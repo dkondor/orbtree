@@ -1,0 +1,7 @@
+<map id="orbtree::rankmultisetC&lt; Key, NVType, IndexType, Compare &gt;" name="orbtree::rankmultisetC&lt; Key, NVType, IndexType, Compare &gt;">
+<area shape="rect" id="node2" href="$classorbtree_1_1orbtree.html" title="orbtree::orbtree\&lt; NodeAllocator\lCompact\&lt; KeyOnly\&lt; Key \&gt;, NVType,\l IndexType \&gt;, Compare, NVFunc\l_Adapter_Simple\&lt; RankFunc\&lt; Key,\l NVType \&gt; \&gt;, true \&gt;" alt="" coords="765,57,1009,143"/>
+<area shape="rect" id="node3" href="$classorbtree_1_1orbtree__base.html" title="orbtree::orbtree_base\l\&lt; NodeAllocatorCompact\l\&lt; KeyOnly\&lt; Key \&gt;, NVType,\l IndexType \&gt;, Compare, NVFunc\l_Adapter_Simple\&lt; RankFunc\&lt; Key,\l NVType \&gt; \&gt;, multi \&gt;" alt="" coords="484,50,716,150"/>
+<area shape="rect" id="node4" href="$classorbtree_1_1NodeAllocatorCompact.html" title="orbtree::NodeAllocatorCompact\l\&lt; KeyOnly\&lt; Key \&gt;, NVType,\l IndexType \&gt;" alt="" coords="219,7,424,63"/>
+<area shape="rect" id="node7" href="$structorbtree_1_1NVFunc__Adapter__Simple.html" title="orbtree::NVFunc_Adapter\l_Simple\&lt; RankFunc\&lt; Key,\l NVType \&gt; \&gt;" alt="" coords="231,137,411,193"/>
+<area shape="rect" id="node8" href="$structorbtree_1_1RankFunc.html" title="orbtree::RankFunc\&lt;\l Key, NVType \&gt;" alt="" coords="5,145,144,186"/>
+</map>

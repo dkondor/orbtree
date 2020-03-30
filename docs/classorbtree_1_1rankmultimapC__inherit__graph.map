@@ -1,0 +1,5 @@
+<map id="orbtree::rankmultimapC&lt; Key, Value, NVType, IndexType, Compare &gt;" name="orbtree::rankmultimapC&lt; Key, Value, NVType, IndexType, Compare &gt;">
+<area shape="rect" id="node2" href="$classorbtree_1_1orbtree.html" title="orbtree::orbtree\&lt; NodeAllocator\lCompact\&lt; KeyValue\&lt; Key, Value\l \&gt;, NVType, IndexType \&gt;, Compare,\l NVFunc_Adapter_Simple\&lt; RankFunc\l\&lt; NVType, KeyValue\&lt; Key, Value \&gt;\l \&gt; \&gt;, true \&gt;" alt="" coords="512,20,757,120"/>
+<area shape="rect" id="node3" href="$classorbtree_1_1orbtree__base.html" title="orbtree::orbtree_base\l\&lt; NodeAllocatorCompact\l\&lt; KeyValue\&lt; Key, Value\l \&gt;, NVType, IndexType \&gt;,\l Compare, NVFunc_Adapter\l_Simple\&lt; RankFunc\&lt; NVType,\l KeyValue\&lt; Key, Value \&gt; \&gt; \&gt;\l, multi \&gt;" alt="" coords="259,5,464,135"/>
+<area shape="rect" id="node4" href="$classorbtree_1_1NodeAllocatorCompact.html" title="orbtree::NodeAllocatorCompact\l\&lt; KeyValue\&lt; Key, Value \&gt;,\l NVType, IndexType \&gt;" alt="" coords="5,42,211,98"/>
+</map>

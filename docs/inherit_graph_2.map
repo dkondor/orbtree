@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classorbtree_1_1NodeAllocatorCompact.html" title="orbtree::NodeAllocatorCompact\l\&lt; KeyOnly\&lt; Key \&gt;, NVType,\l IndexType \&gt;" alt="" coords="5,75,211,131"/>
+<area shape="rect" id="node2" href="$classorbtree_1_1orbtree__base.html" title="orbtree::orbtree_base\l\&lt; NodeAllocatorCompact\l\&lt; KeyOnly\&lt; Key \&gt;, NVType,\l IndexType \&gt;, Compare, NVFunc\l_Adapter_Simple\&lt; RankFunc\&lt; Key,\l NVType \&gt; \&gt;, multi \&gt;" alt="" coords="259,53,491,153"/>
+<area shape="rect" id="node3" href="$classorbtree_1_1orbtree.html" title="orbtree::orbtree\&lt; NodeAllocator\lCompact\&lt; KeyOnly\&lt; Key \&gt;, NVType,\l IndexType \&gt;, Compare, NVFunc\l_Adapter_Simple\&lt; RankFunc\&lt; Key,\l NVType \&gt; \&gt;, false \&gt;" alt="" coords="539,5,783,91"/>
+<area shape="rect" id="node5" href="$classorbtree_1_1orbtree.html" title="orbtree::orbtree\&lt; NodeAllocator\lCompact\&lt; KeyOnly\&lt; Key \&gt;, NVType,\l IndexType \&gt;, Compare, NVFunc\l_Adapter_Simple\&lt; RankFunc\&lt; Key,\l NVType \&gt; \&gt;, true \&gt;" alt="" coords="539,115,783,200"/>
+<area shape="rect" id="node4" href="$classorbtree_1_1ranksetC.html" title="Order statistic set, calculates the rank of elements. Compact version, the key has to be trivially co..." alt="" coords="835,20,1013,76"/>
+<area shape="rect" id="node6" href="$classorbtree_1_1rankmultisetC.html" title="Order statistic multiset, calculates the rank of elements. Compact version, the key has to be trivial..." alt="" coords="831,129,1017,185"/>
+</map>

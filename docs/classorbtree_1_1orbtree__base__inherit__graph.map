@@ -1,0 +1,5 @@
+<map id="orbtree::orbtree_base&lt; NodeAllocator, Compare, NVFunc, multi &gt;" name="orbtree::orbtree_base&lt; NodeAllocator, Compare, NVFunc, multi &gt;">
+<area shape="rect" id="node3" href="$classorbtree_1_1orbtree.html" title="Generalized order statistic tree main interface. It is recommended to use the templates orbset..." alt="" coords="387,5,595,47"/>
+<area shape="rect" id="node4" href="$classorbtree_1_1orbtree.html" title="orbtree\&lt; NodeAllocator,\l Compare, NVFunc, false \&gt;" alt="" coords="399,71,582,112"/>
+<area shape="rect" id="node5" href="$classorbtree_1_1orbtreemap.html" title="Base class with map&#45;specific function. It is recommended to use the specializations orbmap..." alt="" coords="643,63,824,119"/>
+</map>
