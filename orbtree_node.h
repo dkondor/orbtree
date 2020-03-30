@@ -313,7 +313,7 @@ namespace orbtree {
 	 * memory location without problems, but can still have nontrivial destructor), but
 	 * as far as I know, this concept does not exist in C++.
 	 */
-	template<class KeyValueT, class NVTypeT, class IndexType, size_t tmp_nodes = 32>
+	template<class KeyValueT, class NVTypeT, class IndexType>
 	class NodeAllocatorCompact {
 		protected:
 			//~ static_assert(std::is_trivially_copyable<KeyValueT>::value,
@@ -380,7 +380,7 @@ namespace orbtree {
 						swap(right,n.right);
 					}
 					
-					friend class NodeAllocatorCompact<KeyValueT,NVTypeT,IndexType,tmp_nodes>;
+					friend class NodeAllocatorCompact<KeyValueT,NVTypeT,IndexType>;
 			};
 			
 		private:
@@ -394,9 +394,9 @@ namespace orbtree {
 			
 			realloc_vector::vector<NVType> nvarray; ///< \brief Vector storing the partial sum of function values in nodes.
 			node_vector_type nodes; ///< \brief Vector storing the node objects.
-			size_t n_del; /* total number of deleted nodes */
-			const unsigned int nv_per_node;
-			NodeHandle deleted_nodes_head; /* head of linked list for deleted nodes (only used if tmp_nodes == 0) */
+			size_t n_del; ///< \brief Number of deleted nodes (memory not freed yet, these are stored in-place, forming a linked list).
+			const unsigned int nv_per_node; ///< \brief Number of weight values per node (number of components returned by the weight function).
+			NodeHandle deleted_nodes_head; ///< \brief Head of linked list for deleted nodes.
 
 		protected:
 			/** \brief invalid handle */
@@ -574,36 +574,34 @@ namespace orbtree {
 			
 			/// \brief Free up memory taken up by deleted nodes by rearranging storage.
 			void shrink_to_fit() {
-				if(!tmp_nodes) {
-					while(deleted_nodes_head != Invalid) {
-						/* remove nodes at the end */
-						NodeHandle size = nodes.size();
-						if(size == 0) throw std::runtime_error("NodeAllocatorCompact::shrink_size(): ran out of nodes!\n");
-						size--;
-						if(nodes[size].is_deleted()) {
-							/* if last node was deleted, update the list of deleted nodes */
-							NodeHandle left = nodes[size].get_left();
-							NodeHandle right = nodes[size].get_right();
-							if(left != Invalid) nodes[left].set_right(right);
-							if(right != Invalid) nodes[right].set_left(left);
-							if(deleted_nodes_head == size) deleted_nodes_head = left;
-						}
-						else {
-							/* otherwise move last node into the place of a deleted node */
-							NodeHandle n = deleted_nodes_head;
-							if(n == size)
-								throw std::runtime_error("NodeAllocatorCompact::shrink_size(): inconsistent deleted nodes!\n");
-							deleted_nodes_head = nodes[deleted_nodes_head].get_left();
-							nodes[deleted_nodes_head].set_right(Invalid);
-							move_node(n,size);
-						}
-						nodes.pop_back();
-						nvarray.resize(((size_t)size)*nv_per_node);
-						if(!n_del) throw std::runtime_error("NodeAllocatorCompact::shrink_size(): inconsistent deleted nodes!\n");
-						n_del--;
+				while(deleted_nodes_head != Invalid) {
+					/* remove nodes at the end */
+					NodeHandle size = nodes.size();
+					if(size == 0) throw std::runtime_error("NodeAllocatorCompact::shrink_size(): ran out of nodes!\n");
+					size--;
+					if(nodes[size].is_deleted()) {
+						/* if last node was deleted, update the list of deleted nodes */
+						NodeHandle left = nodes[size].get_left();
+						NodeHandle right = nodes[size].get_right();
+						if(left != Invalid) nodes[left].set_right(right);
+						if(right != Invalid) nodes[right].set_left(left);
+						if(deleted_nodes_head == size) deleted_nodes_head = left;
 					}
-					shrink_memory();
+					else {
+						/* otherwise move last node into the place of a deleted node */
+						NodeHandle n = deleted_nodes_head;
+						if(n == size)
+							throw std::runtime_error("NodeAllocatorCompact::shrink_size(): inconsistent deleted nodes!\n");
+						deleted_nodes_head = nodes[deleted_nodes_head].get_left();
+						nodes[deleted_nodes_head].set_right(Invalid);
+						move_node(n,size);
+					}
+					nodes.pop_back();
+					nvarray.resize(((size_t)size)*nv_per_node);
+					if(!n_del) throw std::runtime_error("NodeAllocatorCompact::shrink_size(): inconsistent deleted nodes!\n");
+					n_del--;
 				}
+				shrink_memory();
 			}
 			
 			/// \brief Reserve storage for at least the requested number of elements.
