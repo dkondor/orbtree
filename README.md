@@ -21,7 +21,7 @@ To use this library, put the main header files (orbtree.h, orbtree_base.h, orbtr
  - Whether the weight function returns only one value (simple), or returns a vector of values (vector). The latter case can be especially useful if the goal is to evaluate the same function with multiple parameter values.
  - Whether the implementation allocated individual nodes separately and uses pointers internally, or stores nodes in vector-like containers and uses indexes internally to refer to nodes. The latter choice provides a more compact tree with less memeory allocation, and for trees with less than 2^31-1 elements, it allows the use of 32-bit indexes instead of 64-bit pointers -- this can in turn decrease memory use as well.
  
-These implementations are provided by the following classes (all part of the ``orbtree`` namespace:
+These implementations are provided by the following classes (all part of the ``orbtree`` namespace):
 
 |                                     | Pointer-based storage | Compact storage |
 | ----------------------------------- | --------------------- | --------------- |
