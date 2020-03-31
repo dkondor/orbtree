@@ -597,7 +597,7 @@ namespace orbtree {
 	/* function has to have a defined return type */
 	/** \class orbtree::orbset
 	 * \brief  General set, i.e. storing a collection of elements without duplicates.
-	 * See \ref orbtree::orbtree for description of members.
+	 * See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * @tparam Key type of elements ("keys") stored in this set.
 	 * @tparam NVFunc function calculating the weights associated with stored
@@ -611,7 +611,7 @@ namespace orbtree {
 	/** \class orbtree::simple_set
 	 * \brief  General set, i.e. storing a collection of elements without duplicates.
 	 * Simple version for weight functions that return one component (i.e. scalar functions).
-	 * See \ref orbtree::orbtree for description of members.
+	 * See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * @tparam Key type of elements ("keys") stored in this set.
 	 * @tparam NVFunc function object calculating the weights associated with stored
@@ -626,7 +626,7 @@ namespace orbtree {
 	
 	/** \class orbtree::orbmultiset
 	 * \brief  General multiset, i.e. storing a collection of elements allowing duplicates.
-	 * See \ref orbtree::orbtree for description of members.
+	 * See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * @tparam Key type of elements ("keys") stored in this set.
 	 * @tparam NVFunc function calculating the values associated with stored
@@ -640,7 +640,7 @@ namespace orbtree {
 	/** \class orbtree::simple_multiset
 	 * \brief  General multiset, i.e. storing a collection of elements allowing duplicates.
 	 * Simple version for weight functions that return one component (i.e. scalar functions).
-	 * See \ref orbtree::orbtree for description of members.
+	 * See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * @tparam Key type of elements ("keys") stored in this set.
 	 * @tparam NVFunc function object calculating the weights associated with stored
@@ -654,7 +654,7 @@ namespace orbtree {
 	
 	
 	/** \class orbtree::orbsetC
-	 * \brief  Specialized set with compact storage. See \ref orbtree::orbtree for description of members.
+	 * \brief  Specialized set with compact storage. See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * This is a set, i.e. a collection of elements without duplicates.
 	 * See \ref orbtree for description of members. Nodes are stored in a flat array
@@ -684,7 +684,7 @@ namespace orbtree {
 	/** \class orbtree::simple_setC
 	 * \brief  Specialized set with compact storage. 
 	 * Simple version for weight functions that return one component (i.e. scalar functions).
-	 * See \ref orbtree::orbtree for description of members.
+	 * See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * This is a set, i.e. a collection of elements without duplicates.
 	 * See \ref orbtree for description of members. Nodes are stored in a flat array
@@ -715,7 +715,7 @@ namespace orbtree {
 	
 	
 	/** \class orbtree::orbmultisetC
-	 * \brief  Specialized multiset with compact storage. See \ref orbtree::orbtree for description of members.
+	 * \brief  Specialized multiset with compact storage. See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * This is a multiset, i.e. a collection of elements that allows duplicates.
 	 * See \ref orbtree for description of members. Nodes are stored in a flat array
@@ -745,7 +745,7 @@ namespace orbtree {
 	/** \class orbtree::simple_multisetC
 	 * \brief  Specialized multiset with compact storage.
 	 * Simple version for weight functions that return one component (i.e. scalar functions).
-	 * See \ref orbtree::orbtree for description of members.
+	 * See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * This is a multiset, i.e. a collection of elements that allows duplicates.
 	 * See \ref orbtree for description of members. Nodes are stored in a flat array
@@ -850,6 +850,7 @@ namespace orbtree {
 	
 	/** \class orbtree::rankset
 	 * \brief  Order statistic set, calculates the rank of elements.
+	 * See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * @tparam Key type of elements ("keys") stored in this set.
 	 * @tparam NVType integer type for rank calculation
@@ -872,6 +873,7 @@ namespace orbtree {
 	
 	/** \class orbtree::ranksetC
 	 * \brief  Order statistic set, calculates the rank of elements, compact version.
+	 * See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * @tparam Key Type of elements ("keys") stored in this set.
 	 * @tparam NVType integer type for rank calculation
@@ -889,6 +891,7 @@ namespace orbtree {
 	
 	/** \class orbtree::rankmultisetC
 	 * \brief  Order statistic multiset, calculates the rank of elements, compact version.
+	 * See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * @tparam Key Type of elements ("keys") stored in this set.
 	 * @tparam NVType integer type for rank calculation
@@ -910,9 +913,10 @@ namespace orbtree {
 	 * 
 	 * note: only const values are supported since modifying the value might modify the rank function as well */
 	/** \brief Base class with map-specific function. It is recommended
-	 * to use the specializations \ref orbmap, orbmapC, \ref orbmultimap
-	 * and orbmultimapC to define and instantiate this class instead of
-	 * this interface directly.
+	 * to use the specializations \ref simple_map, \ref simple_mapC,
+	 * \ref simple_multimap, \ref simple_multimapC, \ref orbmap, orbmapC,
+	 * \ref orbmultimap and orbmultimapC to define and instantiate this
+	 * class instead of this interface directly.
 	 * 
 	 * Provides implementation for map-specific interface.
 	 * 
@@ -1036,7 +1040,8 @@ namespace orbtree {
 	};
 	
 	/** \class orbtree::orbmap
-	 * \brief General map implementation. See \ref orbtree and \ref orbtreemap for description of members.
+	 * \brief General map implementation. See \ref orbtree::orbtree "orbtree"
+	 * and \ref orbtreemap for description of members.
 	 * 
 	 * @tparam Key Key to sort elements by.
 	 * @tparam Value Value stored in elements.
@@ -1051,7 +1056,7 @@ namespace orbtree {
 	/** \class orbtree::simple_map
 	 * \brief General map implementation.
 	 * Simple version for weight functions that return one component (i.e. scalar functions).
-	 * See \ref orbtree and \ref orbtreemap for description of members.
+	 * See \ref orbtree::orbtree "orbtree" and \ref orbtreemap for description of members.
 	 * 
 	 * @tparam Key Key to sort elements by.
 	 * @tparam Value Value stored in elements.
@@ -1066,7 +1071,8 @@ namespace orbtree {
 	
 	
 	/** \class orbtree::orbmultimap
-	 * \brief General multimap implementation (i.e. map allowing duplicate keys). See \ref orbtree for description of members.
+	 * \brief General multimap implementation (i.e. map allowing duplicate keys).
+	 * See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * @tparam Key Key to sort elements by.
 	 * @tparam Value Value stored in elements.
@@ -1081,7 +1087,7 @@ namespace orbtree {
 	/** \class orbtree::simple_multimap
 	 * \brief General multimap implementation (i.e. map allowing duplicate keys).
 	 * Simple version for weight functions that return one component (i.e. scalar functions).
-	 * See \ref orbtree for description of members.
+	 * See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * @tparam Key Key to sort elements by.
 	 * @tparam Value Value stored in elements.
@@ -1096,7 +1102,8 @@ namespace orbtree {
 	
 	
 	/** \class orbtree::orbmapC
-	 * \brief Map implementation with compact storage. See \ref orbtree and \ref orbtreemap for description of members.
+	 * \brief Map implementation with compact storage. See \ref orbtree::orbtree "orbtree"
+	 * and \ref orbtreemap for description of members.
 	 * 
 	 * @tparam Key Key to sort elements by.
 	 * @tparam Value Value stored in elements.
@@ -1120,7 +1127,7 @@ namespace orbtree {
 	/** \class orbtree::simple_mapC
 	 * \brief Map implementation with compact storage.
 	 * Simple version for weight functions that return one component (i.e. scalar functions).
-	 * See \ref orbtree and \ref orbtreemap for description of members.
+	 * See \ref orbtree::orbtree "orbtree" and \ref orbtreemap for description of members.
 	 * 
 	 * @tparam Key Key to sort elements by.
 	 * @tparam Value Value stored in elements.
@@ -1144,7 +1151,7 @@ namespace orbtree {
 	
 	
 	/** \class orbtree::orbmultimapC
-	 * \brief Multimap implementation with compact storage. See \ref orbtree for description of members.
+	 * \brief Multimap implementation with compact storage. See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * @tparam Key Key to sort elements by.
 	 * @tparam Value Value stored in elements.
@@ -1168,7 +1175,7 @@ namespace orbtree {
 	/** \class orbtree::simple_multimapC
 	 * \brief Multimap implementation with compact storage.
 	 * Simple version for weight functions that return one component (i.e. scalar functions).
-	 * See \ref orbtree for description of members.
+	 * See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * @tparam Key Key to sort elements by.
 	 * @tparam Value Value stored in elements.
@@ -1193,6 +1200,7 @@ namespace orbtree {
 	
 	/** \class orbtree::rankmap
 	 * \brief  Order statistic map, calculates the rank of elements.
+	 * See \ref orbtree::orbtree "orbtree" and \ref orbtreemap for description of members.
 	 * 
 	 * @tparam Key type of elements ("keys") stored in this set.
 	 * @tparam Value Value stored in elements.
@@ -1205,6 +1213,7 @@ namespace orbtree {
 	
 	/** \class orbtree::rankmultimap
 	 * \brief  Order statistic multimap, calculates the rank of elements.
+	 * See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * @tparam Key type of elements ("keys") stored in this set.
 	 * @tparam Value Value stored in elements.
@@ -1217,6 +1226,7 @@ namespace orbtree {
 	
 	/** \class orbtree::rankmapC
 	 * \brief  Order statistic map with compact storage, calculates the rank of elements.
+	 * See \ref orbtree::orbtree "orbtree" and \ref orbtreemap for description of members.
 	 * 
 	 * @tparam Key Key to sort elements by.
 	 * @tparam Value Value stored in elements.
@@ -1238,6 +1248,7 @@ namespace orbtree {
 	
 	/** \class orbtree::rankmultimapC
 	 * \brief  Order statistic multimap with compact storage, calculates the rank of elements.
+	 * See \ref orbtree::orbtree "orbtree" for description of members.
 	 * 
 	 * @tparam Key Key to sort elements by.
 	 * @tparam Value Value stored in elements.

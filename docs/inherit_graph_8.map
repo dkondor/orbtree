@@ -2,6 +2,6 @@
 <area shape="rect" id="node2" href="$classorbtree_1_1orbtree__base.html" title="base class for both map and set – should not be used directly " alt="" coords="224,31,405,87"/>
 <area shape="rect" id="node3" href="$classorbtree_1_1orbtree.html" title="Generalized order statistic tree main interface. It is recommended to use the templates orbset..." alt="" coords="453,5,683,47"/>
 <area shape="rect" id="node4" href="$classorbtree_1_1orbtree.html" title="orbtree::orbtree\&lt; NodeAllocator,\l Compare, NVFunc, false, simple \&gt;" alt="" coords="453,71,683,112"/>
-<area shape="rect" id="node5" href="$classorbtree_1_1orbtreemap.html" title="Base class with map&#45;specific function. It is recommended to use the specializations orbmap..." alt="" coords="731,63,912,119"/>
+<area shape="rect" id="node5" href="$classorbtree_1_1orbtreemap.html" title="Base class with map&#45;specific function. It is recommended to use the specializations simple_map..." alt="" coords="731,63,912,119"/>
 <area shape="rect" id="node6" href="$classorbtree_1_1NVFunc__wrapper.html" title="orbtree::NVFunc_wrapper\l\&lt; NVFunc \&gt;" alt="" coords="5,68,176,109"/>
 </map>
