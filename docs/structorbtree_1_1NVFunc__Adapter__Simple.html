@@ -72,15 +72,10 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Adapter for functions that return only one result.  
+<p>Adapter for functions that return only one result. This class also describes the interface expected for the NVFunc template parameter for the tree / set / map classes.  
  <a href="structorbtree_1_1NVFunc__Adapter__Simple.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="orbtree_8h_source.html">orbtree.h</a>&gt;</code></p>
-<div class="dynheader">
-Collaboration diagram for orbtree::NVFunc_Adapter_Simple&lt; NVFunc &gt;:</div>
-<div class="dyncontent">
-<div class="center"><img src="structorbtree_1_1NVFunc__Adapter__Simple__coll__graph.png" border="0" usemap="#orbtree_1_1NVFunc__Adapter__Simple_3_01NVFunc_01_4_coll__map" alt="Collaboration graph"/></div>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -104,6 +99,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a041c0db0494523c92b4893053ded5184"><td class="memItemLeft" align="right" valign="top"><a id="a041c0db0494523c92b4893053ded5184"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>NVFunc_Adapter_Simple</b> (NVFunc &amp;&amp;f_)</td></tr>
 <tr class="separator:a041c0db0494523c92b4893053ded5184"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a123e8d9dbad0daa08572d0dc0db6a01f"><td class="memTemplParams" colspan="2"><a id="a123e8d9dbad0daa08572d0dc0db6a01f"></a>
+template&lt;class T &gt; </td></tr>
+<tr class="memitem:a123e8d9dbad0daa08572d0dc0db6a01f"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>NVFunc_Adapter_Simple</b> (const T &amp;t)</td></tr>
+<tr class="separator:a123e8d9dbad0daa08572d0dc0db6a01f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -115,8 +114,7 @@ NVFunc&#160;</td><td class="memItemRight" valign="bottom"><b>f</b></td></tr>
 <div class="textblock"><h3>template&lt;class NVFunc&gt;<br />
 struct orbtree::NVFunc_Adapter_Simple&lt; NVFunc &gt;</h3>
 
-<p>Adapter for functions that return only one result. </p>
-<p>This class also describes the interface expected for the NVFunc template parameter for the tree / set / map classes.</p>
+<p>Adapter for functions that return only one result. This class also describes the interface expected for the NVFunc template parameter for the tree / set / map classes. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">NVFunc</td><td>simple function taking one argument and returning the associated value to be stored. Should define a member type as argument_type to use this adapter. </td></tr>
@@ -130,7 +128,7 @@ struct orbtree::NVFunc_Adapter_Simple&lt; NVFunc &gt;</h3>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class NVFunc&gt; </div>
+template&lt;class NVFunc &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -160,7 +158,7 @@ template&lt;class NVFunc&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class NVFunc&gt; </div>
+template&lt;class NVFunc &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

@@ -67,22 +67,23 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Specialized multiset with compact storage, for POD (trivially copyable) elements. See <a class="el" href="classorbtree_1_1orbtree.html">orbtree::orbtree</a> for description of members.  
+<p>Specialized multiset with compact storage. See <a class="el" href="classorbtree_1_1orbtree.html">orbtree::orbtree</a> for description of members.  
  <a href="classorbtree_1_1orbmultisetC.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="orbtree_8h_source.html">orbtree.h</a>&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Specialized multiset with compact storage, for POD (trivially copyable) elements. See <a class="el" href="classorbtree_1_1orbtree.html">orbtree::orbtree</a> for description of members. </p>
+<div class="textblock"><p>Specialized multiset with compact storage. See <a class="el" href="classorbtree_1_1orbtree.html">orbtree::orbtree</a> for description of members. </p>
 <p>This is a multiset, i.e. a collection of elements that allows duplicates. See orbtree for description of members. Nodes are stored in a flat array and the red-black bit is stored as part of node references. Indexing is done with integers instead of pointers, this can save space especially on 64-bit machines if 32-bit indices are sufficient. Space for each node is sizeof(Key) + 3*sizeof(IndexType) + padding (if necessary)</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Key</td><td>Type of elements ("keys") stored in this set. Must be trivially copyable (as per std::is_trivially_copyable). </td></tr>
-    <tr><td class="paramname">NVFunc</td><td>function calculating the values associated with stored elements. See <a class="el" href="structorbtree_1_1NVFunc__Adapter__Simple.html" title="Adapter for functions that return only one result. ">NVFunc_Adapter_Simple</a> for the description of the expected interface. </td></tr>
+    <tr><td class="paramname">Key</td><td>Type of elements ("keys") stored in this set. </td></tr>
+    <tr><td class="paramname">NVFunc</td><td>function calculating the values associated with stored elements. See <a class="el" href="structorbtree_1_1NVFunc__Adapter__Simple.html" title="Adapter for functions that return only one result. This class also describes the interface expected f...">NVFunc_Adapter_Simple</a> for the description of the expected interface. </td></tr>
     <tr><td class="paramname">IndexType</td><td>unsigned integral type to use for indexing. Maximum number of elements is half of the maximum value of this type - 1. Default is uin32_t, i.e. 32-bit integers, allowing 2^31-1 elements. </td></tr>
-    <tr><td class="paramname">Compare</td><td>comparison functor for keys. </td></tr>
+    <tr><td class="paramname">Compare</td><td>comparison functor for keys.</td></tr>
   </table>
   </dd>
 </dl>
+<p>Note: internally, it uses <a class="el" href="classrealloc__vector_1_1vector.html" title="C++ vector-like container for trivially moveable types, using realloc() for growing memory...">realloc_vector::vector</a> if Key is trivially copyable (as per <a href="https://en.cppreference.com/w/cpp/types/is_trivially_copyable">std::is_trivially_copyable</a>) and <a class="el" href="classstacked__vector_1_1vector.html" title="C++ vector-like container that internally maintains a &quot;stack&quot; of vectors instead of having one large ...">stacked_vector::vector</a> otherwise. In the latter case, performnace can be improved by using the <a href="https://github.com/ridiculousfish/libdivide">libdivide library</a> &ndash; see the documentation of <a class="el" href="classstacked__vector_1_1vector.html">stacked_vector</a> for more details. </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="orbtree_8h_source.html">orbtree.h</a></li>
 </ul>

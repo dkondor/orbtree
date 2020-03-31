@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>orbtree: orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT &gt; Class Template Reference</title>
+<title>orbtree: orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT, simple &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -70,7 +70,7 @@ $(function() {
 <a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
 <a href="classorbtree_1_1NodeAllocatorPtr-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT &gt; Class Template Reference</div>  </div>
+<div class="title">orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT, simple &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -79,11 +79,11 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="orbtree__node_8h_source.html">orbtree_node.h</a>&gt;</code></p>
 <div class="dynheader">
-Collaboration diagram for orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT &gt;:</div>
+Collaboration diagram for orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT, simple &gt;:</div>
 <div class="dyncontent">
-<div class="center"><img src="classorbtree_1_1NodeAllocatorPtr__coll__graph.png" border="0" usemap="#orbtree_1_1NodeAllocatorPtr_3_01KeyValueT_00_01NVTypeT_01_4_coll__map" alt="Collaboration graph"/></div>
-<map name="orbtree_1_1NodeAllocatorPtr_3_01KeyValueT_00_01NVTypeT_01_4_coll__map" id="orbtree_1_1NodeAllocatorPtr_3_01KeyValueT_00_01NVTypeT_01_4_coll__map">
-<area shape="rect" id="node2" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html" title="node class " alt="" coords="5,7,219,48"/>
+<div class="center"><img src="classorbtree_1_1NodeAllocatorPtr__coll__graph.png" border="0" usemap="#orbtree_1_1NodeAllocatorPtr_3_01KeyValueT_00_01NVTypeT_00_01simple_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="orbtree_1_1NodeAllocatorPtr_3_01KeyValueT_00_01NVTypeT_00_01simple_01_4_coll__map" id="orbtree_1_1NodeAllocatorPtr_3_01KeyValueT_00_01NVTypeT_00_01simple_01_4_coll__map">
+<area shape="rect" id="node2" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html" title="node class " alt="" coords="11,5,219,61"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -95,99 +95,117 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-types"></a>
 Protected Types</h2></td></tr>
-<tr class="memitem:ad7ba915ce31ef936cf20fe6cb7768ccb"><td class="memItemLeft" align="right" valign="top"><a id="ad7ba915ce31ef936cf20fe6cb7768ccb"></a>
+<tr class="memitem:a3209b2b25f2befdb58afd7aed220a426"><td class="memItemLeft" align="right" valign="top"><a id="a3209b2b25f2befdb58afd7aed220a426"></a>
 typedef KeyValueT&#160;</td><td class="memItemRight" valign="bottom"><b>KeyValue</b></td></tr>
-<tr class="separator:ad7ba915ce31ef936cf20fe6cb7768ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad2112857a5723cde75bda54e7d87f5b"><td class="memItemLeft" align="right" valign="top"><a id="aad2112857a5723cde75bda54e7d87f5b"></a>
+<tr class="separator:a3209b2b25f2befdb58afd7aed220a426"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca15ce8284d323596cb532e6943f0d59"><td class="memItemLeft" align="right" valign="top"><a id="aca15ce8284d323596cb532e6943f0d59"></a>
 typedef NVTypeT&#160;</td><td class="memItemRight" valign="bottom"><b>NVType</b></td></tr>
-<tr class="separator:aad2112857a5723cde75bda54e7d87f5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fbd8bac2a0516fda69b3a982ca4db31"><td class="memItemLeft" align="right" valign="top">typedef const <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a4fbd8bac2a0516fda69b3a982ca4db31">NodeHandle</a></td></tr>
-<tr class="memdesc:a4fbd8bac2a0516fda69b3a982ca4db31"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html" title="node class ">Node</a> handle type to be used by tree implementation.  <a href="#a4fbd8bac2a0516fda69b3a982ca4db31">More...</a><br /></td></tr>
-<tr class="separator:a4fbd8bac2a0516fda69b3a982ca4db31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:aca15ce8284d323596cb532e6943f0d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a050f2d97c881f8fda67cd654128f4f6b"><td class="memItemLeft" align="right" valign="top">typedef const <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a050f2d97c881f8fda67cd654128f4f6b">NodeHandle</a></td></tr>
+<tr class="memdesc:a050f2d97c881f8fda67cd654128f4f6b"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html" title="node class ">Node</a> handle type to be used by tree implementation.  <a href="#a050f2d97c881f8fda67cd654128f4f6b">More...</a><br /></td></tr>
+<tr class="separator:a050f2d97c881f8fda67cd654128f4f6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a0b616c4417e714f2800771405e5245b5"><td class="memItemLeft" align="right" valign="top"><a id="a0b616c4417e714f2800771405e5245b5"></a>
+<tr class="memitem:a327910ae36932f531b1cfcca75afa817"><td class="memItemLeft" align="right" valign="top"><a id="a327910ae36932f531b1cfcca75afa817"></a>
 unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>get_nv_per_node</b> () const</td></tr>
-<tr class="separator:a0b616c4417e714f2800771405e5245b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27c245561336a527697b081b68a3990b"><td class="memItemLeft" align="right" valign="top"><a id="a27c245561336a527697b081b68a3990b"></a>
+<tr class="separator:a327910ae36932f531b1cfcca75afa817"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b44dde94981046052e5cc4ae8faf2ee"><td class="memItemLeft" align="right" valign="top"><a id="a2b44dde94981046052e5cc4ae8faf2ee"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>NodeAllocatorPtr</b> (unsigned int nv_per_node_)</td></tr>
-<tr class="separator:a27c245561336a527697b081b68a3990b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5c1c09e9ac2c533ee9cb35bd86d68f5"><td class="memItemLeft" align="right" valign="top"><a id="af5c1c09e9ac2c533ee9cb35bd86d68f5"></a>
-<a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#af5c1c09e9ac2c533ee9cb35bd86d68f5">get_node</a> (<a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a4fbd8bac2a0516fda69b3a982ca4db31">NodeHandle</a> x)</td></tr>
-<tr class="memdesc:af5c1c09e9ac2c533ee9cb35bd86d68f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">get reference to a modifiable node <br /></td></tr>
-<tr class="separator:af5c1c09e9ac2c533ee9cb35bd86d68f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a800222d59218a25611251dc6876290c0"><td class="memItemLeft" align="right" valign="top"><a id="a800222d59218a25611251dc6876290c0"></a>
-const <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a800222d59218a25611251dc6876290c0">get_node</a> (const <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a4fbd8bac2a0516fda69b3a982ca4db31">NodeHandle</a> x) const</td></tr>
-<tr class="memdesc:a800222d59218a25611251dc6876290c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">get reference to a const node <br /></td></tr>
-<tr class="separator:a800222d59218a25611251dc6876290c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc008d38f6537e2d4f511bf25efa4a7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#afc008d38f6537e2d4f511bf25efa4a7c">new_node</a> ()</td></tr>
-<tr class="memdesc:afc008d38f6537e2d4f511bf25efa4a7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node  <a href="#afc008d38f6537e2d4f511bf25efa4a7c">More...</a><br /></td></tr>
-<tr class="separator:afc008d38f6537e2d4f511bf25efa4a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8088c07bb7b7876c8bcb86d61dd5b4c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a8088c07bb7b7876c8bcb86d61dd5b4c5">new_node</a> (const KeyValue &amp;kv)</td></tr>
-<tr class="memdesc:a8088c07bb7b7876c8bcb86d61dd5b4c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node  <a href="#a8088c07bb7b7876c8bcb86d61dd5b4c5">More...</a><br /></td></tr>
-<tr class="separator:a8088c07bb7b7876c8bcb86d61dd5b4c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cb2c5758be31f37baebd5a9b01b8d7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a5cb2c5758be31f37baebd5a9b01b8d7b">new_node</a> (KeyValue &amp;&amp;kv)</td></tr>
-<tr class="memdesc:a5cb2c5758be31f37baebd5a9b01b8d7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node  <a href="#a5cb2c5758be31f37baebd5a9b01b8d7b">More...</a><br /></td></tr>
-<tr class="separator:a5cb2c5758be31f37baebd5a9b01b8d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab426f1f1e4063e20a58358e8ca37b2bb"><td class="memTemplParams" colspan="2">template&lt;class... T&gt; </td></tr>
-<tr class="memitem:ab426f1f1e4063e20a58358e8ca37b2bb"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#ab426f1f1e4063e20a58358e8ca37b2bb">new_node</a> (T &amp;&amp;... kv)</td></tr>
-<tr class="memdesc:ab426f1f1e4063e20a58358e8ca37b2bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node  <a href="#ab426f1f1e4063e20a58358e8ca37b2bb">More...</a><br /></td></tr>
-<tr class="separator:ab426f1f1e4063e20a58358e8ca37b2bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a978e114df7d74449cb6a7ceec5ad7a14"><td class="memItemLeft" align="right" valign="top"><a id="a978e114df7d74449cb6a7ceec5ad7a14"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a978e114df7d74449cb6a7ceec5ad7a14">free_node</a> (<a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a4fbd8bac2a0516fda69b3a982ca4db31">NodeHandle</a> n)</td></tr>
-<tr class="memdesc:a978e114df7d74449cb6a7ceec5ad7a14"><td class="mdescLeft">&#160;</td><td class="mdescRight">delete node &ndash; tree is not traversed, the caller must arrange to "cut" out the node in question (otherwise the referenced nodes will be lost) <br /></td></tr>
-<tr class="separator:a978e114df7d74449cb6a7ceec5ad7a14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaee84587f6a48e4a906b91c698038467"><td class="memItemLeft" align="right" valign="top"><a id="aaee84587f6a48e4a906b91c698038467"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#aaee84587f6a48e4a906b91c698038467">clear_tree</a> ()</td></tr>
-<tr class="memdesc:aaee84587f6a48e4a906b91c698038467"><td class="mdescLeft">&#160;</td><td class="mdescRight">clear tree, i.e. free all nodes, but keep root (sentinel) and nil, so that tree can be used again <br /></td></tr>
-<tr class="separator:aaee84587f6a48e4a906b91c698038467"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6196900fe360dea3d6537a2d49233de3"><td class="memItemLeft" align="right" valign="top"><a id="a6196900fe360dea3d6537a2d49233de3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a6196900fe360dea3d6537a2d49233de3">free_tree_nodes_r</a> (<a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *n)</td></tr>
-<tr class="memdesc:a6196900fe360dea3d6537a2d49233de3"><td class="mdescLeft">&#160;</td><td class="mdescRight">free whole tree (starting from root) <br /></td></tr>
-<tr class="separator:a6196900fe360dea3d6537a2d49233de3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a6c273874b3cbc6ce4fe7dbe66f38a6"><td class="memItemLeft" align="right" valign="top"><a id="a6a6c273874b3cbc6ce4fe7dbe66f38a6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a6a6c273874b3cbc6ce4fe7dbe66f38a6">init_node</a> (<a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *n)</td></tr>
-<tr class="memdesc:a6a6c273874b3cbc6ce4fe7dbe66f38a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">safely initialize new node, throw an exception if memory allocation failed <br /></td></tr>
-<tr class="separator:a6a6c273874b3cbc6ce4fe7dbe66f38a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1810b37be023168254588ec8c8551515"><td class="memItemLeft" align="right" valign="top"><a id="a1810b37be023168254588ec8c8551515"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a1810b37be023168254588ec8c8551515">get_node_sum</a> (<a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a4fbd8bac2a0516fda69b3a982ca4db31">NodeHandle</a> n, NVType *s) const</td></tr>
-<tr class="memdesc:a1810b37be023168254588ec8c8551515"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the value of the partial sum stored in this node <br /></td></tr>
-<tr class="separator:a1810b37be023168254588ec8c8551515"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5372eaf8b8a0f839f4fa1cebf998dda4"><td class="memItemLeft" align="right" valign="top"><a id="a5372eaf8b8a0f839f4fa1cebf998dda4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a5372eaf8b8a0f839f4fa1cebf998dda4">set_node_sum</a> (<a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a4fbd8bac2a0516fda69b3a982ca4db31">NodeHandle</a> n1, const NVType *s)</td></tr>
-<tr class="memdesc:a5372eaf8b8a0f839f4fa1cebf998dda4"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the value of the partial sum stored in this node <br /></td></tr>
-<tr class="separator:a5372eaf8b8a0f839f4fa1cebf998dda4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a2b44dde94981046052e5cc4ae8faf2ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1df55f06c29e56e89f73322cb9efa8fa"><td class="memItemLeft" align="right" valign="top"><a id="a1df55f06c29e56e89f73322cb9efa8fa"></a>
+<a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a1df55f06c29e56e89f73322cb9efa8fa">get_node</a> (<a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a050f2d97c881f8fda67cd654128f4f6b">NodeHandle</a> x)</td></tr>
+<tr class="memdesc:a1df55f06c29e56e89f73322cb9efa8fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">get reference to a modifiable node <br /></td></tr>
+<tr class="separator:a1df55f06c29e56e89f73322cb9efa8fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add8742f3b23037fa7a255ba788630ffe"><td class="memItemLeft" align="right" valign="top"><a id="add8742f3b23037fa7a255ba788630ffe"></a>
+const <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#add8742f3b23037fa7a255ba788630ffe">get_node</a> (const <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a050f2d97c881f8fda67cd654128f4f6b">NodeHandle</a> x) const</td></tr>
+<tr class="memdesc:add8742f3b23037fa7a255ba788630ffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">get reference to a const node <br /></td></tr>
+<tr class="separator:add8742f3b23037fa7a255ba788630ffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34a83affb40b7d9ffbec88f31b79c011"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a34a83affb40b7d9ffbec88f31b79c011">new_node</a> ()</td></tr>
+<tr class="memdesc:a34a83affb40b7d9ffbec88f31b79c011"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node  <a href="#a34a83affb40b7d9ffbec88f31b79c011">More...</a><br /></td></tr>
+<tr class="separator:a34a83affb40b7d9ffbec88f31b79c011"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57ed3ef2a09963fd98e8ef06d87d2a57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a57ed3ef2a09963fd98e8ef06d87d2a57">new_node</a> (const KeyValue &amp;kv)</td></tr>
+<tr class="memdesc:a57ed3ef2a09963fd98e8ef06d87d2a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node  <a href="#a57ed3ef2a09963fd98e8ef06d87d2a57">More...</a><br /></td></tr>
+<tr class="separator:a57ed3ef2a09963fd98e8ef06d87d2a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6358b933851c67e173c5ab950b5dbc09"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a6358b933851c67e173c5ab950b5dbc09">new_node</a> (KeyValue &amp;&amp;kv)</td></tr>
+<tr class="memdesc:a6358b933851c67e173c5ab950b5dbc09"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node  <a href="#a6358b933851c67e173c5ab950b5dbc09">More...</a><br /></td></tr>
+<tr class="separator:a6358b933851c67e173c5ab950b5dbc09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32409ffe1c540f3a078e86264a593c10"><td class="memTemplParams" colspan="2">template&lt;class... T&gt; </td></tr>
+<tr class="memitem:a32409ffe1c540f3a078e86264a593c10"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a32409ffe1c540f3a078e86264a593c10">new_node</a> (T &amp;&amp;... kv)</td></tr>
+<tr class="memdesc:a32409ffe1c540f3a078e86264a593c10"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node  <a href="#a32409ffe1c540f3a078e86264a593c10">More...</a><br /></td></tr>
+<tr class="separator:a32409ffe1c540f3a078e86264a593c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bff7d24e99e381a4f4d3140ca961f92"><td class="memItemLeft" align="right" valign="top"><a id="a6bff7d24e99e381a4f4d3140ca961f92"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a6bff7d24e99e381a4f4d3140ca961f92">free_node</a> (<a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a050f2d97c881f8fda67cd654128f4f6b">NodeHandle</a> n)</td></tr>
+<tr class="memdesc:a6bff7d24e99e381a4f4d3140ca961f92"><td class="mdescLeft">&#160;</td><td class="mdescRight">delete node &ndash; tree is not traversed, the caller must arrange to "cut" out the node in question (otherwise the referenced nodes will be lost) <br /></td></tr>
+<tr class="separator:a6bff7d24e99e381a4f4d3140ca961f92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8803b330ab9abeb8fe08081d589b543e"><td class="memItemLeft" align="right" valign="top"><a id="a8803b330ab9abeb8fe08081d589b543e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a8803b330ab9abeb8fe08081d589b543e">clear_tree</a> ()</td></tr>
+<tr class="memdesc:a8803b330ab9abeb8fe08081d589b543e"><td class="mdescLeft">&#160;</td><td class="mdescRight">clear tree, i.e. free all nodes, but keep root (sentinel) and nil, so that tree can be used again <br /></td></tr>
+<tr class="separator:a8803b330ab9abeb8fe08081d589b543e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac626ffc135f6eb0b0d3414bda423dc57"><td class="memItemLeft" align="right" valign="top"><a id="ac626ffc135f6eb0b0d3414bda423dc57"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#ac626ffc135f6eb0b0d3414bda423dc57">free_tree_nodes_r</a> (<a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *n)</td></tr>
+<tr class="memdesc:ac626ffc135f6eb0b0d3414bda423dc57"><td class="mdescLeft">&#160;</td><td class="mdescRight">free whole tree (starting from root) <br /></td></tr>
+<tr class="separator:ac626ffc135f6eb0b0d3414bda423dc57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb568672893585bcb979a1c837217656"><td class="memTemplParams" colspan="2"><a id="afb568672893585bcb979a1c837217656"></a>
+template&lt;bool simple_ = simple&gt; </td></tr>
+<tr class="memitem:afb568672893585bcb979a1c837217656"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#afb568672893585bcb979a1c837217656">init_node</a> (typename std::enable_if&lt; simple_, <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&gt;::type n)</td></tr>
+<tr class="memdesc:afb568672893585bcb979a1c837217656"><td class="mdescLeft">&#160;</td><td class="mdescRight">safely initialize new node, throw an exception if memory allocation failed <br /></td></tr>
+<tr class="separator:afb568672893585bcb979a1c837217656"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d04f1cfd57ae801fdcaf8796c619fbd"><td class="memTemplParams" colspan="2"><a id="a7d04f1cfd57ae801fdcaf8796c619fbd"></a>
+template&lt;bool simple_ = simple&gt; </td></tr>
+<tr class="memitem:a7d04f1cfd57ae801fdcaf8796c619fbd"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a7d04f1cfd57ae801fdcaf8796c619fbd">init_node</a> (typename std::enable_if&lt;!simple_, <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&gt;::type n)</td></tr>
+<tr class="memdesc:a7d04f1cfd57ae801fdcaf8796c619fbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">safely initialize new node, throw an exception if memory allocation failed <br /></td></tr>
+<tr class="separator:a7d04f1cfd57ae801fdcaf8796c619fbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13cfcee0101f2af0dd13c0dc90e04e93"><td class="memTemplParams" colspan="2"><a id="a13cfcee0101f2af0dd13c0dc90e04e93"></a>
+template&lt;bool simple_ = simple&gt; </td></tr>
+<tr class="memitem:a13cfcee0101f2af0dd13c0dc90e04e93"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a13cfcee0101f2af0dd13c0dc90e04e93">get_node_sum</a> (<a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a050f2d97c881f8fda67cd654128f4f6b">NodeHandle</a> n, typename std::enable_if&lt; simple_, NVType *&gt;::type s) const</td></tr>
+<tr class="memdesc:a13cfcee0101f2af0dd13c0dc90e04e93"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the value of the partial sum of weights stored in this node &ndash; simple case when the weight function returns only one value <br /></td></tr>
+<tr class="separator:a13cfcee0101f2af0dd13c0dc90e04e93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ef51e00c04df81987925ce7c286c4b1"><td class="memTemplParams" colspan="2"><a id="a8ef51e00c04df81987925ce7c286c4b1"></a>
+template&lt;bool simple_ = simple&gt; </td></tr>
+<tr class="memitem:a8ef51e00c04df81987925ce7c286c4b1"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a8ef51e00c04df81987925ce7c286c4b1">get_node_sum</a> (<a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a050f2d97c881f8fda67cd654128f4f6b">NodeHandle</a> n, typename std::enable_if&lt;!simple_, NVType *&gt;::type s) const</td></tr>
+<tr class="memdesc:a8ef51e00c04df81987925ce7c286c4b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the value of the partial sum of weights stored in this node &ndash; case when the weight function returns a vector <br /></td></tr>
+<tr class="separator:a8ef51e00c04df81987925ce7c286c4b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c2a0e8275f967269814b4c1968e5b78"><td class="memTemplParams" colspan="2"><a id="a0c2a0e8275f967269814b4c1968e5b78"></a>
+template&lt;bool simple_ = simple&gt; </td></tr>
+<tr class="memitem:a0c2a0e8275f967269814b4c1968e5b78"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a0c2a0e8275f967269814b4c1968e5b78">set_node_sum</a> (<a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a050f2d97c881f8fda67cd654128f4f6b">NodeHandle</a> n1, typename std::enable_if&lt; simple_, const NVType *&gt;::type s)</td></tr>
+<tr class="memdesc:a0c2a0e8275f967269814b4c1968e5b78"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the value of the partial sum stored in this node &ndash; simple case when the weight function returns only one value <br /></td></tr>
+<tr class="separator:a0c2a0e8275f967269814b4c1968e5b78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c21614b269d4b2e7e0f82f84dca8465"><td class="memTemplParams" colspan="2"><a id="a5c21614b269d4b2e7e0f82f84dca8465"></a>
+template&lt;bool simple_ = simple&gt; </td></tr>
+<tr class="memitem:a5c21614b269d4b2e7e0f82f84dca8465"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a5c21614b269d4b2e7e0f82f84dca8465">set_node_sum</a> (<a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a050f2d97c881f8fda67cd654128f4f6b">NodeHandle</a> n1, typename std::enable_if&lt;!simple_, const NVType *&gt;::type s)</td></tr>
+<tr class="memdesc:a5c21614b269d4b2e7e0f82f84dca8465"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the value of the partial sum stored in this node &ndash; case when the weight function returns a vector <br /></td></tr>
+<tr class="separator:a5c21614b269d4b2e7e0f82f84dca8465"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a80f9a7407b7a03cdb37a33865d46a224"><td class="memItemLeft" align="right" valign="top"><a id="a80f9a7407b7a03cdb37a33865d46a224"></a>
-<a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a80f9a7407b7a03cdb37a33865d46a224">root</a></td></tr>
-<tr class="memdesc:a80f9a7407b7a03cdb37a33865d46a224"><td class="mdescLeft">&#160;</td><td class="mdescRight">Root sentinel, allocated automatically, used when freeing the tree. <br /></td></tr>
-<tr class="separator:a80f9a7407b7a03cdb37a33865d46a224"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ee6092605bc0cf889e7f31d4d3cf87e"><td class="memItemLeft" align="right" valign="top"><a id="a1ee6092605bc0cf889e7f31d4d3cf87e"></a>
-<a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a1ee6092605bc0cf889e7f31d4d3cf87e">nil</a></td></tr>
-<tr class="memdesc:a1ee6092605bc0cf889e7f31d4d3cf87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sentinel for nil. <br /></td></tr>
-<tr class="separator:a1ee6092605bc0cf889e7f31d4d3cf87e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afaf661a9f4679dd408fc670bbe91ba9e"><td class="memItemLeft" align="right" valign="top"><a id="afaf661a9f4679dd408fc670bbe91ba9e"></a>
-const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#afaf661a9f4679dd408fc670bbe91ba9e">nv_per_node</a></td></tr>
-<tr class="memdesc:afaf661a9f4679dd408fc670bbe91ba9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">each node has nv_per_node values calculated and stored in it <br /></td></tr>
-<tr class="separator:afaf661a9f4679dd408fc670bbe91ba9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ebe92e678e0b8f088da2b15d21bfcf9"><td class="memItemLeft" align="right" valign="top"><a id="a6ebe92e678e0b8f088da2b15d21bfcf9"></a>
+<a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a6ebe92e678e0b8f088da2b15d21bfcf9">root</a></td></tr>
+<tr class="memdesc:a6ebe92e678e0b8f088da2b15d21bfcf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Root sentinel, allocated automatically, used when freeing the tree. <br /></td></tr>
+<tr class="separator:a6ebe92e678e0b8f088da2b15d21bfcf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2083be1552bd1f11de6ce34b0a253541"><td class="memItemLeft" align="right" valign="top"><a id="a2083be1552bd1f11de6ce34b0a253541"></a>
+<a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a2083be1552bd1f11de6ce34b0a253541">nil</a></td></tr>
+<tr class="memdesc:a2083be1552bd1f11de6ce34b0a253541"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sentinel for nil. <br /></td></tr>
+<tr class="separator:a2083be1552bd1f11de6ce34b0a253541"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55ca292940d3d62cec2b7e1a5a2a3cab"><td class="memItemLeft" align="right" valign="top"><a id="a55ca292940d3d62cec2b7e1a5a2a3cab"></a>
+const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a55ca292940d3d62cec2b7e1a5a2a3cab">nv_per_node</a></td></tr>
+<tr class="memdesc:a55ca292940d3d62cec2b7e1a5a2a3cab"><td class="mdescLeft">&#160;</td><td class="mdescRight">each node has nv_per_node values calculated and stored in it <br /></td></tr>
+<tr class="separator:a55ca292940d3d62cec2b7e1a5a2a3cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
-<tr class="memitem:a4b654fff36a48482629f30e9797005bd"><td class="memItemLeft" align="right" valign="top"><a id="a4b654fff36a48482629f30e9797005bd"></a>
-static constexpr <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a4b654fff36a48482629f30e9797005bd">Invalid</a> = 0</td></tr>
-<tr class="memdesc:a4b654fff36a48482629f30e9797005bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">invalid handle <br /></td></tr>
-<tr class="separator:a4b654fff36a48482629f30e9797005bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9090fb5595998fcf78792bc4e3aaa9e9"><td class="memItemLeft" align="right" valign="top"><a id="a9090fb5595998fcf78792bc4e3aaa9e9"></a>
-static const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a9090fb5595998fcf78792bc4e3aaa9e9">max_nodes</a> = 0</td></tr>
-<tr class="memdesc:a9090fb5595998fcf78792bc4e3aaa9e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">maximum number of nodes &ndash; unlimited <br /></td></tr>
-<tr class="separator:a9090fb5595998fcf78792bc4e3aaa9e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a434544f22ce09714d0f99e192b100cf1"><td class="memItemLeft" align="right" valign="top"><a id="a434544f22ce09714d0f99e192b100cf1"></a>
+static constexpr <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a434544f22ce09714d0f99e192b100cf1">Invalid</a> = 0</td></tr>
+<tr class="memdesc:a434544f22ce09714d0f99e192b100cf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">invalid handle <br /></td></tr>
+<tr class="separator:a434544f22ce09714d0f99e192b100cf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa63321b13f6b247b095d73514c41f4e2"><td class="memItemLeft" align="right" valign="top"><a id="aa63321b13f6b247b095d73514c41f4e2"></a>
+static const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#aa63321b13f6b247b095d73514c41f4e2">max_nodes</a> = 0</td></tr>
+<tr class="memdesc:aa63321b13f6b247b095d73514c41f4e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">maximum number of nodes &ndash; unlimited <br /></td></tr>
+<tr class="separator:aa63321b13f6b247b095d73514c41f4e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;class KeyValueT, class NVTypeT&gt;<br />
-class orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT &gt;</h3>
+<div class="textblock"><h3>template&lt;class KeyValueT, class NVTypeT, bool simple = false&gt;<br />
+class orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT, simple &gt;</h3>
 
 <p>Basic allocator that allocates each node individually, using C++ new / delete and pointers. Can throw exception if out of memory. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
@@ -198,19 +216,19 @@ class orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT &gt;</h3>
   </dd>
 </dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a4fbd8bac2a0516fda69b3a982ca4db31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4fbd8bac2a0516fda69b3a982ca4db31">&#9670;&nbsp;</a></span>NodeHandle</h2>
+<a id="a050f2d97c881f8fda67cd654128f4f6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a050f2d97c881f8fda67cd654128f4f6b">&#9670;&nbsp;</a></span>NodeHandle</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class KeyValueT, class NVTypeT&gt; </div>
+template&lt;class KeyValueT , class NVTypeT , bool simple = false&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">typedef const <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a>* <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html">orbtree::NodeAllocatorPtr</a>&lt; KeyValueT, NVTypeT &gt;::<a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a4fbd8bac2a0516fda69b3a982ca4db31">NodeHandle</a></td>
+          <td class="memname">typedef const <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a>* <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html">orbtree::NodeAllocatorPtr</a>&lt; KeyValueT, NVTypeT, simple &gt;::<a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a050f2d97c881f8fda67cd654128f4f6b">NodeHandle</a></td>
         </tr>
       </table>
   </td>
@@ -226,19 +244,19 @@ template&lt;class KeyValueT, class NVTypeT&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="afc008d38f6537e2d4f511bf25efa4a7c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc008d38f6537e2d4f511bf25efa4a7c">&#9670;&nbsp;</a></span>new_node() <span class="overload">[1/4]</span></h2>
+<a id="a34a83affb40b7d9ffbec88f31b79c011"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34a83affb40b7d9ffbec88f31b79c011">&#9670;&nbsp;</a></span>new_node() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class KeyValueT, class NVTypeT&gt; </div>
+template&lt;class KeyValueT , class NVTypeT , bool simple = false&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a>* <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html">orbtree::NodeAllocatorPtr</a>&lt; KeyValueT, NVTypeT &gt;::new_node </td>
+          <td class="memname"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a>* <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html">orbtree::NodeAllocatorPtr</a>&lt; KeyValueT, NVTypeT, simple &gt;::new_node </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -256,19 +274,19 @@ template&lt;class KeyValueT, class NVTypeT&gt; </div>
 
 </div>
 </div>
-<a id="a8088c07bb7b7876c8bcb86d61dd5b4c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8088c07bb7b7876c8bcb86d61dd5b4c5">&#9670;&nbsp;</a></span>new_node() <span class="overload">[2/4]</span></h2>
+<a id="a57ed3ef2a09963fd98e8ef06d87d2a57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57ed3ef2a09963fd98e8ef06d87d2a57">&#9670;&nbsp;</a></span>new_node() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class KeyValueT, class NVTypeT&gt; </div>
+template&lt;class KeyValueT , class NVTypeT , bool simple = false&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a>* <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html">orbtree::NodeAllocatorPtr</a>&lt; KeyValueT, NVTypeT &gt;::new_node </td>
+          <td class="memname"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a>* <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html">orbtree::NodeAllocatorPtr</a>&lt; KeyValueT, NVTypeT, simple &gt;::new_node </td>
           <td>(</td>
           <td class="paramtype">const KeyValue &amp;&#160;</td>
           <td class="paramname"><em>kv</em></td><td>)</td>
@@ -287,19 +305,19 @@ template&lt;class KeyValueT, class NVTypeT&gt; </div>
 
 </div>
 </div>
-<a id="a5cb2c5758be31f37baebd5a9b01b8d7b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5cb2c5758be31f37baebd5a9b01b8d7b">&#9670;&nbsp;</a></span>new_node() <span class="overload">[3/4]</span></h2>
+<a id="a6358b933851c67e173c5ab950b5dbc09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6358b933851c67e173c5ab950b5dbc09">&#9670;&nbsp;</a></span>new_node() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class KeyValueT, class NVTypeT&gt; </div>
+template&lt;class KeyValueT , class NVTypeT , bool simple = false&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a>* <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html">orbtree::NodeAllocatorPtr</a>&lt; KeyValueT, NVTypeT &gt;::new_node </td>
+          <td class="memname"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a>* <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html">orbtree::NodeAllocatorPtr</a>&lt; KeyValueT, NVTypeT, simple &gt;::new_node </td>
           <td>(</td>
           <td class="paramtype">KeyValue &amp;&amp;&#160;</td>
           <td class="paramname"><em>kv</em></td><td>)</td>
@@ -318,13 +336,13 @@ template&lt;class KeyValueT, class NVTypeT&gt; </div>
 
 </div>
 </div>
-<a id="ab426f1f1e4063e20a58358e8ca37b2bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab426f1f1e4063e20a58358e8ca37b2bb">&#9670;&nbsp;</a></span>new_node() <span class="overload">[4/4]</span></h2>
+<a id="a32409ffe1c540f3a078e86264a593c10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32409ffe1c540f3a078e86264a593c10">&#9670;&nbsp;</a></span>new_node() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class KeyValueT, class NVTypeT&gt; </div>
+template&lt;class KeyValueT , class NVTypeT , bool simple = false&gt; </div>
 <div class="memtemplate">
 template&lt;class... T&gt; </div>
 <table class="mlabels">
@@ -332,7 +350,7 @@ template&lt;class... T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a>* <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html">orbtree::NodeAllocatorPtr</a>&lt; KeyValueT, NVTypeT &gt;::new_node </td>
+          <td class="memname"><a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html">Node</a>* <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html">orbtree::NodeAllocatorPtr</a>&lt; KeyValueT, NVTypeT, simple &gt;::new_node </td>
           <td>(</td>
           <td class="paramtype">T &amp;&amp;...&#160;</td>
           <td class="paramname"><em>kv</em></td><td>)</td>

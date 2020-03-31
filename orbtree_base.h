@@ -39,6 +39,15 @@
 
 namespace orbtree {
 	
+	template<class NVFunc> class NVFunc_wrapper {
+		protected:
+			NVFunc f;
+			explicit NVFunc_wrapper(const NVFunc& f_):f(f_) { }
+			explicit NVFunc_wrapper(NVFunc&& f_):f(std::move(f_)) { }
+			template<class T>
+			explicit NVFunc_wrapper(const T& t):f(t) { }
+	};
+	
 	/** \brief base class for both map and set -- should not be used directly
 	 * 
 	 * @tparam NodeAllocator Class taking care of allocating and freeing
@@ -51,7 +60,7 @@ namespace orbtree {
 	 * @tparam multi Whether multiple nodes with the same key are allowed.
 	 */
 	template<class NodeAllocator, class Compare, class NVFunc, bool multi>
-	class orbtree_base : public NodeAllocator {
+	class orbtree_base : public NVFunc_wrapper<NVFunc>, NodeAllocator {
 		protected:
 			/// \brief node objects
 			typedef typename NodeAllocator::Node Node;
@@ -74,7 +83,7 @@ namespace orbtree {
 		
 			/** \brief keep track of the number of inserted elements */
 			size_t size1;
-			NVFunc f;
+			NVFunc& f;
 			Compare c;
 			
 			void create_sentinels() {
@@ -103,9 +112,13 @@ namespace orbtree {
 			
 		//~ public:
 			orbtree_base() { create_sentinels(); }
-			explicit orbtree_base(const NVFunc& f_, const Compare& c_):f(f_),c(c_),NodeAllocator(f_.get_nr()) { create_sentinels(); }
-			explicit orbtree_base(NVFunc&& f_,const Compare& c_):f(f_),c(c_),NodeAllocator(f_.get_nr()) { create_sentinels(); }
-			
+			explicit orbtree_base(const NVFunc& f_, const Compare& c_) : NVFunc_wrapper<NVFunc>(f_),
+				NodeAllocator(NVFunc_wrapper<NVFunc>::f.get_nr()), f(NVFunc_wrapper<NVFunc>::f), c(c_) { create_sentinels(); }
+			explicit orbtree_base(NVFunc&& f_, const Compare& c_) : NVFunc_wrapper<NVFunc>(std::move(f_)),
+				NodeAllocator(NVFunc_wrapper<NVFunc>::f.get_nr()), f(NVFunc_wrapper<NVFunc>::f), c(c_) { create_sentinels(); }
+			template<class T>
+			explicit orbtree_base(const T& t, const Compare& c_) : NVFunc_wrapper<NVFunc>(t),
+				NodeAllocator(NVFunc_wrapper<NVFunc>::f.get_nr()), f(NVFunc_wrapper<NVFunc>::f), c(c_) { create_sentinels(); }
 			
 			/* copy / move constructor -- not implemented yet */
 			
@@ -701,7 +714,7 @@ namespace orbtree {
 	bool orbtree_base<NodeAllocator,Compare,NVFunc,multi>::insert_search_hint(NodeHandle hint, const KeyType& k, NodeHandle& n, bool& insert_left) const {
 		if(c(k,get_node_key(hint))) {
 			/* k should go before hint, it might be a valid hint 
-			/* have to compare with previous value as well */
+			 * have to compare with previous value as well */
 			NodeHandle p = previous(hint);
 			if(!c(k,get_node_key(p))) {
 				/* p <= k < hint, might be good */
@@ -816,7 +829,7 @@ namespace orbtree {
 		/* delete node n, return a handle to its successor in the tree */
 		NodeHandle x = next(n);
 		/* if n has one child, we can delete n, replace it with one of its children 
-		/* if n has two children, then x has one child (we go right from n and keep going left as long as it's possible)
+		 * if n has two children, then x has one child (we go right from n and keep going left as long as it's possible)
 		 * 	in this case, we can cut out x, and then move it in place of n */
 		NodeHandle del = n;
 		if(get_node(n).get_left() != nil() && get_node(n).get_right() != nil()) del = x;
@@ -1060,8 +1073,8 @@ namespace orbtree {
 				this->get_node_sum(x,tmp);
 				
 				/* if NVType is integral, we want exact match -- otherwise, we use epsilon for comparison */
-				if(std::is_integral<NVType>::value) for(unsigned int i=0;i<f.get_nr();i++) if(tmp[i] != sum[i])
-						throw std::runtime_error("orbtree_base::check_tree(): partial sums are inconsistent!\n");
+				if(std::is_integral<NVType>::value) { for(unsigned int i=0;i<f.get_nr();i++) if(tmp[i] != sum[i])
+						throw std::runtime_error("orbtree_base::check_tree(): partial sums are inconsistent!\n"); }
 				else for(unsigned int i=0;i<f.get_nr();i++) if(fabs(tmp[i]-sum[i]) > epsilon)
 					throw std::runtime_error("orbtree_base::check_tree(): partial sums are inconsistent!\n");
 			}

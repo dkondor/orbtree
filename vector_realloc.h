@@ -668,6 +668,7 @@ bool vector<T>::insert_nothrow(vector<T>::const_iterator pos, vector<T>::iterato
 
 } // namespace realloc_vector
 
+#undef CONSTEXPR
 
 #endif
 

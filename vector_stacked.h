@@ -874,6 +874,7 @@ bool vector<T,vt>::insert_nothrow(vector<T,vt>::const_iterator pos, vector<T,vt>
 
 } // namespace stacked_vector
 
+#undef CONSTEXPR
 
 #endif
 

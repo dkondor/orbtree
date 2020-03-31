@@ -1,3 +1,4 @@
-<map id="orbtree::orbtree&lt; NodeAllocator, Compare, NVFunc, multi &gt;" name="orbtree::orbtree&lt; NodeAllocator, Compare, NVFunc, multi &gt;">
-<area shape="rect" id="node2" href="$classorbtree_1_1orbtree__base.html" title="base class for both map and set – should not be used directly " alt="" coords="80,95,261,151"/>
+<map id="orbtree::orbtree&lt; NodeAllocator, Compare, NVFunc, multi, simple &gt;" name="orbtree::orbtree&lt; NodeAllocator, Compare, NVFunc, multi, simple &gt;">
+<area shape="rect" id="node2" href="$classorbtree_1_1orbtree__base.html" title="base class for both map and set – should not be used directly " alt="" coords="167,199,349,255"/>
+<area shape="rect" id="node3" href="$classorbtree_1_1NVFunc__wrapper.html" title="orbtree::NVFunc_wrapper\l\&lt; NVFunc \&gt;" alt="" coords="53,95,223,136"/>
 </map>

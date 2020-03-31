@@ -68,15 +68,15 @@ $(function() {
 : <a class="el" href="classstacked__vector_1_1vector.html#a2345fd0f3640d288bf99ec5c47cf0a4e">stacked_vector::vector&lt; T, vector_type &gt;</a>
 </li>
 <li>get_left()
-: <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html#a9325bb8fd4b72fd452abb7a41e2c126f">orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT &gt;::Node</a>
+: <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html#afc6517dc12fbc7bea2c4c195e1e5fb0f">orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT, simple &gt;::Node</a>
 , <a class="el" href="classorbtree_1_1orbtree__base.html#a3c60ee1b54d9615d995dab6256056984">orbtree::orbtree_base&lt; NodeAllocator, Compare, NVFunc, multi &gt;</a>
 </li>
 <li>get_max_grow()
 : <a class="el" href="classrealloc__vector_1_1vector.html#a895f5f7da09cb762ea67fa86e06f7665">realloc_vector::vector&lt; T &gt;</a>
 </li>
 <li>get_node()
-: <a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#aeab80cc3b6fdcd8ad3ac6d45ce27fe57">orbtree::NodeAllocatorCompact&lt; KeyValueT, NVTypeT, IndexType, tmp_nodes &gt;</a>
-, <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#af5c1c09e9ac2c533ee9cb35bd86d68f5">orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT &gt;</a>
+: <a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#aae9185e80d5beaff67108f5e9af2e5e9">orbtree::NodeAllocatorCompact&lt; KeyValueT, NVTypeT, IndexType &gt;</a>
+, <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a1df55f06c29e56e89f73322cb9efa8fa">orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT, simple &gt;</a>
 , <a class="el" href="classorbtree_1_1orbtree__base.html#a340e5dba4f706fb00237c3273db222f2">orbtree::orbtree_base&lt; NodeAllocator, Compare, NVFunc, multi &gt;</a>
 </li>
 <li>get_node_grvalue()
@@ -86,8 +86,11 @@ $(function() {
 : <a class="el" href="classorbtree_1_1orbtree__base.html#a1581d4499f2bc74428671cb94530e7cb">orbtree::orbtree_base&lt; NodeAllocator, Compare, NVFunc, multi &gt;</a>
 </li>
 <li>get_node_sum()
-: <a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a4b1d2615adf53219fe7f1ef50bb23170">orbtree::NodeAllocatorCompact&lt; KeyValueT, NVTypeT, IndexType, tmp_nodes &gt;</a>
-, <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a1810b37be023168254588ec8c8551515">orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT &gt;</a>
+: <a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a65c196bb3a4326c3e7630f1a7798e418">orbtree::NodeAllocatorCompact&lt; KeyValueT, NVTypeT, IndexType &gt;</a>
+, <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html#a13cfcee0101f2af0dd13c0dc90e04e93">orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT, simple &gt;</a>
+</li>
+<li>get_norm()
+: <a class="el" href="classorbtree_1_1orbtree.html#a166c76788267d1b35298985f4b9eae07">orbtree::orbtree&lt; NodeAllocator, Compare, NVFunc, multi, simple &gt;</a>
 </li>
 <li>get_norm_fv()
 : <a class="el" href="classorbtree_1_1orbtree__base.html#a0bfd4e40f0441cd5024f1006cfbb6b9d">orbtree::orbtree_base&lt; NodeAllocator, Compare, NVFunc, multi &gt;</a>
@@ -97,27 +100,17 @@ $(function() {
 , <a class="el" href="structorbtree_1_1NVFunc__Adapter__Vec.html#ad79f7e2d65749fb82e9651083f15d314">orbtree::NVFunc_Adapter_Vec&lt; NVFunc &gt;</a>
 </li>
 <li>get_nv_per_node()
-: <a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a247f3e3960c4af357014b220f612ba5e">orbtree::NodeAllocatorCompact&lt; KeyValueT, NVTypeT, IndexType, tmp_nodes &gt;</a>
+: <a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#ac8979647f17f68bf4f74290759372b54">orbtree::NodeAllocatorCompact&lt; KeyValueT, NVTypeT, IndexType &gt;</a>
 </li>
 <li>get_parent()
-: <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html#ab9d54dcb90b6ee1a1c546e2c3ebb5bdd">orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT &gt;::Node</a>
+: <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html#a0830488d36f8b4f13e97e117e57ff4bc">orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT, simple &gt;::Node</a>
 , <a class="el" href="classorbtree_1_1orbtree__base.html#ac7c8f9ff96f4e4f139ddb65c2dae6ec8">orbtree::orbtree_base&lt; NodeAllocator, Compare, NVFunc, multi &gt;</a>
-</li>
-<li>get_rank()
-: <a class="el" href="classorbtree_1_1rankmap.html#a91bf2a6a3d585fcb734c18e745bf18af">orbtree::rankmap&lt; Key, Value, NVType, Compare &gt;</a>
-, <a class="el" href="classorbtree_1_1rankmapC.html#a296e0ceb639a2cb2c2dd5529b34bb36e">orbtree::rankmapC&lt; Key, Value, NVType, IndexType, Compare &gt;</a>
-, <a class="el" href="classorbtree_1_1rankmultimap.html#a79b7230ee59ea7eca56f3653ccdf314f">orbtree::rankmultimap&lt; Key, Value, NVType, Compare &gt;</a>
-, <a class="el" href="classorbtree_1_1rankmultimapC.html#a0283e1f8ae31ead501ca771f36976190">orbtree::rankmultimapC&lt; Key, Value, NVType, IndexType, Compare &gt;</a>
-, <a class="el" href="classorbtree_1_1rankmultiset.html#a888c51d9208e3e155b2683c8e02e4bce">orbtree::rankmultiset&lt; Key, NVType, Compare &gt;</a>
-, <a class="el" href="classorbtree_1_1rankmultisetC.html#ac4490a0b66033c5abf83d8933a0ff013">orbtree::rankmultisetC&lt; Key, NVType, IndexType, Compare &gt;</a>
-, <a class="el" href="classorbtree_1_1rankset.html#a92f5523c96e61e7a2327f89b151edd92">orbtree::rankset&lt; Key, NVType, Compare &gt;</a>
-, <a class="el" href="classorbtree_1_1ranksetC.html#a88be1b8370d53e5e495c3937a04588c2">orbtree::ranksetC&lt; Key, NVType, IndexType, Compare &gt;</a>
 </li>
 <li>get_ref()
 : <a class="el" href="classstacked__vector_1_1vector.html#abb5cd04ccdecc5e8dedbe863384b7130">stacked_vector::vector&lt; T, vector_type &gt;</a>
 </li>
 <li>get_right()
-: <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html#a157203e49ca9a877554cdbedca67e30a">orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT &gt;::Node</a>
+: <a class="el" href="structorbtree_1_1NodeAllocatorPtr_1_1Node.html#a09f6b70a2ac770b46e7d12cec4dceece">orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT, simple &gt;::Node</a>
 , <a class="el" href="classorbtree_1_1orbtree__base.html#a7edf15f1c988a532563ee5a327ac1384">orbtree::orbtree_base&lt; NodeAllocator, Compare, NVFunc, multi &gt;</a>
 </li>
 <li>get_sibling()
@@ -130,7 +123,7 @@ $(function() {
 : <a class="el" href="classstacked__vector_1_1vector.html#a0c2bb0ecb5b2d43cb1188ff243fccd19">stacked_vector::vector&lt; T, vector_type &gt;</a>
 </li>
 <li>get_sum()
-: <a class="el" href="classorbtree_1_1orbtree.html#a5ec3439e4356708dcf188eda51997c30">orbtree::orbtree&lt; NodeAllocator, Compare, NVFunc, multi &gt;</a>
+: <a class="el" href="classorbtree_1_1orbtree.html#ad560654f0743ea578874ef935204167b">orbtree::orbtree&lt; NodeAllocator, Compare, NVFunc, multi, simple &gt;</a>
 </li>
 <li>get_sum_fv()
 : <a class="el" href="classorbtree_1_1orbtree__base.html#a95df4d552f3d7df3eac7cdb1f2d4ad14">orbtree::orbtree_base&lt; NodeAllocator, Compare, NVFunc, multi &gt;</a>
@@ -139,7 +132,7 @@ $(function() {
 : <a class="el" href="classorbtree_1_1orbtree__base.html#ae2fc2a50100d3c50fc10857628ea0051">orbtree::orbtree_base&lt; NodeAllocator, Compare, NVFunc, multi &gt;</a>
 </li>
 <li>get_sum_node()
-: <a class="el" href="classorbtree_1_1orbtree.html#ae182a2bbfc881111c60231aff335457b">orbtree::orbtree&lt; NodeAllocator, Compare, NVFunc, multi &gt;</a>
+: <a class="el" href="classorbtree_1_1orbtree.html#acd583489cfa472b3a35e8514e4c21079">orbtree::orbtree&lt; NodeAllocator, Compare, NVFunc, multi, simple &gt;</a>
 </li>
 <li>grow_one()
 : <a class="el" href="classstacked__vector_1_1vector.html#aa7aff360c12bb0b4d89efe45ab566879">stacked_vector::vector&lt; T, vector_type &gt;</a>

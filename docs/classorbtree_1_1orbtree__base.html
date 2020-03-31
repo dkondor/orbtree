@@ -83,15 +83,19 @@ Inheritance diagram for orbtree::orbtree_base&lt; NodeAllocator, Compare, NVFunc
 <div class="dyncontent">
 <div class="center"><img src="classorbtree_1_1orbtree__base__inherit__graph.png" border="0" usemap="#orbtree_1_1orbtree__base_3_01NodeAllocator_00_01Compare_00_01NVFunc_00_01multi_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="orbtree_1_1orbtree__base_3_01NodeAllocator_00_01Compare_00_01NVFunc_00_01multi_01_4_inherit__map" id="orbtree_1_1orbtree__base_3_01NodeAllocator_00_01Compare_00_01NVFunc_00_01multi_01_4_inherit__map">
-<area shape="rect" id="node3" href="classorbtree_1_1orbtree.html" title="Generalized order statistic tree main interface. It is recommended to use the templates orbset..." alt="" coords="387,5,595,47"/>
-<area shape="rect" id="node4" href="classorbtree_1_1orbtree.html" title="orbtree\&lt; NodeAllocator,\l Compare, NVFunc, false \&gt;" alt="" coords="399,71,582,112"/>
-<area shape="rect" id="node5" href="classorbtree_1_1orbtreemap.html" title="Base class with map&#45;specific function. It is recommended to use the specializations orbmap..." alt="" coords="643,63,824,119"/>
+<area shape="rect" id="node4" href="classorbtree_1_1orbtree.html" title="Generalized order statistic tree main interface. It is recommended to use the templates orbset..." alt="" coords="453,5,661,47"/>
+<area shape="rect" id="node5" href="classorbtree_1_1orbtree.html" title="orbtree\&lt; NodeAllocator,\l Compare, NVFunc, false,\l simple \&gt;" alt="" coords="470,71,645,127"/>
+<area shape="rect" id="node2" href="classorbtree_1_1NVFunc__wrapper.html" title="orbtree::NVFunc_wrapper\l\&lt; NVFunc \&gt;" alt="" coords="5,13,176,55"/>
+<area shape="rect" id="node6" href="classorbtree_1_1orbtreemap.html" title="Base class with map&#45;specific function. It is recommended to use the specializations orbmap..." alt="" coords="709,71,891,127"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for orbtree::orbtree_base&lt; NodeAllocator, Compare, NVFunc, multi &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="classorbtree_1_1orbtree__base__coll__graph.png" border="0" usemap="#orbtree_1_1orbtree__base_3_01NodeAllocator_00_01Compare_00_01NVFunc_00_01multi_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="orbtree_1_1orbtree__base_3_01NodeAllocator_00_01Compare_00_01NVFunc_00_01multi_01_4_coll__map" id="orbtree_1_1orbtree__base_3_01NodeAllocator_00_01Compare_00_01NVFunc_00_01multi_01_4_coll__map">
+<area shape="rect" id="node2" href="classorbtree_1_1NVFunc__wrapper.html" title="orbtree::NVFunc_wrapper\l\&lt; NVFunc \&gt;" alt="" coords="53,95,223,136"/>
+</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
@@ -187,6 +191,10 @@ const <a class="el" href="classorbtree_1_1orbtree__base.html#a5912e87855b088de32
 <tr class="memitem:a958aa7faf3a6f99967d01d51c4dde35b"><td class="memItemLeft" align="right" valign="top"><a id="a958aa7faf3a6f99967d01d51c4dde35b"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>orbtree_base</b> (NVFunc &amp;&amp;f_, const Compare &amp;c_)</td></tr>
 <tr class="separator:a958aa7faf3a6f99967d01d51c4dde35b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad268f30cc08b721eb5d6f7ce7511360f"><td class="memTemplParams" colspan="2"><a id="ad268f30cc08b721eb5d6f7ce7511360f"></a>
+template&lt;class T &gt; </td></tr>
+<tr class="memitem:ad268f30cc08b721eb5d6f7ce7511360f"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>orbtree_base</b> (const T &amp;t, const Compare &amp;c_)</td></tr>
+<tr class="separator:ad268f30cc08b721eb5d6f7ce7511360f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0dc66c1458508a0e07ca807d892bd8d"><td class="memItemLeft" align="right" valign="top">std::pair&lt; <a class="el" href="classorbtree_1_1orbtree__base.html#a652905b3ff5eb2166f427aa7f558d498">NodeHandle</a>, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1orbtree__base.html#af0dc66c1458508a0e07ca807d892bd8d">insert</a> (ValueType &amp;&amp;kv)</td></tr>
 <tr class="memdesc:af0dc66c1458508a0e07ca807d892bd8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert new element.  <a href="#af0dc66c1458508a0e07ca807d892bd8d">More...</a><br /></td></tr>
 <tr class="separator:af0dc66c1458508a0e07ca807d892bd8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -333,6 +341,17 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1orbtree__base.html#af95a96c37ba6e241eada4e623748200f">check_tree_r</a> (double epsilon, <a class="el" href="classorbtree_1_1orbtree__base.html#a652905b3ff5eb2166f427aa7f558d498">NodeHandle</a> x, size_t black_count, size_t &amp;previous_black_count) const</td></tr>
 <tr class="memdesc:af95a96c37ba6e241eada4e623748200f"><td class="mdescLeft">&#160;</td><td class="mdescRight">recursive helper for check_tree(double) <br /></td></tr>
 <tr class="separator:af95a96c37ba6e241eada4e623748200f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classorbtree_1_1NVFunc__wrapper"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classorbtree_1_1NVFunc__wrapper')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classorbtree_1_1NVFunc__wrapper.html">orbtree::NVFunc_wrapper&lt; NVFunc &gt;</a></td></tr>
+<tr class="memitem:a8af94fe48562d5477df15fce8a3bdfb8 inherit pro_methods_classorbtree_1_1NVFunc__wrapper"><td class="memItemLeft" align="right" valign="top"><a id="a8af94fe48562d5477df15fce8a3bdfb8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>NVFunc_wrapper</b> (const NVFunc &amp;f_)</td></tr>
+<tr class="separator:a8af94fe48562d5477df15fce8a3bdfb8 inherit pro_methods_classorbtree_1_1NVFunc__wrapper"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcf62c66ae36aee503d231433ffe840b inherit pro_methods_classorbtree_1_1NVFunc__wrapper"><td class="memItemLeft" align="right" valign="top"><a id="abcf62c66ae36aee503d231433ffe840b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>NVFunc_wrapper</b> (NVFunc &amp;&amp;f_)</td></tr>
+<tr class="separator:abcf62c66ae36aee503d231433ffe840b inherit pro_methods_classorbtree_1_1NVFunc__wrapper"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32bae064d422e072d5ae646c8c45cacf inherit pro_methods_classorbtree_1_1NVFunc__wrapper"><td class="memTemplParams" colspan="2"><a id="a32bae064d422e072d5ae646c8c45cacf"></a>
+template&lt;class T &gt; </td></tr>
+<tr class="memitem:a32bae064d422e072d5ae646c8c45cacf inherit pro_methods_classorbtree_1_1NVFunc__wrapper"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>NVFunc_wrapper</b> (const T &amp;t)</td></tr>
+<tr class="separator:a32bae064d422e072d5ae646c8c45cacf inherit pro_methods_classorbtree_1_1NVFunc__wrapper"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -340,12 +359,16 @@ Protected Attributes</h2></td></tr>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1orbtree__base.html#a65ffeb74cf7633cd43f16274c9522757">size1</a></td></tr>
 <tr class="memdesc:a65ffeb74cf7633cd43f16274c9522757"><td class="mdescLeft">&#160;</td><td class="mdescRight">keep track of the number of inserted elements <br /></td></tr>
 <tr class="separator:a65ffeb74cf7633cd43f16274c9522757"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b9ac29180f46526d3139913425540e1"><td class="memItemLeft" align="right" valign="top"><a id="a4b9ac29180f46526d3139913425540e1"></a>
-NVFunc&#160;</td><td class="memItemRight" valign="bottom"><b>f</b></td></tr>
-<tr class="separator:a4b9ac29180f46526d3139913425540e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbf239df4b473d870ef743e37fab877a"><td class="memItemLeft" align="right" valign="top"><a id="acbf239df4b473d870ef743e37fab877a"></a>
+NVFunc &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>f</b></td></tr>
+<tr class="separator:acbf239df4b473d870ef743e37fab877a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbed14df189c55d6ea4551cb1ea417ef"><td class="memItemLeft" align="right" valign="top"><a id="adbed14df189c55d6ea4551cb1ea417ef"></a>
 Compare&#160;</td><td class="memItemRight" valign="bottom"><b>c</b></td></tr>
 <tr class="separator:adbed14df189c55d6ea4551cb1ea417ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classorbtree_1_1NVFunc__wrapper"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classorbtree_1_1NVFunc__wrapper')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classorbtree_1_1NVFunc__wrapper.html">orbtree::NVFunc_wrapper&lt; NVFunc &gt;</a></td></tr>
+<tr class="memitem:aba11b130ddd563714eb79470f422ac3c inherit pro_attribs_classorbtree_1_1NVFunc__wrapper"><td class="memItemLeft" align="right" valign="top"><a id="aba11b130ddd563714eb79470f422ac3c"></a>
+NVFunc&#160;</td><td class="memItemRight" valign="bottom"><b>f</b></td></tr>
+<tr class="separator:aba11b130ddd563714eb79470f422ac3c inherit pro_attribs_classorbtree_1_1NVFunc__wrapper"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;class NodeAllocator, class Compare, class NVFunc, bool multi&gt;<br />
@@ -356,7 +379,7 @@ class orbtree::orbtree_base&lt; NodeAllocator, Compare, NVFunc, multi &gt;</h3>
   <table class="tparams">
     <tr><td class="paramname">NodeAllocator</td><td>Class taking care of allocating and freeing nodes, should be <a class="el" href="classorbtree_1_1NodeAllocatorPtr.html" title="Basic allocator that allocates each node individually, using C++ new / delete and pointers...">NodeAllocatorPtr</a> or <a class="el" href="classorbtree_1_1NodeAllocatorCompact.html" title="Alternate node allocator with the aim to use less memory. ">NodeAllocatorCompact</a> from <a class="el" href="orbtree__node_8h_source.html">orbtree_node.h</a> </td></tr>
     <tr><td class="paramname">Compare</td><td>Comparison functor </td></tr>
-    <tr><td class="paramname">NVFunc</td><td>Function that calculates each node's "value" &ndash; it is assumed to be a vector-valued function, so these values are stored and manipulated in arrays. It should have a function get_nr() that return the number of values to use. See <a class="el" href="structorbtree_1_1NVFunc__Adapter__Simple.html" title="Adapter for functions that return only one result. ">NVFunc_Adapter_Simple</a> and <a class="el" href="structorbtree_1_1NVFunc__Adapter__Vec.html" title="adapter for functions that take one parameter from a vector of parameters ">NVFunc_Adapter_Vec</a> for examples. </td></tr>
+    <tr><td class="paramname">NVFunc</td><td>Function that calculates each node's "value" &ndash; it is assumed to be a vector-valued function, so these values are stored and manipulated in arrays. It should have a function get_nr() that return the number of values to use. See <a class="el" href="structorbtree_1_1NVFunc__Adapter__Simple.html" title="Adapter for functions that return only one result. This class also describes the interface expected f...">NVFunc_Adapter_Simple</a> and <a class="el" href="structorbtree_1_1NVFunc__Adapter__Vec.html" title="adapter for functions that take one parameter from a vector of parameters ">NVFunc_Adapter_Vec</a> for examples. </td></tr>
     <tr><td class="paramname">multi</td><td>Whether multiple nodes with the same key are allowed. </td></tr>
   </table>
   </dd>

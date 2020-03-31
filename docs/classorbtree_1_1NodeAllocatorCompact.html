@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>orbtree: orbtree::NodeAllocatorCompact&lt; KeyValueT, NVTypeT, IndexType, tmp_nodes &gt; Class Template Reference</title>
+<title>orbtree: orbtree::NodeAllocatorCompact&lt; KeyValueT, NVTypeT, IndexType &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -71,7 +71,7 @@ $(function() {
 <a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
 <a href="classorbtree_1_1NodeAllocatorCompact-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">orbtree::NodeAllocatorCompact&lt; KeyValueT, NVTypeT, IndexType, tmp_nodes &gt; Class Template Reference</div>  </div>
+<div class="title">orbtree::NodeAllocatorCompact&lt; KeyValueT, NVTypeT, IndexType &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -79,11 +79,6 @@ $(function() {
  <a href="classorbtree_1_1NodeAllocatorCompact.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="orbtree__node_8h_source.html">orbtree_node.h</a>&gt;</code></p>
-<div class="dynheader">
-Collaboration diagram for orbtree::NodeAllocatorCompact&lt; KeyValueT, NVTypeT, IndexType, tmp_nodes &gt;:</div>
-<div class="dyncontent">
-<div class="center"><img src="classorbtree_1_1NodeAllocatorCompact__coll__graph.png" border="0" usemap="#orbtree_1_1NodeAllocatorCompact_3_01KeyValueT_00_01NVTypeT_00_01IndexType_00_01tmp__nodes_01_4_coll__map" alt="Collaboration graph"/></div>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -93,110 +88,110 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a376742d61163afc936fc449ac14704d9"><td class="memItemLeft" align="right" valign="top"><a id="a376742d61163afc936fc449ac14704d9"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a376742d61163afc936fc449ac14704d9">capacity</a> () const</td></tr>
-<tr class="memdesc:a376742d61163afc936fc449ac14704d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the current capacity of the underlying storage <br /></td></tr>
-<tr class="separator:a376742d61163afc936fc449ac14704d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e8eaffaa3119158d9d59eff97cdc7f1"><td class="memItemLeft" align="right" valign="top"><a id="a1e8eaffaa3119158d9d59eff97cdc7f1"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a1e8eaffaa3119158d9d59eff97cdc7f1">deleted_nodes</a> () const</td></tr>
-<tr class="memdesc:a1e8eaffaa3119158d9d59eff97cdc7f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the number of deleted nodes <br /></td></tr>
-<tr class="separator:a1e8eaffaa3119158d9d59eff97cdc7f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add85a26e93a96ee827b4f34843a318de"><td class="memItemLeft" align="right" valign="top"><a id="add85a26e93a96ee827b4f34843a318de"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#add85a26e93a96ee827b4f34843a318de">shrink_to_fit</a> ()</td></tr>
-<tr class="memdesc:add85a26e93a96ee827b4f34843a318de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free up memory taken up by deleted nodes by rearranging storage. <br /></td></tr>
-<tr class="separator:add85a26e93a96ee827b4f34843a318de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a566a4d3708e5b09a88d80d1d333f68f5"><td class="memItemLeft" align="right" valign="top"><a id="a566a4d3708e5b09a88d80d1d333f68f5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a566a4d3708e5b09a88d80d1d333f68f5">reserve</a> (size_t size)</td></tr>
-<tr class="memdesc:a566a4d3708e5b09a88d80d1d333f68f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserve storage for at least the requested number of elements. It can throw an exception on failure to allocate memory. <br /></td></tr>
-<tr class="separator:a566a4d3708e5b09a88d80d1d333f68f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70c5925eae3f09c1ccbdb5cb322bac5d"><td class="memItemLeft" align="right" valign="top"><a id="a70c5925eae3f09c1ccbdb5cb322bac5d"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a70c5925eae3f09c1ccbdb5cb322bac5d">capacity</a> () const</td></tr>
+<tr class="memdesc:a70c5925eae3f09c1ccbdb5cb322bac5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the current capacity of the underlying storage <br /></td></tr>
+<tr class="separator:a70c5925eae3f09c1ccbdb5cb322bac5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadb52bbc7abbf257f2a9aa218f68a9d1"><td class="memItemLeft" align="right" valign="top"><a id="aadb52bbc7abbf257f2a9aa218f68a9d1"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#aadb52bbc7abbf257f2a9aa218f68a9d1">deleted_nodes</a> () const</td></tr>
+<tr class="memdesc:aadb52bbc7abbf257f2a9aa218f68a9d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the number of deleted nodes <br /></td></tr>
+<tr class="separator:aadb52bbc7abbf257f2a9aa218f68a9d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e8bb90477e552f748dcc8a27e3dba5e"><td class="memItemLeft" align="right" valign="top"><a id="a4e8bb90477e552f748dcc8a27e3dba5e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a4e8bb90477e552f748dcc8a27e3dba5e">shrink_to_fit</a> ()</td></tr>
+<tr class="memdesc:a4e8bb90477e552f748dcc8a27e3dba5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free up memory taken up by deleted nodes by rearranging storage. <br /></td></tr>
+<tr class="separator:a4e8bb90477e552f748dcc8a27e3dba5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95e7c9f92f995e4e697a30a60eb80655"><td class="memItemLeft" align="right" valign="top"><a id="a95e7c9f92f995e4e697a30a60eb80655"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a95e7c9f92f995e4e697a30a60eb80655">reserve</a> (size_t size)</td></tr>
+<tr class="memdesc:a95e7c9f92f995e4e697a30a60eb80655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserve storage for at least the requested number of elements. It can throw an exception on failure to allocate memory. <br /></td></tr>
+<tr class="separator:a95e7c9f92f995e4e697a30a60eb80655"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-types"></a>
 Protected Types</h2></td></tr>
-<tr class="memitem:a2a205c52f423536ad84f246f093e1551"><td class="memItemLeft" align="right" valign="top"><a id="a2a205c52f423536ad84f246f093e1551"></a>
+<tr class="memitem:a49d8f635189bcbbb7278c05fdc7a6bed"><td class="memItemLeft" align="right" valign="top"><a id="a49d8f635189bcbbb7278c05fdc7a6bed"></a>
 typedef IndexType&#160;</td><td class="memItemRight" valign="bottom"><b>NodeHandle</b></td></tr>
-<tr class="separator:a2a205c52f423536ad84f246f093e1551"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67ba0e900db8142ed43d596fc4e0b0ad"><td class="memItemLeft" align="right" valign="top"><a id="a67ba0e900db8142ed43d596fc4e0b0ad"></a>
+<tr class="separator:a49d8f635189bcbbb7278c05fdc7a6bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1d1a8b2a553b77cb3d8aecdb65ddb8d"><td class="memItemLeft" align="right" valign="top"><a id="ad1d1a8b2a553b77cb3d8aecdb65ddb8d"></a>
 typedef KeyValueT&#160;</td><td class="memItemRight" valign="bottom"><b>KeyValue</b></td></tr>
-<tr class="separator:a67ba0e900db8142ed43d596fc4e0b0ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcc8292cd56327bf44719c5bada23e3f"><td class="memItemLeft" align="right" valign="top"><a id="afcc8292cd56327bf44719c5bada23e3f"></a>
+<tr class="separator:ad1d1a8b2a553b77cb3d8aecdb65ddb8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dab3598ef9e9ebc6519b8978d58d5ed"><td class="memItemLeft" align="right" valign="top"><a id="a4dab3598ef9e9ebc6519b8978d58d5ed"></a>
 typedef NVTypeT&#160;</td><td class="memItemRight" valign="bottom"><b>NVType</b></td></tr>
-<tr class="separator:afcc8292cd56327bf44719c5bada23e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a4dab3598ef9e9ebc6519b8978d58d5ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a4388cde7efe11fdf4e525e8611c0f3c3"><td class="memItemLeft" align="right" valign="top"><a id="a4388cde7efe11fdf4e525e8611c0f3c3"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a4388cde7efe11fdf4e525e8611c0f3c3">NodeAllocatorCompact</a> ()</td></tr>
-<tr class="memdesc:a4388cde7efe11fdf4e525e8611c0f3c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nil sentinel. <br /></td></tr>
-<tr class="separator:a4388cde7efe11fdf4e525e8611c0f3c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a170422845501ec6b1b111d4397d678dd"><td class="memItemLeft" align="right" valign="top"><a id="a170422845501ec6b1b111d4397d678dd"></a>
+<tr class="memitem:ac55b01c6dac7e86c63bb907731d7ffa2"><td class="memItemLeft" align="right" valign="top"><a id="ac55b01c6dac7e86c63bb907731d7ffa2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#ac55b01c6dac7e86c63bb907731d7ffa2">NodeAllocatorCompact</a> ()</td></tr>
+<tr class="memdesc:ac55b01c6dac7e86c63bb907731d7ffa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nil sentinel. <br /></td></tr>
+<tr class="separator:ac55b01c6dac7e86c63bb907731d7ffa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b515526a7babdd7fdf0d1fe63425a33"><td class="memItemLeft" align="right" valign="top"><a id="a7b515526a7babdd7fdf0d1fe63425a33"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>NodeAllocatorCompact</b> (unsigned int nv_per_node_)</td></tr>
-<tr class="separator:a170422845501ec6b1b111d4397d678dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeab80cc3b6fdcd8ad3ac6d45ce27fe57"><td class="memItemLeft" align="right" valign="top"><a id="aeab80cc3b6fdcd8ad3ac6d45ce27fe57"></a>
-<a class="el" href="structorbtree_1_1NodeAllocatorCompact_1_1Node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#aeab80cc3b6fdcd8ad3ac6d45ce27fe57">get_node</a> (NodeHandle x)</td></tr>
-<tr class="memdesc:aeab80cc3b6fdcd8ad3ac6d45ce27fe57"><td class="mdescLeft">&#160;</td><td class="mdescRight">get reference to a modifiable node <br /></td></tr>
-<tr class="separator:aeab80cc3b6fdcd8ad3ac6d45ce27fe57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85cb88a7efdf76bee2961def0cce1e15"><td class="memItemLeft" align="right" valign="top"><a id="a85cb88a7efdf76bee2961def0cce1e15"></a>
-const <a class="el" href="structorbtree_1_1NodeAllocatorCompact_1_1Node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a85cb88a7efdf76bee2961def0cce1e15">get_node</a> (NodeHandle x) const</td></tr>
-<tr class="memdesc:a85cb88a7efdf76bee2961def0cce1e15"><td class="mdescLeft">&#160;</td><td class="mdescRight">get reference to a const node <br /></td></tr>
-<tr class="separator:a85cb88a7efdf76bee2961def0cce1e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a428da0c3d1fe1d52831d146c35ef8d54"><td class="memItemLeft" align="right" valign="top"><a id="a428da0c3d1fe1d52831d146c35ef8d54"></a>
-NodeHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a428da0c3d1fe1d52831d146c35ef8d54">new_node</a> ()</td></tr>
-<tr class="memdesc:a428da0c3d1fe1d52831d146c35ef8d54"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node &ndash; note that it is the callers responsibility to store the handle in the tree <br /></td></tr>
-<tr class="separator:a428da0c3d1fe1d52831d146c35ef8d54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad80a913be4923e32ba35960f26c2c7e2"><td class="memItemLeft" align="right" valign="top"><a id="ad80a913be4923e32ba35960f26c2c7e2"></a>
-NodeHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#ad80a913be4923e32ba35960f26c2c7e2">new_node</a> (const KeyValue &amp;kv)</td></tr>
-<tr class="memdesc:ad80a913be4923e32ba35960f26c2c7e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node &ndash; note that it is the callers responsibility to store the handle in the tree <br /></td></tr>
-<tr class="separator:ad80a913be4923e32ba35960f26c2c7e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0553a72981a41ef8256d8c1690b54858"><td class="memItemLeft" align="right" valign="top"><a id="a0553a72981a41ef8256d8c1690b54858"></a>
-NodeHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a0553a72981a41ef8256d8c1690b54858">new_node</a> (KeyValue &amp;&amp;kv)</td></tr>
-<tr class="memdesc:a0553a72981a41ef8256d8c1690b54858"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node &ndash; note that it is the callers responsibility to store the handle in the tree <br /></td></tr>
-<tr class="separator:a0553a72981a41ef8256d8c1690b54858"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a218a9894d4c0ad66520ef41b51704fb9"><td class="memTemplParams" colspan="2"><a id="a218a9894d4c0ad66520ef41b51704fb9"></a>
+<tr class="separator:a7b515526a7babdd7fdf0d1fe63425a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae9185e80d5beaff67108f5e9af2e5e9"><td class="memItemLeft" align="right" valign="top"><a id="aae9185e80d5beaff67108f5e9af2e5e9"></a>
+<a class="el" href="structorbtree_1_1NodeAllocatorCompact_1_1Node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#aae9185e80d5beaff67108f5e9af2e5e9">get_node</a> (NodeHandle x)</td></tr>
+<tr class="memdesc:aae9185e80d5beaff67108f5e9af2e5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">get reference to a modifiable node <br /></td></tr>
+<tr class="separator:aae9185e80d5beaff67108f5e9af2e5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3849cb512d026b1b70c25ce6dba3ce8c"><td class="memItemLeft" align="right" valign="top"><a id="a3849cb512d026b1b70c25ce6dba3ce8c"></a>
+const <a class="el" href="structorbtree_1_1NodeAllocatorCompact_1_1Node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a3849cb512d026b1b70c25ce6dba3ce8c">get_node</a> (NodeHandle x) const</td></tr>
+<tr class="memdesc:a3849cb512d026b1b70c25ce6dba3ce8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">get reference to a const node <br /></td></tr>
+<tr class="separator:a3849cb512d026b1b70c25ce6dba3ce8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51c7e0f164471024feaeb2b189581012"><td class="memItemLeft" align="right" valign="top"><a id="a51c7e0f164471024feaeb2b189581012"></a>
+NodeHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a51c7e0f164471024feaeb2b189581012">new_node</a> ()</td></tr>
+<tr class="memdesc:a51c7e0f164471024feaeb2b189581012"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node &ndash; note that it is the callers responsibility to store the handle in the tree <br /></td></tr>
+<tr class="separator:a51c7e0f164471024feaeb2b189581012"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adad1a82c6e28859e26d62be430d26650"><td class="memItemLeft" align="right" valign="top"><a id="adad1a82c6e28859e26d62be430d26650"></a>
+NodeHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#adad1a82c6e28859e26d62be430d26650">new_node</a> (const KeyValue &amp;kv)</td></tr>
+<tr class="memdesc:adad1a82c6e28859e26d62be430d26650"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node &ndash; note that it is the callers responsibility to store the handle in the tree <br /></td></tr>
+<tr class="separator:adad1a82c6e28859e26d62be430d26650"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac93e6961ee59854b47f2c1a3382356a1"><td class="memItemLeft" align="right" valign="top"><a id="ac93e6961ee59854b47f2c1a3382356a1"></a>
+NodeHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#ac93e6961ee59854b47f2c1a3382356a1">new_node</a> (KeyValue &amp;&amp;kv)</td></tr>
+<tr class="memdesc:ac93e6961ee59854b47f2c1a3382356a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node &ndash; note that it is the callers responsibility to store the handle in the tree <br /></td></tr>
+<tr class="separator:ac93e6961ee59854b47f2c1a3382356a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a745ece682ae226c91e8b15d78dfd0949"><td class="memTemplParams" colspan="2"><a id="a745ece682ae226c91e8b15d78dfd0949"></a>
 template&lt;class... T&gt; </td></tr>
-<tr class="memitem:a218a9894d4c0ad66520ef41b51704fb9"><td class="memTemplItemLeft" align="right" valign="top">NodeHandle&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a218a9894d4c0ad66520ef41b51704fb9">new_node</a> (T &amp;&amp;... kv)</td></tr>
-<tr class="memdesc:a218a9894d4c0ad66520ef41b51704fb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node &ndash; note that it is the callers responsibility to store the handle in the tree <br /></td></tr>
-<tr class="separator:a218a9894d4c0ad66520ef41b51704fb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4c2a133c9b9a539b3936ff1e678d482"><td class="memItemLeft" align="right" valign="top"><a id="ae4c2a133c9b9a539b3936ff1e678d482"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#ae4c2a133c9b9a539b3936ff1e678d482">free_node</a> (NodeHandle n)</td></tr>
-<tr class="memdesc:ae4c2a133c9b9a539b3936ff1e678d482"><td class="mdescLeft">&#160;</td><td class="mdescRight">delete node &ndash; tree is not traversed, the caller must arrange to "cut" out the node in question <br /></td></tr>
-<tr class="separator:ae4c2a133c9b9a539b3936ff1e678d482"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6923a1fc619483e2ebbb47b77cb17e78"><td class="memItemLeft" align="right" valign="top"><a id="a6923a1fc619483e2ebbb47b77cb17e78"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a6923a1fc619483e2ebbb47b77cb17e78">clear_tree</a> ()</td></tr>
-<tr class="memdesc:a6923a1fc619483e2ebbb47b77cb17e78"><td class="mdescLeft">&#160;</td><td class="mdescRight">clear tree, to be reused <br /></td></tr>
-<tr class="separator:a6923a1fc619483e2ebbb47b77cb17e78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a247f3e3960c4af357014b220f612ba5e"><td class="memItemLeft" align="right" valign="top"><a id="a247f3e3960c4af357014b220f612ba5e"></a>
-unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a247f3e3960c4af357014b220f612ba5e">get_nv_per_node</a> () const</td></tr>
-<tr class="memdesc:a247f3e3960c4af357014b220f612ba5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">each node has nv_per_node values calculated and stored in it <br /></td></tr>
-<tr class="separator:a247f3e3960c4af357014b220f612ba5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b1d2615adf53219fe7f1ef50bb23170"><td class="memItemLeft" align="right" valign="top"><a id="a4b1d2615adf53219fe7f1ef50bb23170"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a4b1d2615adf53219fe7f1ef50bb23170">get_node_sum</a> (NodeHandle n, NVType *s) const</td></tr>
-<tr class="memdesc:a4b1d2615adf53219fe7f1ef50bb23170"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the partial sum stored in node n <br /></td></tr>
-<tr class="separator:a4b1d2615adf53219fe7f1ef50bb23170"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80f7bb8143f0371f96eb475dbd4818cb"><td class="memItemLeft" align="right" valign="top"><a id="a80f7bb8143f0371f96eb475dbd4818cb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a80f7bb8143f0371f96eb475dbd4818cb">set_node_sum</a> (NodeHandle n, const NVType *s)</td></tr>
-<tr class="memdesc:a80f7bb8143f0371f96eb475dbd4818cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the partial sum stored in node n <br /></td></tr>
-<tr class="separator:a80f7bb8143f0371f96eb475dbd4818cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a745ece682ae226c91e8b15d78dfd0949"><td class="memTemplItemLeft" align="right" valign="top">NodeHandle&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a745ece682ae226c91e8b15d78dfd0949">new_node</a> (T &amp;&amp;... kv)</td></tr>
+<tr class="memdesc:a745ece682ae226c91e8b15d78dfd0949"><td class="mdescLeft">&#160;</td><td class="mdescRight">get new node &ndash; note that it is the callers responsibility to store the handle in the tree <br /></td></tr>
+<tr class="separator:a745ece682ae226c91e8b15d78dfd0949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b985256f4740ceec691c46ab1fb1fd5"><td class="memItemLeft" align="right" valign="top"><a id="a3b985256f4740ceec691c46ab1fb1fd5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a3b985256f4740ceec691c46ab1fb1fd5">free_node</a> (NodeHandle n)</td></tr>
+<tr class="memdesc:a3b985256f4740ceec691c46ab1fb1fd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">delete node &ndash; tree is not traversed, the caller must arrange to "cut" out the node in question <br /></td></tr>
+<tr class="separator:a3b985256f4740ceec691c46ab1fb1fd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d590bcbfe1ca0fa2a771172f4f30549"><td class="memItemLeft" align="right" valign="top"><a id="a3d590bcbfe1ca0fa2a771172f4f30549"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a3d590bcbfe1ca0fa2a771172f4f30549">clear_tree</a> ()</td></tr>
+<tr class="memdesc:a3d590bcbfe1ca0fa2a771172f4f30549"><td class="mdescLeft">&#160;</td><td class="mdescRight">clear tree, to be reused <br /></td></tr>
+<tr class="separator:a3d590bcbfe1ca0fa2a771172f4f30549"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8979647f17f68bf4f74290759372b54"><td class="memItemLeft" align="right" valign="top"><a id="ac8979647f17f68bf4f74290759372b54"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#ac8979647f17f68bf4f74290759372b54">get_nv_per_node</a> () const</td></tr>
+<tr class="memdesc:ac8979647f17f68bf4f74290759372b54"><td class="mdescLeft">&#160;</td><td class="mdescRight">each node has nv_per_node values calculated and stored in it <br /></td></tr>
+<tr class="separator:ac8979647f17f68bf4f74290759372b54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65c196bb3a4326c3e7630f1a7798e418"><td class="memItemLeft" align="right" valign="top"><a id="a65c196bb3a4326c3e7630f1a7798e418"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a65c196bb3a4326c3e7630f1a7798e418">get_node_sum</a> (NodeHandle n, NVType *s) const</td></tr>
+<tr class="memdesc:a65c196bb3a4326c3e7630f1a7798e418"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the partial sum stored in node n <br /></td></tr>
+<tr class="separator:a65c196bb3a4326c3e7630f1a7798e418"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a590f4f6b76ce898d019deed7825bdf2c"><td class="memItemLeft" align="right" valign="top"><a id="a590f4f6b76ce898d019deed7825bdf2c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a590f4f6b76ce898d019deed7825bdf2c">set_node_sum</a> (NodeHandle n, const NVType *s)</td></tr>
+<tr class="memdesc:a590f4f6b76ce898d019deed7825bdf2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the partial sum stored in node n <br /></td></tr>
+<tr class="separator:a590f4f6b76ce898d019deed7825bdf2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a47978c1aa0accc1df9e1af6fa0ca7e1b"><td class="memItemLeft" align="right" valign="top"><a id="a47978c1aa0accc1df9e1af6fa0ca7e1b"></a>
+<tr class="memitem:a7bdb247e1475c507307be65719f14b1e"><td class="memItemLeft" align="right" valign="top"><a id="a7bdb247e1475c507307be65719f14b1e"></a>
 NodeHandle&#160;</td><td class="memItemRight" valign="bottom"><b>root</b></td></tr>
-<tr class="separator:a47978c1aa0accc1df9e1af6fa0ca7e1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c86524e69e6e60d839f0cff6b98dbc6"><td class="memItemLeft" align="right" valign="top"><a id="a3c86524e69e6e60d839f0cff6b98dbc6"></a>
-NodeHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a3c86524e69e6e60d839f0cff6b98dbc6">nil</a></td></tr>
-<tr class="memdesc:a3c86524e69e6e60d839f0cff6b98dbc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Root sentinel. <br /></td></tr>
-<tr class="separator:a3c86524e69e6e60d839f0cff6b98dbc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a7bdb247e1475c507307be65719f14b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c1db079061ff55f06d3846bd662e825"><td class="memItemLeft" align="right" valign="top"><a id="a5c1db079061ff55f06d3846bd662e825"></a>
+NodeHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a5c1db079061ff55f06d3846bd662e825">nil</a></td></tr>
+<tr class="memdesc:a5c1db079061ff55f06d3846bd662e825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Root sentinel. <br /></td></tr>
+<tr class="separator:a5c1db079061ff55f06d3846bd662e825"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
-<tr class="memitem:a726ec05afa1713218b7ce3e357e6924c"><td class="memItemLeft" align="right" valign="top"><a id="a726ec05afa1713218b7ce3e357e6924c"></a>
-static constexpr NodeHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a726ec05afa1713218b7ce3e357e6924c">Invalid</a> = max_nodes</td></tr>
-<tr class="memdesc:a726ec05afa1713218b7ce3e357e6924c"><td class="mdescLeft">&#160;</td><td class="mdescRight">invalid handle <br /></td></tr>
-<tr class="separator:a726ec05afa1713218b7ce3e357e6924c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a010991b3ff4be364d3f5a4d1e15d00d0"><td class="memItemLeft" align="right" valign="top"><a id="a010991b3ff4be364d3f5a4d1e15d00d0"></a>
+static constexpr NodeHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorbtree_1_1NodeAllocatorCompact.html#a010991b3ff4be364d3f5a4d1e15d00d0">Invalid</a> = max_nodes</td></tr>
+<tr class="memdesc:a010991b3ff4be364d3f5a4d1e15d00d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">invalid handle <br /></td></tr>
+<tr class="separator:a010991b3ff4be364d3f5a4d1e15d00d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;class KeyValueT, class NVTypeT, class IndexType, size_t tmp_nodes = 32&gt;<br />
-class orbtree::NodeAllocatorCompact&lt; KeyValueT, NVTypeT, IndexType, tmp_nodes &gt;</h3>
+<div class="textblock"><h3>template&lt;class KeyValueT, class NVTypeT, class IndexType&gt;<br />
+class orbtree::NodeAllocatorCompact&lt; KeyValueT, NVTypeT, IndexType &gt;</h3>
 
 <p>Alternate node allocator with the aim to use less memory. </p>
 <p>Special node allocator that stores values in separate array + stores red/black flag in parent pointer. Note that memory is not freed automatically when nodes are deleted, use the shrink_size() function for that purpose.</p>

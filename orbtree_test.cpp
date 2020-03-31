@@ -77,8 +77,7 @@ int main(int argc, char **argv)
 			/* check all ranks (by iterating over all nodes) */
 			uint32_t i = 0;
 			for(auto it = rbtree.cbegin();it != rbtree.cend();++it,++i) {
-				uint32_t r = 0;
-				rbtree.get_sum_node(it,&r);
+				uint32_t r = rbtree.get_sum_node(it);
 				if(r != i) throw std::runtime_error("key rank not consistent!\n");
 			}
 			if(i != rbtree.size()) throw std::runtime_error("inconsistent tree size!\n");
@@ -92,8 +91,7 @@ int main(int argc, char **argv)
 		/* check all ranks (by iterating over all nodes) */
 		uint32_t i = 0;
 		for(auto it = rbtree.cbegin();it != rbtree.cend();++it,++i) {
-			uint32_t r = 0;
-			rbtree.get_sum_node(it,&r);
+			uint32_t r = rbtree.get_sum_node(it);
 			if(r != i) throw std::runtime_error("key rank not consistent!\n");
 		}
 		if(i != rbtree.size()) throw std::runtime_error("inconsistent tree size!\n");

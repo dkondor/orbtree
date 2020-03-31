@@ -1,2 +1,2 @@
-<map id="orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT &gt;::Node" name="orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT &gt;::Node">
+<map id="orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT, simple &gt;::Node" name="orbtree::NodeAllocatorPtr&lt; KeyValueT, NVTypeT, simple &gt;::Node">
 </map>

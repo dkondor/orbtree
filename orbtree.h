@@ -44,6 +44,14 @@
 #include <vector>
 #include <math.h>
 
+/* constexpr if support only for c++17 or newer */
+#if __cplusplus >= 201703L
+#define CONSTEXPR constexpr
+#else
+#define CONSTEXPR
+#endif
+
+
 namespace orbtree {
 	
 	/* main class with public interface */
@@ -64,8 +72,11 @@ namespace orbtree {
 	 * 		elements based on key and value
 	 * @tparam multi determines if this is a multiset / multimap (keys
 	 * 		can be present multiple times) or not
+	 * @tparam simple determines if the weight function returns one value
+	 * 		(if true) or multiple values (if false). This changes the
+	 * 		return value of \ref get_sum()
 	 */
-	template<class NodeAllocator, class Compare, class NVFunc, bool multi>
+	template<class NodeAllocator, class Compare, class NVFunc, bool multi, bool simple = false>
 	class orbtree : public orbtree_base<NodeAllocator, Compare, NVFunc, multi> {
 		protected:
 			typedef typename orbtree_base<NodeAllocator, Compare, NVFunc, multi>::NodeHandle NodeHandle;
@@ -86,8 +97,27 @@ namespace orbtree {
 						-- since iterators are InputIterators, only unsigned differences are possible */
 			
 			
-			explicit orbtree(const NVFunc& f_ = NVFunc(), const Compare& c_ = Compare()):orbtree_base<NodeAllocator, Compare, NVFunc, multi>(f_,c_) { }
-			explicit orbtree(NVFunc&& f_,const Compare& c_ = Compare()):orbtree_base<NodeAllocator, Compare, NVFunc, multi>(f_,c_) { }
+			explicit orbtree(const NVFunc& f_ = NVFunc(), const Compare& c_ = Compare())
+					: orbtree_base<NodeAllocator, Compare, NVFunc, multi>(f_,c_) {
+				if CONSTEXPR (simple) if(this->f.get_nr() != 1) {
+					throw std::runtime_error("For simple tree, weight function can only return one component!\n");
+				}
+			}
+			explicit orbtree(NVFunc&& f_,const Compare& c_ = Compare())
+					: orbtree_base<NodeAllocator, Compare, NVFunc, multi>(f_,c_) { 
+				if CONSTEXPR (simple) if(this->f.get_nr() != 1) {
+					throw std::runtime_error("For simple tree, weight function can only return one component!\n");
+				}
+			}
+			template<class T>
+			explicit orbtree(const T& t, const Compare& c_ = Compare())
+					: orbtree_base<NodeAllocator, Compare, NVFunc, multi>(t,c_) {
+				if CONSTEXPR (simple) if(this->f.get_nr() != 1) {
+					throw std::runtime_error("For simple tree, weight function can only return one component!\n");
+				}
+			}
+					
+			
 			
 			
 			/* iterators -- note: set should only have const iterators */
@@ -117,7 +147,7 @@ namespace orbtree {
 					typedef const value_base& reference;
 					
 					friend class iterator_base<!is_const>;
-					friend class orbtree<NodeAllocator,Compare,NVFunc,multi>;
+					friend class orbtree<NodeAllocator,Compare,NVFunc,multi,simple>;
 				protected:
 					orbtree_t& t; /* has to be const reference for const iterator */
 					NodeHandle n;
@@ -433,118 +463,98 @@ namespace orbtree {
 				return orbtree_base<NodeAllocator, Compare, NVFunc, multi>::find(k) != this->nil();
 			}
 			
-			/** \brief Calculate partial sum of the values stored in nodes
+			
+		public:
+			/** \brief Calculate partial sum of the weights of nodes
 			 * that come before the one pointed to by it.
 			 * 
 			 * Result is returned in res, which must point to an array
 			 * large enough (e.g. with at least as many elements as
 			 * the components calculated by NVFunc)
 			 */
-			void get_sum_node(const_iterator it, NVType* res) const {
+			template<bool simple_ = simple>
+			void get_sum_node(const_iterator it, typename std::enable_if<!simple_,NVType*>::type res) const {
 				if(it == cend()) this->get_norm_fv(res);
 				this->get_sum_fv_node(it.n,res);
 			}
+			/** \brief Calculate partial sum of nodes
+			 * that come before the one pointed to by it.
+			 * 
+			 * Specialized version for simple containers (i.e. where the
+			 * weight function returns only one component) that returns
+			 * the result directly instead of using a pointer.
+			 */
+			template<bool simple_ = simple>
+			NVType get_sum_node(typename std::enable_if<simple_,const_iterator>::type it) const {
+				NVType res;
+				if(it == cend()) this->get_norm_fv(&res);
+				this->get_sum_fv_node(it.n,&res);
+				return res;
+			}
 			
-			/** \brief Calculate partial sum for keys that come before k.
+			
+			/** \brief Calculate partial sum of weights for keys that come before k.
 			 * 
 			 * Result is returned in res, which must point to an array
 			 * large enough (with elements corresponding to the number
 			 * of components returned by NVFunc).
 			 */
-			void get_sum(const key_type& k, NVType* res) const {
+			template<bool simple_ = simple>
+			void get_sum(const key_type& k, typename std::enable_if<!simple_,NVType*>::type res) const {
 				auto it = lower_bound(k);
 				get_sum_node(it,res);
 			}
+			/** \brief Calculate partial sum of weights for keys that come before k.
+			 * 
+			 * Specialized version for simple containers (i.e. where the
+			 * weight function returns only one component) that returns
+			 * the result directly instead of using a pointer.
+			 */
+			template<bool simple_ = simple>
+			NVType get_sum(typename std::enable_if<simple_,const key_type&>::type k) const {
+				auto it = lower_bound(k);
+				return get_sum_node(it);
+			}
 			
-			/** \brief Calculate partial sum for keys that come before k.
+			/** \brief Calculate partial sum of weights for keys that come before k.
 			 * 
 			 * Result is returned in res, which must point to an array
 			 * large enough (with elements corresponding to the number
 			 * of components returned by NVFunc).
 			 */
-			template<class K> void get_sum(const K& k, NVType* res) const {
+			template<class K, bool simple_ = simple>
+			void get_sum(const K& k, typename std::enable_if<!simple_,NVType*>::type res) const {
 				auto it = lower_bound(k);
 				get_sum_node(it,res);
 			}
+			/** \brief Calculate partial sum of weights for keys that come before k.
+			 * 
+			 * Specialized version for simple containers (i.e. where the
+			 * weight function returns only one component) that returns
+			 * the result directly instead of using a pointer.
+			 */
+			template<class K, bool simple_ = simple>
+			NVType get_sum(typename std::enable_if<simple_,const K&>::type k) const {
+				auto it = lower_bound(k);
+				return get_sum_node(it);
+			}
+			
+			/// Calculate normalization, i.e. sum of all weights. Equivalent to get_sum(cend(),res).
+			template<bool simple_ = simple>
+			void get_norm(typename std::enable_if<!simple_,NVType*>::type res) const { this->get_norm_fv(res); }
+			/// Calculate normalization, i.e. sum of all weights. Equivalent to get_sum(cend()).
+			template<bool simple_ = simple> NVType get_norm(typename std::enable_if<simple_,void*>::type k = 0) const {
+				NVType res;
+				this->get_norm_fv(&res);
+				return res;
+			}
+			
 			
 	};
 	
 	
-	/* basic classes */
-	
-	/* general set and multiset -- needs to be given a node value type and function */
-	/* function has to have a defined return type */
-	/** \class orbtree::orbset
-	 * \brief  General set, i.e. storing a collection of elements without duplicates. See \ref orbtree::orbtree for description of members.
-	 * @tparam Key type of elements ("keys") stored in this set.
-	 * @tparam NVFunc function calculating the values associated with stored
-	 * elements. See NVFunc_Adapter_Simple for the description of the expected
-	 * interface.
-	 * @tparam Compare comparison functor for keys.
-	 */
-	template<class Key, class NVFunc, class Compare = std::less<Key> >
-	using orbset = orbtree< NodeAllocatorPtr< KeyOnly<Key>, typename NVFunc::result_type >, Compare, NVFunc, false >;
-	
-	/** \class orbtree::orbmultiset
-	 * \brief  General multiset, i.e. storing a collection of elements allowing duplicates. See \ref orbtree::orbtree for description of members.
-	 * @tparam Key type of elements ("keys") stored in this set.
-	 * @tparam NVFunc function calculating the values associated with stored
-	 * elements. See NVFunc_Adapter_Simple for the description of the expected
-	 * interface.
-	 * @tparam Compare comparison functor for keys.
-	 */
-	template<class Key, class NVFunc, class Compare = std::less<Key> >
-	using orbmultiset = orbtree< NodeAllocatorPtr< KeyOnly<Key>, typename NVFunc::result_type >, Compare, NVFunc, true >;
-	
-	/** \class orbtree::orbsetC
-	 * \brief  Specialized set with compact storage, for POD (trivially copyable) elements. See \ref orbtree::orbtree for description of members.
-	 * 
-	 * This is a set, i.e. a collection of elements without duplicates.
-	 * See \ref orbtree for description of members. Nodes are stored in a flat array
-	 * and the red-black bit is stored as part of node references. Indexing is done
-	 * with integers instead of pointers, this can save space especially on 64-bit machines
-	 * if 32-bit indices are sufficient. Space for each node is sizeof(Key) +
-	 * 3*sizeof(IndexType) + padding (if necessary)
-	 * 
-	 * @tparam Key Type of elements ("keys") stored in this set. Must be
-	 * trivially copyable (as per std::is_trivially_copyable).
-	 * @tparam NVFunc function calculating the values associated with stored
-	 * elements. See NVFunc_Adapter_Simple for the description of the expected
-	 * interface.
-	 * @tparam IndexType unsigned integral type to use for indexing.
-	 * Maximum number of elements is half of the maximum value of this type - 1.
-	 * Default is uin32_t, i.e. 32-bit integers, allowing 2^31-1 elements.
-	 * @tparam Compare comparison functor for keys.
-	 */
-	template<class Key, class NVFunc, class IndexType = uint32_t, class Compare = std::less<Key> >
-	using orbsetC = orbtree< NodeAllocatorCompact< KeyOnly<Key>, typename NVFunc::result_type, IndexType, 0 >, Compare, NVFunc, false >;
-	
-	/** \class orbtree::orbmultisetC
-	 * \brief  Specialized multiset with compact storage, for POD (trivially copyable) elements. See \ref orbtree::orbtree for description of members.
-	 * 
-	 * This is a multiset, i.e. a collection of elements that allows duplicates.
-	 * See \ref orbtree for description of members. Nodes are stored in a flat array
-	 * and the red-black bit is stored as part of node references. Indexing is done
-	 * with integers instead of pointers, this can save space especially on 64-bit machines
-	 * if 32-bit indices are sufficient. Space for each node is sizeof(Key) +
-	 * 3*sizeof(IndexType) + padding (if necessary)
-	 * 
-	 * @tparam Key Type of elements ("keys") stored in this set. Must be
-	 * trivially copyable (as per std::is_trivially_copyable).
-	 * @tparam NVFunc function calculating the values associated with stored
-	 * elements. See NVFunc_Adapter_Simple for the description of the expected
-	 * interface.
-	 * @tparam IndexType unsigned integral type to use for indexing.
-	 * Maximum number of elements is half of the maximum value of this type - 1.
-	 * Default is uin32_t, i.e. 32-bit integers, allowing 2^31-1 elements.
-	 * @tparam Compare comparison functor for keys.
-	 */
-	template<class Key, class NVFunc, class IndexType = uint32_t, class Compare = std::less<Key> >
-	using orbmultisetC = orbtree< NodeAllocatorCompact< KeyOnly<Key>, typename NVFunc::result_type, IndexType, 0 >, Compare, NVFunc, true >;
-		
-	
-	/// Adapter for functions that return only one result.
-	/** This class also describes the interface expected for the
+	/** \brief Adapter for functions that return only one result.
+	 * This class also describes the interface expected for the
 	 * NVFunc template parameter for the tree / set / map classes.
 	 * 
 	 * @tparam NVFunc simple function taking one argument and returning the associated value to be stored.
@@ -576,7 +586,193 @@ namespace orbtree {
 		/// Create a new instance storing the given function
 		explicit NVFunc_Adapter_Simple(const NVFunc& f_):f(f_) { }
 		explicit NVFunc_Adapter_Simple(NVFunc&& f_):f(f_) { }
+		template<class T>
+		explicit NVFunc_Adapter_Simple(const T& t):f(t) { }
 	};
+	
+	
+	/* basic classes */
+	
+	/* general set and multiset -- needs to be given a node value type and function */
+	/* function has to have a defined return type */
+	/** \class orbtree::orbset
+	 * \brief  General set, i.e. storing a collection of elements without duplicates.
+	 * See \ref orbtree::orbtree for description of members.
+	 * 
+	 * @tparam Key type of elements ("keys") stored in this set.
+	 * @tparam NVFunc function calculating the weights associated with stored
+	 * elements. See NVFunc_Adapter_Simple for the description of the expected
+	 * interface.
+	 * @tparam Compare comparison functor for keys.
+	 */
+	template<class Key, class NVFunc, class Compare = std::less<Key> >
+	using orbset = orbtree< NodeAllocatorPtr< KeyOnly<Key>, typename NVFunc::result_type >, Compare, NVFunc, false >;
+	
+	/** \class orbtree::simple_set
+	 * \brief  General set, i.e. storing a collection of elements without duplicates.
+	 * Simple version for weight functions that return one component (i.e. scalar functions).
+	 * See \ref orbtree::orbtree for description of members.
+	 * 
+	 * @tparam Key type of elements ("keys") stored in this set.
+	 * @tparam NVFunc function object calculating the weights associated with stored
+	 * elements. Requires operator() with the key as the only parameter and returning
+	 * NVFunc::result_type that should be a public typedef as well.
+	 * @tparam Compare comparison functor for keys.
+	 */
+	template<class Key, class NVFunc, class Compare = std::less<Key> >
+	using simple_set = orbtree< NodeAllocatorPtr< KeyOnly<Key>, typename NVFunc::result_type, true >,
+		Compare, NVFunc_Adapter_Simple<NVFunc>, false, true >;
+	
+	
+	/** \class orbtree::orbmultiset
+	 * \brief  General multiset, i.e. storing a collection of elements allowing duplicates.
+	 * See \ref orbtree::orbtree for description of members.
+	 * 
+	 * @tparam Key type of elements ("keys") stored in this set.
+	 * @tparam NVFunc function calculating the values associated with stored
+	 * elements. See NVFunc_Adapter_Simple for the description of the expected
+	 * interface.
+	 * @tparam Compare comparison functor for keys.
+	 */
+	template<class Key, class NVFunc, class Compare = std::less<Key> >
+	using orbmultiset = orbtree< NodeAllocatorPtr< KeyOnly<Key>, typename NVFunc::result_type >, Compare, NVFunc, true >;
+	
+	/** \class orbtree::simple_multiset
+	 * \brief  General multiset, i.e. storing a collection of elements allowing duplicates.
+	 * Simple version for weight functions that return one component (i.e. scalar functions).
+	 * See \ref orbtree::orbtree for description of members.
+	 * 
+	 * @tparam Key type of elements ("keys") stored in this set.
+	 * @tparam NVFunc function object calculating the weights associated with stored
+	 * elements. Requires operator() with the key as the only parameter and returning
+	 * NVFunc::result_type that should be a public typedef as well.
+	 * @tparam Compare comparison functor for keys.
+	 */
+	template<class Key, class NVFunc, class Compare = std::less<Key> >
+	using simple_multiset = orbtree< NodeAllocatorPtr< KeyOnly<Key>, typename NVFunc::result_type, true >,
+		Compare, NVFunc_Adapter_Simple<NVFunc>, true, true >;
+	
+	
+	/** \class orbtree::orbsetC
+	 * \brief  Specialized set with compact storage. See \ref orbtree::orbtree for description of members.
+	 * 
+	 * This is a set, i.e. a collection of elements without duplicates.
+	 * See \ref orbtree for description of members. Nodes are stored in a flat array
+	 * and the red-black bit is stored as part of node references. Indexing is done
+	 * with integers instead of pointers, this can save space especially on 64-bit machines
+	 * if 32-bit indices are sufficient. Space for each node is sizeof(Key) +
+	 * 3*sizeof(IndexType) + padding (if necessary)
+	 * 
+	 * @tparam Key Type of elements ("keys") stored in this set.
+	 * @tparam NVFunc function calculating the values associated with stored
+	 * elements. See NVFunc_Adapter_Simple for the description of the expected
+	 * interface.
+	 * @tparam IndexType unsigned integral type to use for indexing.
+	 * Maximum number of elements is half of the maximum value of this type - 1.
+	 * Default is uin32_t, i.e. 32-bit integers, allowing 2^31-1 elements.
+	 * @tparam Compare comparison functor for keys.
+	 * 
+	 * Note: internally, it uses realloc_vector::vector if Key is trivially copyable
+	 * (as per [std::is_trivially_copyable](https://en.cppreference.com/w/cpp/types/is_trivially_copyable))
+	 * and stacked_vector::vector otherwise. In the latter case, performnace can be
+	 * improved by using the [libdivide library](https://github.com/ridiculousfish/libdivide) --
+	 * see the documentation of \ref stacked_vector::vector "stacked_vector" for more details.
+	 */
+	template<class Key, class NVFunc, class IndexType = uint32_t, class Compare = std::less<Key> >
+	using orbsetC = orbtree< NodeAllocatorCompact< KeyOnly<Key>, typename NVFunc::result_type, IndexType >, Compare, NVFunc, false >;
+	
+	/** \class orbtree::simple_setC
+	 * \brief  Specialized set with compact storage. 
+	 * Simple version for weight functions that return one component (i.e. scalar functions).
+	 * See \ref orbtree::orbtree for description of members.
+	 * 
+	 * This is a set, i.e. a collection of elements without duplicates.
+	 * See \ref orbtree for description of members. Nodes are stored in a flat array
+	 * and the red-black bit is stored as part of node references. Indexing is done
+	 * with integers instead of pointers, this can save space especially on 64-bit machines
+	 * if 32-bit indices are sufficient. Space for each node is sizeof(Key) +
+	 * 3*sizeof(IndexType) + padding (if necessary)
+	 * 
+	 * @tparam Key Type of elements ("keys") stored in this set.
+	 * @tparam NVFunc function object calculating the weights associated with stored
+	 * elements. Requires operator() with the key as the only parameter and returning
+	 * NVFunc::result_type that should be a public typedef as well.
+	 * @tparam IndexType unsigned integral type to use for indexing.
+	 * Maximum number of elements is half of the maximum value of this type - 1.
+	 * Default is uin32_t, i.e. 32-bit integers, allowing 2^31-1 elements.
+	 * @tparam Compare comparison functor for keys.
+	 * 
+	 * Note: internally, it uses realloc_vector::vector if Key is trivially copyable
+	 * (as per [std::is_trivially_copyable](https://en.cppreference.com/w/cpp/types/is_trivially_copyable))
+	 * and stacked_vector::vector otherwise. In the latter case, performnace can be
+	 * improved by using the [libdivide library](https://github.com/ridiculousfish/libdivide) --
+	 * see the documentation of \ref stacked_vector::vector "stacked_vector" for more details.
+	 */
+	template<class Key, class NVFunc, class IndexType = uint32_t, class Compare = std::less<Key> >
+	using simple_setC = orbtree< NodeAllocatorCompact< KeyOnly<Key>, typename NVFunc::result_type, IndexType >,
+		Compare, NVFunc_Adapter_Simple<NVFunc>, false, true >;
+	
+	
+	
+	/** \class orbtree::orbmultisetC
+	 * \brief  Specialized multiset with compact storage. See \ref orbtree::orbtree for description of members.
+	 * 
+	 * This is a multiset, i.e. a collection of elements that allows duplicates.
+	 * See \ref orbtree for description of members. Nodes are stored in a flat array
+	 * and the red-black bit is stored as part of node references. Indexing is done
+	 * with integers instead of pointers, this can save space especially on 64-bit machines
+	 * if 32-bit indices are sufficient. Space for each node is sizeof(Key) +
+	 * 3*sizeof(IndexType) + padding (if necessary)
+	 * 
+	 * @tparam Key Type of elements ("keys") stored in this set.
+	 * @tparam NVFunc function calculating the values associated with stored
+	 * elements. See NVFunc_Adapter_Simple for the description of the expected
+	 * interface.
+	 * @tparam IndexType unsigned integral type to use for indexing.
+	 * Maximum number of elements is half of the maximum value of this type - 1.
+	 * Default is uin32_t, i.e. 32-bit integers, allowing 2^31-1 elements.
+	 * @tparam Compare comparison functor for keys.
+	 * 
+	 * Note: internally, it uses realloc_vector::vector if Key is trivially copyable
+	 * (as per [std::is_trivially_copyable](https://en.cppreference.com/w/cpp/types/is_trivially_copyable))
+	 * and stacked_vector::vector otherwise. In the latter case, performnace can be
+	 * improved by using the [libdivide library](https://github.com/ridiculousfish/libdivide) --
+	 * see the documentation of \ref stacked_vector::vector "stacked_vector" for more details.
+	 */
+	template<class Key, class NVFunc, class IndexType = uint32_t, class Compare = std::less<Key> >
+	using orbmultisetC = orbtree< NodeAllocatorCompact< KeyOnly<Key>, typename NVFunc::result_type, IndexType >, Compare, NVFunc, true >;
+	
+	/** \class orbtree::simple_multisetC
+	 * \brief  Specialized multiset with compact storage.
+	 * Simple version for weight functions that return one component (i.e. scalar functions).
+	 * See \ref orbtree::orbtree for description of members.
+	 * 
+	 * This is a multiset, i.e. a collection of elements that allows duplicates.
+	 * See \ref orbtree for description of members. Nodes are stored in a flat array
+	 * and the red-black bit is stored as part of node references. Indexing is done
+	 * with integers instead of pointers, this can save space especially on 64-bit machines
+	 * if 32-bit indices are sufficient. Space for each node is sizeof(Key) +
+	 * 3*sizeof(IndexType) + padding (if necessary)
+	 * 
+	 * @tparam Key Type of elements ("keys") stored in this set.
+	 * @tparam NVFunc function object calculating the weights associated with stored
+	 * elements. Requires operator() with the key as the only parameter and returning
+	 * NVFunc::result_type that should be a public typedef as well.
+	 * @tparam IndexType unsigned integral type to use for indexing.
+	 * Maximum number of elements is half of the maximum value of this type - 1.
+	 * Default is uin32_t, i.e. 32-bit integers, allowing 2^31-1 elements.
+	 * @tparam Compare comparison functor for keys.
+	 * 
+	 * Note: internally, it uses realloc_vector::vector if Key is trivially copyable
+	 * (as per [std::is_trivially_copyable](https://en.cppreference.com/w/cpp/types/is_trivially_copyable))
+	 * and stacked_vector::vector otherwise. In the latter case, performnace can be
+	 * improved by using the [libdivide library](https://github.com/ridiculousfish/libdivide) --
+	 * see the documentation of \ref stacked_vector::vector "stacked_vector" for more details.
+	 */
+	template<class Key, class NVFunc, class IndexType = uint32_t, class Compare = std::less<Key> >
+	using simple_multisetC = orbtree< NodeAllocatorCompact< KeyOnly<Key>, typename NVFunc::result_type, IndexType >,
+		Compare, NVFunc_Adapter_Simple<NVFunc>, true, true >;
+		
 	
 	/* more specialized version: order statistic set / multiset with compact nodes (i.e. calculates ranks, either 32-bit or 64-bit) */
 	/// simple function to use for standard order statistic trees; returns 1 for any key, so sum of values can be used to calculate the rank of elements
@@ -608,13 +804,13 @@ namespace orbtree {
 		}
 		NVFunc_Adapter_Vec() = delete; /* need parameter vector at least */
 		/// this adapter can only be constructed with a parameter vector
-		explicit NVFunc_Adapter_Vec(const std::vector<typename NVFunc::ParType>& pars_, const NVFunc& f_ = NVFunc()):pars(pars_),f(f_) { }
+		explicit NVFunc_Adapter_Vec(const std::vector<typename NVFunc::ParType>& pars_, const NVFunc& f_ = NVFunc()):f(f_),pars(pars_) { }
 		/// this adapter can only be constructed with a parameter vector
-		explicit NVFunc_Adapter_Vec(std::vector<typename NVFunc::ParType>&& pars_, const NVFunc& f_ = NVFunc()):pars(pars_),f(f_) { }
+		explicit NVFunc_Adapter_Vec(std::vector<typename NVFunc::ParType>&& pars_, const NVFunc& f_ = NVFunc()):f(f_),pars(std::move(pars_)) { }
 		/// this adapter can only be constructed with a parameter vector
-		explicit NVFunc_Adapter_Vec(const std::vector<typename NVFunc::ParType>& pars_, NVFunc&& f_):pars(pars_),f(f_) { }
+		explicit NVFunc_Adapter_Vec(const std::vector<typename NVFunc::ParType>& pars_, NVFunc&& f_):f(std::move(f_)),pars(pars_) { }
 		/// this adapter can only be constructed with a parameter vector
-		explicit NVFunc_Adapter_Vec(std::vector<typename NVFunc::ParType>&& pars_, NVFunc&& f_):pars(pars_),f(f_) { }
+		explicit NVFunc_Adapter_Vec(std::vector<typename NVFunc::ParType>&& pars_, NVFunc&& f_):f(std::move(f_)),pars(std::move(pars_)) { }
 	};
 	
 	
@@ -652,91 +848,61 @@ namespace orbtree {
 	template<class KeyType> using NVPower2 = NVFunc_Adapter_Vec<NVPower<KeyType> >;
 	template<class KeyType> using NVPowerMulti2 = NVFunc_Adapter_Vec<NVPowerMulti<KeyType> >;
 	
-	/** 
+	/** \class orbtree::rankset
 	 * \brief  Order statistic set, calculates the rank of elements.
+	 * 
 	 * @tparam Key type of elements ("keys") stored in this set.
 	 * @tparam NVType integer type for rank calculation
 	 * @tparam Compare comparison functor for keys.
 	 */
 	template<class Key, class NVType = uint32_t, class Compare = std::less<Key> >
-	class rankset : public orbtree< NodeAllocatorPtr< KeyOnly<Key>, NVType >, Compare,
-			NVFunc_Adapter_Simple<RankFunc<Key, NVType> >, false > {
-		protected:
-			typedef typename orbtree< NodeAllocatorPtr< KeyOnly<Key>, NVType >, Compare,
-			NVFunc_Adapter_Simple<RankFunc<Key, NVType> >, false >::const_iterator const_iterator;
-		public:
-			/// convenience wrapper to get the rank of a node directly instead of having to supply a pointer
-			NVType get_rank(const_iterator it) const {
-				NVType r;
-				get_sum_node(it,&r);
-				return r;
-			}
-	};
+	using rankset = orbtree< NodeAllocatorPtr< KeyOnly<Key>, NVType, true >, Compare,
+			NVFunc_Adapter_Simple<RankFunc<Key, NVType> >, false, true >;
 	
-	/** 
+	/** \class orbtree::rankmultiset
 	 * \brief  Order statistic multiset, calculates the rank of elements.
+	 * 
 	 * @tparam Key type of elements ("keys") stored in this set.
 	 * @tparam NVType integer type for rank calculation
 	 * @tparam Compare comparison functor for keys.
 	 */
 	template<class Key, class NVType = uint32_t, class Compare = std::less<Key> >
-	class rankmultiset : public orbtree< NodeAllocatorPtr< KeyOnly<Key>, NVType >, Compare,
-			NVFunc_Adapter_Simple<RankFunc<Key, NVType> >, true > {
-		protected:
-			typedef orbtree< NodeAllocatorPtr< KeyOnly<Key>, NVType >, Compare,
-			NVFunc_Adapter_Simple<RankFunc<Key, NVType> >, true > orbtree_base_class;
-		public:
-			/// convenience wrapper to get the rank of a node directly instead of having to supply a pointer
-			NVType get_rank(typename orbtree_base_class::const_iterator it) const {
-				NVType r;
-				get_sum_node(it,&r);
-				return r;
-			}
-	};
+	using rankmultiset = orbtree< NodeAllocatorPtr< KeyOnly<Key>, NVType, true >, Compare,
+			NVFunc_Adapter_Simple<RankFunc<Key, NVType> >, true, true >;
 	
-	/** 
-	 * \brief  Order statistic set, calculates the rank of elements. Compact version, the key has to be trivially copyable type.
-	 * @tparam Key Type of elements ("keys") stored in this set. Must be
-	 * trivially copyable (as per std::is_trivially_copyable)-
+	/** \class orbtree::ranksetC
+	 * \brief  Order statistic set, calculates the rank of elements, compact version.
+	 * 
+	 * @tparam Key Type of elements ("keys") stored in this set.
 	 * @tparam NVType integer type for rank calculation
 	 * @tparam Compare comparison functor for keys.
+	 * 
+	 * Note: internally, it uses realloc_vector::vector if Key is trivially copyable
+	 * (as per [std::is_trivially_copyable](https://en.cppreference.com/w/cpp/types/is_trivially_copyable))
+	 * and stacked_vector::vector otherwise. In the latter case, performnace can be
+	 * improved by using the [libdivide library](https://github.com/ridiculousfish/libdivide) --
+	 * see the documentation of \ref stacked_vector::vector "stacked_vector" for more details.
 	 */
 	template<class Key, class NVType = uint32_t, class IndexType = uint32_t, class Compare = std::less<Key> >
-	class ranksetC : public orbtree< NodeAllocatorCompact< KeyOnly<Key>, NVType, IndexType >, Compare,
-			NVFunc_Adapter_Simple<RankFunc<Key, NVType> >, false > {
-		protected:
-			typedef orbtree< NodeAllocatorCompact< KeyOnly<Key>, NVType, IndexType >, Compare,
-			NVFunc_Adapter_Simple<RankFunc<Key, NVType> >, false > orbtree_base_class;
-		public:
-			/// convenience wrapper to get the rank of a node directly instead of having to supply a pointer
-			NVType get_rank(typename orbtree_base_class::const_iterator it) const {
-				NVType r;
-				get_sum_node(it,&r);
-				return r;
-			}
-	};
+	using ranksetC = orbtree< NodeAllocatorCompact< KeyOnly<Key>, NVType, IndexType >, Compare,
+			NVFunc_Adapter_Simple<RankFunc<Key, NVType> >, false, true >;
 	
-	/** 
-	 * \brief  Order statistic multiset, calculates the rank of elements. Compact version, the key has to be trivially copyable type.
-	 * @tparam Key Type of elements ("keys") stored in this set. Must be
-	 * trivially copyable (as per std::is_trivially_copyable)-
+	/** \class orbtree::rankmultisetC
+	 * \brief  Order statistic multiset, calculates the rank of elements, compact version.
+	 * 
+	 * @tparam Key Type of elements ("keys") stored in this set.
 	 * @tparam NVType integer type for rank calculation
 	 * @tparam Compare comparison functor for keys.
+	 * 
+	 * Note: internally, it uses realloc_vector::vector if Key is trivially copyable
+	 * (as per [std::is_trivially_copyable](https://en.cppreference.com/w/cpp/types/is_trivially_copyable))
+	 * and stacked_vector::vector otherwise. In the latter case, performnace can be
+	 * improved by using the [libdivide library](https://github.com/ridiculousfish/libdivide) --
+	 * see the documentation of \ref stacked_vector::vector "stacked_vector" for more details.
 	 */
 	template<class Key, class NVType = uint32_t, class IndexType = uint32_t, class Compare = std::less<Key> >
-	class rankmultisetC : public orbtree< NodeAllocatorCompact< KeyOnly<Key>, NVType, IndexType >, Compare,
-			NVFunc_Adapter_Simple<RankFunc<Key, NVType> >, true > {
-		protected:
-			typedef orbtree< NodeAllocatorCompact< KeyOnly<Key>, NVType, IndexType >, Compare,
-			NVFunc_Adapter_Simple<RankFunc<Key, NVType> >, true > orbtree_base_class;
-		public:
-			/// convenience wrapper to get the rank of a node directly instead of having to supply a pointer
-			NVType get_rank(typename orbtree_base_class::const_iterator it) const {
-				NVType r;
-				get_sum_node(it,&r);
-				return r;
-			}
-	};
+	using rankmultisetC = orbtree< NodeAllocatorCompact< KeyOnly<Key>, NVType, IndexType >, Compare,
+			NVFunc_Adapter_Simple<RankFunc<Key, NVType> >, true, true >;
 	
 		
 	/* map types -- extra step in adding accessor functions (only for map, multimap does not have them)
@@ -755,25 +921,28 @@ namespace orbtree {
 	 * @tparam NVFunc function that calculates values associated with
 	 * 		elements based on key and value
 	 */
-	template<class NodeAllocator, class Compare, class NVFunc>
-	class orbtreemap : public orbtree<NodeAllocator, Compare, NVFunc, false> {
+	template<class NodeAllocator, class Compare, class NVFunc, bool simple = false>
+	class orbtreemap : public orbtree<NodeAllocator, Compare, NVFunc, false, simple> {
 		protected:
-			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false>::NodeHandle NodeHandle;
-			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false>::KeyValue KeyValue;
+			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false, simple>::NodeHandle NodeHandle;
+			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false, simple>::KeyValue KeyValue;
 		
 		public:
 			/* typedefs */
-			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false>::value_type value_type;
-			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false>::key_type key_type;
-			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false>::size_type size_type;
-			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false>::difference_type difference_type;
-			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false>::iterator iterator;
-			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false>::const_iterator const_iterator;
+			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false, simple>::value_type value_type;
+			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false, simple>::key_type key_type;
+			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false, simple>::size_type size_type;
+			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false, simple>::difference_type difference_type;
+			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false, simple>::iterator iterator;
+			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false, simple>::const_iterator const_iterator;
 			/// type of values stored in this map
 			typedef typename NodeAllocator::KeyValue::MappedType mapped_type;
 			
-			explicit orbtreemap(const NVFunc& f_ = NVFunc(), const Compare& c_ = Compare()):orbtree<NodeAllocator, Compare, NVFunc, false>(f_,c_) { }
-			explicit orbtreemap(NVFunc&& f_,const Compare& c_ = Compare()):orbtree<NodeAllocator, Compare, NVFunc, false>(f_,c_) { }
+			explicit orbtreemap(const NVFunc& f_ = NVFunc(), const Compare& c_ = Compare()) :
+				orbtree<NodeAllocator, Compare, NVFunc, false, simple>(f_,c_) { }
+			explicit orbtreemap(NVFunc&& f_,const Compare& c_ = Compare()) : orbtree<NodeAllocator, Compare, NVFunc, false, simple>(f_,c_) { }
+			template <class T>
+			explicit orbtreemap(const T& t, const Compare& c_ = Compare()) : orbtree<NodeAllocator, Compare, NVFunc, false, simple>(t,c_) { }
 			
 			/// Access mapped value for a given key, throws an exception if key is not found.
 			/** Cannot be used to modify value since that can require
@@ -812,7 +981,7 @@ namespace orbtree {
 			 * Returns true if a new element was inserted, false if the
 			 * value of an existing element was updated. */
 			bool set_value(const key_type& k, const mapped_type& v) {
-				std::pair<iterator,bool> tmp = orbtree<NodeAllocator, Compare, NVFunc, false>::insert(value_type(k,v));
+				std::pair<iterator,bool> tmp = orbtree<NodeAllocator, Compare, NVFunc, false, simple>::insert(value_type(k,v));
 				if(tmp.second == false) tmp.first.set_value(v);
 				return tmp.second;
 			}
@@ -821,7 +990,7 @@ namespace orbtree {
 			 * Returns true if a new element was inserted, false if the
 			 * value of an existing element was updated. */
 			bool set_value(key_type&& k, const mapped_type& v) {
-				std::pair<iterator,bool> tmp = orbtree<NodeAllocator, Compare, NVFunc, false>::insert(value_type(std::move(k),v));
+				std::pair<iterator,bool> tmp = orbtree<NodeAllocator, Compare, NVFunc, false, simple>::insert(value_type(std::move(k),v));
 				if(tmp.second == false) tmp.first.set_value(v);
 				return tmp.second;
 			}
@@ -830,9 +999,9 @@ namespace orbtree {
 			 * Returns true if a new element was inserted, false if the
 			 * value of an existing element was updated. */
 			bool set_value(const key_type& k, mapped_type&& v) {
-				auto it = orbtree<NodeAllocator, Compare, NVFunc, false>::find(k);
-				if(it == orbtree<NodeAllocator, Compare, NVFunc, false>::end()) {
-					orbtree<NodeAllocator, Compare, NVFunc, false>::insert(value_type(k,std::move(v)));
+				auto it = orbtree<NodeAllocator, Compare, NVFunc, false, simple>::find(k);
+				if(it == orbtree<NodeAllocator, Compare, NVFunc, false, simple>::end()) {
+					orbtree<NodeAllocator, Compare, NVFunc, false, simple>::insert(value_type(k,std::move(v)));
 					return true;
 				}
 				it.set_value(std::move(v));
@@ -843,22 +1012,22 @@ namespace orbtree {
 			 * Returns true if a new element was inserted, false if the
 			 * value of an existing element was updated. */
 			bool set_value(key_type&& k, mapped_type&& v) {
-				auto it = orbtree<NodeAllocator, Compare, NVFunc, false>::find(k);
-				if(it == orbtree<NodeAllocator, Compare, NVFunc, false>::end()) {
-					orbtree<NodeAllocator, Compare, NVFunc, false>::insert(value_type(std::move(k),std::move(v)));
+				auto it = orbtree<NodeAllocator, Compare, NVFunc, false, simple>::find(k);
+				if(it == orbtree<NodeAllocator, Compare, NVFunc, false, simple>::end()) {
+					orbtree<NodeAllocator, Compare, NVFunc, false, simple>::insert(value_type(std::move(k),std::move(v)));
 					return true;
 				}
 				it.set_value(std::move(v));
 				return false;
 			}
 			
-			/** update the value of an existing element -- throws exception if the key does not exist */
+			/** \brief update the value of an existing element -- throws exception if the key does not exist */
 			void update_value(const key_type& k, const mapped_type& v) {
 				NodeHandle n = orbtree_base<NodeAllocator, Compare, NVFunc, false>::find(k);
 				if(n == this->nil()) throw std::out_of_range("orbtreemap::at(): key not present in map!\n");
 				orbtree_base<NodeAllocator, Compare, NVFunc, false>::update_value(n,v);
 			}
-			/** update the value of an existing element -- throws exception if the key does not exist */
+			/** \brief update the value of an existing element -- throws exception if the key does not exist */
 			void update_value(const key_type& k, mapped_type&& v) {
 				NodeHandle n = orbtree_base<NodeAllocator, Compare, NVFunc, false>::find(k);
 				if(n == this->nil()) throw std::out_of_range("orbtreemap::at(): key not present in map!\n");
@@ -879,6 +1048,23 @@ namespace orbtree {
 	template<class Key, class Value, class NVFunc, class Compare = std::less<Key> >
 	using orbmap = orbtreemap< NodeAllocatorPtr< KeyValue<Key,Value>, typename NVFunc::result_type >, Compare, NVFunc >;
 	
+	/** \class orbtree::simple_map
+	 * \brief General map implementation.
+	 * Simple version for weight functions that return one component (i.e. scalar functions).
+	 * See \ref orbtree and \ref orbtreemap for description of members.
+	 * 
+	 * @tparam Key Key to sort elements by.
+	 * @tparam Value Value stored in elements.
+	 * @tparam NVFunc function object calculating the weights associated with stored
+	 * elements. Requires operator() with the key as the only parameter and returning
+	 * NVFunc::result_type that should be a public typedef as well.
+	 * @tparam Compare comparison functor for keys.
+	 */
+	template<class Key, class Value, class NVFunc, class Compare = std::less<Key> >
+	using simple_map = orbtreemap< NodeAllocatorPtr< KeyValue<Key,Value>, typename NVFunc::result_type, true >,
+		Compare, NVFunc_Adapter_Simple<NVFunc>, true >;
+	
+	
 	/** \class orbtree::orbmultimap
 	 * \brief General multimap implementation (i.e. map allowing duplicate keys). See \ref orbtree for description of members.
 	 * 
@@ -890,13 +1076,30 @@ namespace orbtree {
 	 * @tparam Compare comparison functor for keys.
 	 */
 	template<class Key, class Value, class NVFunc, class Compare = std::less<Key> >
-	using orbmultimap = orbtree< NodeAllocatorPtr< KeyValue<Key,Value>, typename NVFunc::result_type >, Compare,NVFunc,true>;
+	using orbmultimap = orbtree< NodeAllocatorPtr< KeyValue<Key,Value>, typename NVFunc::result_type >, Compare, NVFunc, true >;
+	
+	/** \class orbtree::simple_multimap
+	 * \brief General multimap implementation (i.e. map allowing duplicate keys).
+	 * Simple version for weight functions that return one component (i.e. scalar functions).
+	 * See \ref orbtree for description of members.
+	 * 
+	 * @tparam Key Key to sort elements by.
+	 * @tparam Value Value stored in elements.
+	 * @tparam NVFunc function object calculating the weights associated with stored
+	 * elements. Requires operator() with the key as the only parameter and returning
+	 * NVFunc::result_type that should be a public typedef as well.
+	 * @tparam Compare comparison functor for keys.
+	 */
+	template<class Key, class Value, class NVFunc, class Compare = std::less<Key> >
+	using simple_multimap = orbtree< NodeAllocatorPtr< KeyValue<Key,Value>, typename NVFunc::result_type, true >,
+		Compare, NVFunc_Adapter_Simple<NVFunc>, true, true>;
+	
 	
 	/** \class orbtree::orbmapC
-	 * \brief Map implementation with compact storage. See \ref orbtree and \ref orbtreemap for description of members. Key and value must be POD-types.
+	 * \brief Map implementation with compact storage. See \ref orbtree and \ref orbtreemap for description of members.
 	 * 
-	 * @tparam Key Key to sort elements by. Must be POD / trivially copyable (as per std::is_trivially_copyable).
-	 * @tparam Value Value stored in elements. Must be POD / trivially copyable (as per std::is_trivially_copyable).
+	 * @tparam Key Key to sort elements by.
+	 * @tparam Value Value stored in elements.
 	 * @tparam NVFunc function calculating the values associated with stored
 	 * elements. See NVFunc_Adapter_Simple for the description of the expected
 	 * interface.
@@ -904,15 +1107,47 @@ namespace orbtree {
 	 * Maximum number of elements is half of the maximum value of this type - 1.
 	 * Default is uin32_t, i.e. 32-bit integers, allowing 2^31-1 elements.
 	 * @tparam Compare comparison functor for keys.
+	 * 
+	 * Note: internally, it uses realloc_vector::vector if both Key and Value are trivially copyable
+	 * (as per [std::is_trivially_copyable](https://en.cppreference.com/w/cpp/types/is_trivially_copyable))
+	 * and stacked_vector::vector otherwise. In the latter case, performnace can be
+	 * improved by using the [libdivide library](https://github.com/ridiculousfish/libdivide) --
+	 * see the documentation of \ref stacked_vector::vector "stacked_vector" for more details.
 	 */
 	template<class Key, class Value, class NVFunc, class IndexType = uint32_t, class Compare = std::less<Key> >
-	using orbmapC = orbtreemap< NodeAllocatorCompact< KeyValue<Key,Value>, typename NVFunc::result_type, IndexType, 0>, Compare, NVFunc >;
+	using orbmapC = orbtreemap< NodeAllocatorCompact< KeyValue<Key,Value>, typename NVFunc::result_type, IndexType>, Compare, NVFunc >;
+	
+	/** \class orbtree::simple_mapC
+	 * \brief Map implementation with compact storage.
+	 * Simple version for weight functions that return one component (i.e. scalar functions).
+	 * See \ref orbtree and \ref orbtreemap for description of members.
+	 * 
+	 * @tparam Key Key to sort elements by.
+	 * @tparam Value Value stored in elements.
+	 * @tparam NVFunc function object calculating the weights associated with stored
+	 * elements. Requires operator() with the key as the only parameter and returning
+	 * NVFunc::result_type that should be a public typedef as well.
+	 * @tparam IndexType unsigned integral type to use for indexing.
+	 * Maximum number of elements is half of the maximum value of this type - 1.
+	 * Default is uin32_t, i.e. 32-bit integers, allowing 2^31-1 elements.
+	 * @tparam Compare comparison functor for keys.
+	 * 
+	 * Note: internally, it uses realloc_vector::vector if both Key and Value are trivially copyable
+	 * (as per [std::is_trivially_copyable](https://en.cppreference.com/w/cpp/types/is_trivially_copyable))
+	 * and stacked_vector::vector otherwise. In the latter case, performnace can be
+	 * improved by using the [libdivide library](https://github.com/ridiculousfish/libdivide) --
+	 * see the documentation of \ref stacked_vector::vector "stacked_vector" for more details.
+	 */
+	template<class Key, class Value, class NVFunc, class IndexType = uint32_t, class Compare = std::less<Key> >
+	using simple_mapC = orbtreemap< NodeAllocatorCompact< KeyValue<Key,Value>, typename NVFunc::result_type, IndexType>,
+		Compare, NVFunc_Adapter_Simple<NVFunc>, true >;
+	
 	
 	/** \class orbtree::orbmultimapC
-	 * \brief Multimap implementation with compact storage. See \ref orbtree for description of members. Key and value must be POD-types.
+	 * \brief Multimap implementation with compact storage. See \ref orbtree for description of members.
 	 * 
-	 * @tparam Key Key to sort elements by. Must be POD / trivially copyable (as per std::is_trivially_copyable).
-	 * @tparam Value Value stored in elements. Must be POD / trivially copyable (as per std::is_trivially_copyable).
+	 * @tparam Key Key to sort elements by.
+	 * @tparam Value Value stored in elements.
 	 * @tparam NVFunc function calculating the values associated with stored
 	 * elements. See NVFunc_Adapter_Simple for the description of the expected
 	 * interface.
@@ -920,106 +1155,111 @@ namespace orbtree {
 	 * Maximum number of elements is half of the maximum value of this type - 1.
 	 * Default is uin32_t, i.e. 32-bit integers, allowing 2^31-1 elements.
 	 * @tparam Compare comparison functor for keys.
+	 * 
+	 * Note: internally, it uses realloc_vector::vector if both Key and Value are trivially copyable
+	 * (as per [std::is_trivially_copyable](https://en.cppreference.com/w/cpp/types/is_trivially_copyable))
+	 * and stacked_vector::vector otherwise. In the latter case, performnace can be
+	 * improved by using the [libdivide library](https://github.com/ridiculousfish/libdivide) --
+	 * see the documentation of \ref stacked_vector::vector "stacked_vector" for more details.
 	 */
 	template<class Key, class Value, class NVFunc, class IndexType = uint32_t, class Compare = std::less<Key> >
-	using orbmultimapC = orbtree< NodeAllocatorCompact< KeyValue<Key,Value>, typename NVFunc::result_type, IndexType, 0>, Compare, NVFunc, true >;
+	using orbmultimapC = orbtree< NodeAllocatorCompact< KeyValue<Key,Value>, typename NVFunc::result_type, IndexType>, Compare, NVFunc, true >;
+	
+	/** \class orbtree::simple_multimapC
+	 * \brief Multimap implementation with compact storage.
+	 * Simple version for weight functions that return one component (i.e. scalar functions).
+	 * See \ref orbtree for description of members.
+	 * 
+	 * @tparam Key Key to sort elements by.
+	 * @tparam Value Value stored in elements.
+	 * @tparam NVFunc function object calculating the weights associated with stored
+	 * elements. Requires operator() with the key as the only parameter and returning
+	 * NVFunc::result_type that should be a public typedef as well.
+	 * @tparam IndexType unsigned integral type to use for indexing.
+	 * Maximum number of elements is half of the maximum value of this type - 1.
+	 * Default is uin32_t, i.e. 32-bit integers, allowing 2^31-1 elements.
+	 * @tparam Compare comparison functor for keys.
+	 * 
+	 * Note: internally, it uses realloc_vector::vector if both Key and Value are trivially copyable
+	 * (as per [std::is_trivially_copyable](https://en.cppreference.com/w/cpp/types/is_trivially_copyable))
+	 * and stacked_vector::vector otherwise. In the latter case, performnace can be
+	 * improved by using the [libdivide library](https://github.com/ridiculousfish/libdivide) --
+	 * see the documentation of \ref stacked_vector::vector "stacked_vector" for more details.
+	 */
+	template<class Key, class Value, class NVFunc, class IndexType = uint32_t, class Compare = std::less<Key> >
+	using simple_multimapC = orbtree< NodeAllocatorCompact< KeyValue<Key,Value>, typename NVFunc::result_type, IndexType>,
+		Compare, NVFunc_Adapter_Simple<NVFunc>, true, true >;
 	
 	
-	/** 
+	/** \class orbtree::rankmap
 	 * \brief  Order statistic map, calculates the rank of elements.
+	 * 
 	 * @tparam Key type of elements ("keys") stored in this set.
 	 * @tparam Value Value stored in elements.
 	 * @tparam NVType Integer type for rank calculation.
 	 * @tparam Compare Comparison functor for keys.
 	 */
 	template<class Key, class Value, class NVType, class Compare = std::less<Key> >
-	class rankmap : public orbtreemap< NodeAllocatorPtr< KeyValue<Key,Value>, NVType >, Compare,
-			NVFunc_Adapter_Simple< RankFunc<NVType,KeyValue<Key,Value> > > > {
-		protected:
-			typedef orbtreemap< NodeAllocatorPtr< KeyValue<Key,Value>, NVType >, Compare,
-				NVFunc_Adapter_Simple< RankFunc<NVType,KeyValue<Key,Value> > > > orbtree_base_class;
-		public:
-			/// convenience wrapper to get the rank of a node directly instead of having to supply a pointer
-			NVType get_rank(typename orbtree_base_class::const_iterator it) const {
-				NVType r;
-				get_sum_node(it,&r);
-				return r;
-			}
-	};
+	using rankmap = orbtreemap< NodeAllocatorPtr< KeyValue<Key,Value>, NVType, true >, Compare,
+			NVFunc_Adapter_Simple< RankFunc<NVType,KeyValue<Key,Value> > >, true >;
 	
-	/** 
+	/** \class orbtree::rankmultimap
 	 * \brief  Order statistic multimap, calculates the rank of elements.
+	 * 
 	 * @tparam Key type of elements ("keys") stored in this set.
 	 * @tparam Value Value stored in elements.
 	 * @tparam NVType Integer type for rank calculation.
 	 * @tparam Compare Comparison functor for keys.
 	 */
 	template<class Key, class Value, class NVType, class Compare = std::less<Key> >
-	class rankmultimap : public orbtree< NodeAllocatorPtr< KeyValue<Key,Value>, NVType >, Compare,
-			NVFunc_Adapter_Simple< RankFunc<NVType,KeyValue<Key,Value> > >, true> {
-		protected:
-			typedef orbtree< NodeAllocatorPtr< KeyValue<Key,Value>, NVType >, Compare,
-			NVFunc_Adapter_Simple< RankFunc<NVType,KeyValue<Key,Value> > >, true> orbtree_base_class;
-		public:
-			/// convenience wrapper to get the rank of a node directly instead of having to supply a pointer
-			NVType get_rank(typename orbtree_base_class::const_iterator it) const {
-				NVType r;
-				get_sum_node(it,&r);
-				return r;
-			}
-	};
+	using rankmultimap = orbtree< NodeAllocatorPtr< KeyValue<Key,Value>, NVType, true >, Compare,
+			NVFunc_Adapter_Simple< RankFunc<NVType,KeyValue<Key,Value> > >, true, true >;
 	
-	/** 
+	/** \class orbtree::rankmapC
 	 * \brief  Order statistic map with compact storage, calculates the rank of elements.
-	 * @tparam Key Key to sort elements by. Must be POD / trivially copyable (as per std::is_trivially_copyable).
-	 * @tparam Value Value stored in elements. Must be POD / trivially copyable (as per std::is_trivially_copyable).
+	 * 
+	 * @tparam Key Key to sort elements by.
+	 * @tparam Value Value stored in elements.
 	 * @tparam NVType Integer type for rank calculation.
 	 * @tparam IndexType unsigned integral type to use for indexing.
 	 * Maximum number of elements is half of the maximum value of this type - 1.
 	 * Default is uin32_t, i.e. 32-bit integers, allowing 2^31-1 elements.
 	 * @tparam Compare Comparison functor for keys.
+	 * 
+	 * Note: internally, it uses realloc_vector::vector if both Key and Value are trivially copyable
+	 * (as per [std::is_trivially_copyable](https://en.cppreference.com/w/cpp/types/is_trivially_copyable))
+	 * and stacked_vector::vector otherwise. In the latter case, performnace can be
+	 * improved by using the [libdivide library](https://github.com/ridiculousfish/libdivide) --
+	 * see the documentation of \ref stacked_vector::vector "stacked_vector" for more details.
 	 */
 	template<class Key, class Value, class NVType, class IndexType = uint32_t, class Compare = std::less<Key> >
-	class rankmapC : public orbtreemap< NodeAllocatorCompact< KeyValue<Key,Value>, NVType, IndexType >, Compare,
-			NVFunc_Adapter_Simple< RankFunc<NVType,KeyValue<Key,Value> > > > {
-		protected:
-			typedef orbtreemap< NodeAllocatorCompact< KeyValue<Key,Value>, NVType, IndexType >, Compare,
-				NVFunc_Adapter_Simple< RankFunc<NVType,KeyValue<Key,Value> > > > orbtree_base_class;
-		public:
-			/// convenience wrapper to get the rank of a node directly instead of having to supply a pointer
-			NVType get_rank(typename orbtree_base_class::const_iterator it) const {
-				NVType r;
-				get_sum_node(it,&r);
-				return r;
-			}
-	};
+	using rankmapC = orbtreemap< NodeAllocatorCompact< KeyValue<Key,Value>, NVType, IndexType >, Compare,
+			NVFunc_Adapter_Simple< RankFunc<NVType,KeyValue<Key,Value> > >, true >;
 	
-	/** 
+	/** \class orbtree::rankmultimapC
 	 * \brief  Order statistic multimap with compact storage, calculates the rank of elements.
-	 * @tparam Key Key to sort elements by. Must be POD / trivially copyable (as per std::is_trivially_copyable).
-	 * @tparam Value Value stored in elements. Must be POD / trivially copyable (as per std::is_trivially_copyable).
+	 * 
+	 * @tparam Key Key to sort elements by.
+	 * @tparam Value Value stored in elements.
 	 * @tparam NVType Integer type for rank calculation.
 	 * @tparam IndexType unsigned integral type to use for indexing.
 	 * Maximum number of elements is half of the maximum value of this type - 1.
 	 * Default is uin32_t, i.e. 32-bit integers, allowing 2^31-1 elements.
 	 * @tparam Compare Comparison functor for keys.
+	 * 
+	 * Note: internally, it uses realloc_vector::vector if both Key and Value are trivially copyable
+	 * (as per [std::is_trivially_copyable](https://en.cppreference.com/w/cpp/types/is_trivially_copyable))
+	 * and stacked_vector::vector otherwise. In the latter case, performnace can be
+	 * improved by using the [libdivide library](https://github.com/ridiculousfish/libdivide) --
+	 * see the documentation of \ref stacked_vector::vector "stacked_vector" for more details.
 	 */
 	template<class Key, class Value, class NVType, class IndexType = uint32_t, class Compare = std::less<Key> >
-	class rankmultimapC : public orbtree< NodeAllocatorCompact< KeyValue<Key,Value>, NVType, IndexType >, Compare,
-			NVFunc_Adapter_Simple< RankFunc<NVType,KeyValue<Key,Value> > >, true> {
-		protected:
-			typedef orbtree< NodeAllocatorCompact< KeyValue<Key,Value>, NVType, IndexType >, Compare,
-			NVFunc_Adapter_Simple< RankFunc<NVType,KeyValue<Key,Value> > >, true> orbtree_base_class;
-		public:
-			/// convenience wrapper to get the rank of a node directly instead of having to supply a pointer
-			NVType get_rank(typename orbtree_base_class::const_iterator it) const {
-				NVType r;
-				get_sum_node(it,&r);
-				return r;
-			}
-	};
+	using rankmultimapC = orbtree< NodeAllocatorCompact< KeyValue<Key,Value>, NVType, IndexType >, Compare,
+			NVFunc_Adapter_Simple< RankFunc<NVType,KeyValue<Key,Value> > >, true, true >;
 	
 }
+
+#undef CONSTEXPR
 
 #endif
 

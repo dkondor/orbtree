@@ -52,6 +52,13 @@
 //~ template <class T> using compact_vector = realloc_vector::vector<T>;
 //~ #endif
 
+/* constexpr if support only for c++17 or newer */
+#if __cplusplus >= 201703L
+#define CONSTEXPR constexpr
+#else
+#define CONSTEXPR
+#endif
+
 
 namespace orbtree {
 	
@@ -151,7 +158,7 @@ namespace orbtree {
 	 * @tparam KeyValueT Type of stored data, should be either KeyOnly or KeyValue
 	 * @tparam NVTypeT Type of extra data stored along in nodes (i.e. the return value of the function whose sum can be calculated).
 	 */
-	template<class KeyValueT, class NVTypeT>
+	template<class KeyValueT, class NVTypeT, bool simple = false>
 	class NodeAllocatorPtr {
 		protected: /* everything is protected, red-black tree class inherits from this */
 			
@@ -165,7 +172,8 @@ namespace orbtree {
 			struct Node {
 				protected:
 					KeyValue kv; /**< \brief key and (optionally) value stored */
-					NVType* partialsum; ///< \brief partial sum (sum of this node's children + this node's value)
+					/// \brief partial sum (sum of this node's children's weight + this node's weight)
+					typename std::conditional<simple, NVType, NVType*>::type partialsum;
 					Node* parent;
 					Node* left;
 					Node* right;
@@ -178,7 +186,11 @@ namespace orbtree {
 					Node():kv(), partialsum(0) { }
 					template<class... T> Node(T&&... args) : kv(std::forward<T...>(args...)), partialsum(0) { }
 					/* note: destructor only deletes the partial sum, does not recursively delete the children */
-					~Node() { if(partialsum) delete[]partialsum; }
+					template<bool simple_ = simple> void do_delete(typename std::enable_if<simple_,void*>::type = 0) { }
+					template<bool simple_ = simple> void do_delete(typename std::enable_if<!simple_,void*>::type = 0) {
+						if(partialsum) delete[]partialsum;
+					}
+					~Node() { do_delete(); }
 					
 					KeyValue& get_key_value() { return kv; }
 					const KeyValue& get_key_value() const { return kv; }
@@ -197,7 +209,7 @@ namespace orbtree {
 					void set_left(const Node* x) { left = const_cast<Node*>(x); } ///< \brief set handle for left child
 					void set_right(const Node* x) { right = const_cast<Node*>(x); } ///< \brief set handle for right child
 				
-					friend class NodeAllocatorPtr<KeyValueT,NVTypeT>;
+					friend class NodeAllocatorPtr<KeyValueT,NVTypeT,simple>;
 			};
 			
 			/** \brief Node handle type to be used by tree implementation.
@@ -220,6 +232,8 @@ namespace orbtree {
 				nil = new_node();
 			}
 			explicit NodeAllocatorPtr(unsigned int nv_per_node_):root(0),nil(0),nv_per_node(nv_per_node_) {
+				if CONSTEXPR (simple) if(nv_per_node != 1)
+					throw std::runtime_error("For simple tree, weight function can only return one component!\n");
 				root = new_node();
 				nil = new_node();
 			}
@@ -273,22 +287,46 @@ namespace orbtree {
 			}
 			
 			/** \brief safely initialize new node, throw an exception if memory allocation failed */
-			void init_node(Node* n) {
+			template <bool simple_ = simple>
+			void init_node(typename std::enable_if<simple_, Node*>::type n) {
+				if(n) {
+					n->parent = Invalid;
+					n->left = Invalid;
+					n->right = Invalid;
+				}
+				if(!n) throw std::runtime_error("NodeAllocatorPtr::init_node(): out of memory!\n");
+			}
+			/** \brief safely initialize new node, throw an exception if memory allocation failed */
+			template <bool simple_ = simple>
+			void init_node(typename std::enable_if<!simple_, Node*>::type n) {
 				if(n) {
 					n->parent = Invalid;
 					n->left = Invalid;
 					n->right = Invalid;
 					n->partialsum = new NVType[nv_per_node];
 				}
-				if( !n || !(n->partialsum) ) throw std::runtime_error("NodeAllocatorPtr::init_node(): out of memory!\n");
+				if( !n || ! (n->partialsum) ) throw std::runtime_error("NodeAllocatorPtr::init_node(): out of memory!\n");
 			}
 			
-			/// \brief get the value of the partial sum stored in this node
-			void get_node_sum(NodeHandle n, NVType* s) const { 
+			/// \brief get the value of the partial sum of weights stored in this node -- simple case when the weight function returns only one value 
+			template<bool simple_ = simple>
+			void get_node_sum(NodeHandle n, typename std::enable_if<simple_,NVType*>::type s) const {
+				*s = n->partialsum;
+			}
+			/// \brief get the value of the partial sum of weights stored in this node -- case when the weight function returns a vector
+			template<bool simple_ = simple>
+			void get_node_sum(NodeHandle n, typename std::enable_if<!simple_,NVType*>::type s) const {
 				for(unsigned int i = 0; i < nv_per_node; i++) s[i] = n->partialsum[i];
 			}
-			/// \brief set the value of the partial sum stored in this node
-			void set_node_sum(NodeHandle n1, const NVType* s) { 
+			/// \brief set the value of the partial sum stored in this node -- simple case when the weight function returns only one value 
+			template<bool simple_ = simple>
+			void set_node_sum(NodeHandle n1, typename std::enable_if<simple_,const NVType*>::type s) { 
+				Node* n = const_cast<Node*>(n1);
+				n->partialsum = *s;
+			}
+			/// \brief set the value of the partial sum stored in this node -- case when the weight function returns a vector
+			template<bool simple_ = simple>
+			void set_node_sum(NodeHandle n1, typename std::enable_if<!simple_,const NVType*>::type s) { 
 				Node* n = const_cast<Node*>(n1);
 				for(unsigned int i = 0; i < nv_per_node; i++) n->partialsum[i] = s[i];
 			}
@@ -394,8 +432,8 @@ namespace orbtree {
 			
 			realloc_vector::vector<NVType> nvarray; ///< \brief Vector storing the partial sum of function values in nodes.
 			node_vector_type nodes; ///< \brief Vector storing the node objects.
-			size_t n_del; ///< \brief Number of deleted nodes (memory not freed yet, these are stored in-place, forming a linked list).
 			const unsigned int nv_per_node; ///< \brief Number of weight values per node (number of components returned by the weight function).
+			size_t n_del; ///< \brief Number of deleted nodes (memory not freed yet, these are stored in-place, forming a linked list).
 			NodeHandle deleted_nodes_head; ///< \brief Head of linked list for deleted nodes.
 
 		protected:
@@ -404,12 +442,12 @@ namespace orbtree {
 			NodeHandle root; /** \brief Root sentinel. */
 			NodeHandle nil; /** \brief Nil sentinel */
 			
-			NodeAllocatorCompact():root(Invalid),nil(Invalid),nv_per_node(1),n_del(0),deleted_nodes_head(Invalid) { 
+			NodeAllocatorCompact():nv_per_node(1),n_del(0),deleted_nodes_head(Invalid),root(Invalid),nil(Invalid) { 
 				root = new_node();
 				nil = new_node();
 			}
-			explicit NodeAllocatorCompact(unsigned int nv_per_node_):root(Invalid),nil(Invalid),
-					nv_per_node(nv_per_node_),n_del(0),deleted_nodes_head(Invalid) {
+			explicit NodeAllocatorCompact(unsigned int nv_per_node_):nv_per_node(nv_per_node_),n_del(0),
+					deleted_nodes_head(Invalid),root(Invalid),nil(Invalid) {
 				root = new_node();
 				nil = new_node();
 			}

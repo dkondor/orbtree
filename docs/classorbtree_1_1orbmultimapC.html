@@ -67,22 +67,23 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Multimap implementation with compact storage. See orbtree for description of members. Key and value must be POD-types.  
+<p>Multimap implementation with compact storage. See orbtree for description of members.  
  <a href="classorbtree_1_1orbmultimapC.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="orbtree_8h_source.html">orbtree.h</a>&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Multimap implementation with compact storage. See orbtree for description of members. Key and value must be POD-types. </p>
+<div class="textblock"><p>Multimap implementation with compact storage. See orbtree for description of members. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Key</td><td>Key to sort elements by. Must be POD / trivially copyable (as per std::is_trivially_copyable). </td></tr>
-    <tr><td class="paramname">Value</td><td>Value stored in elements. Must be POD / trivially copyable (as per std::is_trivially_copyable). </td></tr>
-    <tr><td class="paramname">NVFunc</td><td>function calculating the values associated with stored elements. See <a class="el" href="structorbtree_1_1NVFunc__Adapter__Simple.html" title="Adapter for functions that return only one result. ">NVFunc_Adapter_Simple</a> for the description of the expected interface. </td></tr>
+    <tr><td class="paramname">Key</td><td>Key to sort elements by. </td></tr>
+    <tr><td class="paramname">Value</td><td>Value stored in elements. </td></tr>
+    <tr><td class="paramname">NVFunc</td><td>function calculating the values associated with stored elements. See <a class="el" href="structorbtree_1_1NVFunc__Adapter__Simple.html" title="Adapter for functions that return only one result. This class also describes the interface expected f...">NVFunc_Adapter_Simple</a> for the description of the expected interface. </td></tr>
     <tr><td class="paramname">IndexType</td><td>unsigned integral type to use for indexing. Maximum number of elements is half of the maximum value of this type - 1. Default is uin32_t, i.e. 32-bit integers, allowing 2^31-1 elements. </td></tr>
-    <tr><td class="paramname">Compare</td><td>comparison functor for keys. </td></tr>
+    <tr><td class="paramname">Compare</td><td>comparison functor for keys.</td></tr>
   </table>
   </dd>
 </dl>
+<p>Note: internally, it uses <a class="el" href="classrealloc__vector_1_1vector.html" title="C++ vector-like container for trivially moveable types, using realloc() for growing memory...">realloc_vector::vector</a> if both Key and Value are trivially copyable (as per <a href="https://en.cppreference.com/w/cpp/types/is_trivially_copyable">std::is_trivially_copyable</a>) and <a class="el" href="classstacked__vector_1_1vector.html" title="C++ vector-like container that internally maintains a &quot;stack&quot; of vectors instead of having one large ...">stacked_vector::vector</a> otherwise. In the latter case, performnace can be improved by using the <a href="https://github.com/ridiculousfish/libdivide">libdivide library</a> &ndash; see the documentation of <a class="el" href="classstacked__vector_1_1vector.html">stacked_vector</a> for more details. </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="orbtree_8h_source.html">orbtree.h</a></li>
 </ul>
