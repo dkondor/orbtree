@@ -91,6 +91,7 @@ namespace orbtree {
 			typedef typename NodeAllocator::KeyValue::KeyType key_type;
 			/// Type of values associated by nodes (calculated by NVFunc)
 			typedef typename NodeAllocator::NVType NVType;
+			typedef NVFunc NVFunc_t;
 			/* conditionally define mapped_type ?? */
 			typedef size_t size_type;
 			typedef size_t difference_type; /* note: unsigned difference_type not standard?
@@ -463,6 +464,25 @@ namespace orbtree {
 				return orbtree_base<NodeAllocator, Compare, NVFunc, multi>::find(k) != this->nil();
 			}
 			
+			/// returns the first element where the supplied predicate based on the cumulative weight function values returns true
+			template<class pred> iterator lower_bound_w(const pred& p) {
+				return iterator(*this, orbtree_base<NodeAllocator, Compare, NVFunc, multi>::lower_bound_w(p));
+			}
+			
+			/// returns the first element where the supplied predicate based on the cumulative weight function values returns true
+			template<class pred> const_iterator lower_bound_w(const pred& p) const {
+				return const_iterator(*this, orbtree_base<NodeAllocator, Compare, NVFunc, multi>::lower_bound_w(p));
+			}
+			
+			/// returns the first element with generalized rank not less than r (only for cases with scalar weight function)
+			template<bool simple_ = simple> iterator lower_bound_rank(const NVType& r) {
+				return lower_bound_w([&r] (const NVType* x) { return *x >= r; });
+			}
+			
+			/// returns the first element with generalized rank not less than r (only for cases with scalar weight function)
+			template<bool simple_ = simple> const_iterator lower_bound_rank(const NVType& r) const {
+				return lower_bound_w([&r] (const NVType* x) { return *x >= r; });
+			}
 			
 		public:
 			/** \brief Calculate partial sum of the weights of nodes
@@ -588,6 +608,10 @@ namespace orbtree {
 		explicit NVFunc_Adapter_Simple(NVFunc&& f_):f(f_) { }
 		template<class T>
 		explicit NVFunc_Adapter_Simple(const T& t):f(t) { }
+		
+		static auto rank_compare(result_type r) {
+			return [r] (const result_type* x) { return *x >= r; };
+		}
 	};
 	
 	
@@ -622,7 +646,6 @@ namespace orbtree {
 	template<class Key, class NVFunc, class Compare = std::less<Key> >
 	using simple_set = orbtree< NodeAllocatorPtr< KeyOnly<Key>, typename NVFunc::result_type, true >,
 		Compare, NVFunc_Adapter_Simple<NVFunc>, false, true >;
-	
 	
 	/** \class orbtree::orbmultiset
 	 * \brief  General multiset, i.e. storing a collection of elements allowing duplicates.
@@ -907,7 +930,7 @@ namespace orbtree {
 	using rankmultisetC = orbtree< NodeAllocatorCompact< KeyOnly<Key>, NVType, IndexType >, Compare,
 			NVFunc_Adapter_Simple<RankFunc<Key, NVType> >, true, true >;
 	
-		
+
 	/* map types -- extra step in adding accessor functions (only for map, multimap does not have them)
 	 * note: this definition does not explicitely require KeyValue to have value, but the extra functions rely on Value being present
 	 * 
@@ -1268,6 +1291,19 @@ namespace orbtree {
 	using rankmultimapC = orbtree< NodeAllocatorCompact< KeyValue<Key,Value>, NVType, IndexType >, Compare,
 			NVFunc_Adapter_Simple< RankFunc<NVType,KeyValue<Key,Value> > >, true, true >;
 	
+	
+	
+	/** Find the first element in the given container with rank not less than the given value; works for containers with scalar weight functions. */
+	template<class cont>
+	typename cont::iterator lower_bound_r(cont& s, typename cont::NVType r) {
+		return s.lower_bound_w(cont::NVFunc_t::rank_compare(r));
+	}
+	
+	/** Find the first element in the given set with rank not less than the given value; works for containers with scalar weight functions. */
+	template<class cont>
+	typename cont::const_iterator lower_bound_r(const cont& s, typename cont::NVType r) {
+		return s.lower_bound_w(cont::NVFunc_t::rank_compare(r));
+	}
 }
 
 #undef CONSTEXPR

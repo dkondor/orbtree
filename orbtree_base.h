@@ -74,6 +74,7 @@ namespace orbtree {
 		public:
 			/// \brief Type the function NVFunc returns
 			typedef typename NodeAllocator::NVType NVType;
+			typedef NVFunc NVFunc_t;
 		
 		protected:
 			/// \brief function to add NVType values; checks for overflow and throws exception in the case of integral types
@@ -209,6 +210,16 @@ namespace orbtree {
 			template<class K> auto lower_bound(const K& key) const -> NodeHandle;
 			/// \brief find the first node larger than the given key -- returns nil if none found
 			template<class K> auto upper_bound(const K& key) const -> NodeHandle;
+			
+			/** \brief search based on the cumulative sum of rank function values
+			 * 
+			 * Find the first (in-order) node, where the supplied predicate
+			 * pred returns false. Note: pred must be partitioned over the
+			 * nodes. A typical use case is finding the nth in-order node if
+			 * the weight function calculates rank.
+			 * 
+			 * Returns nil if not found. */
+			template<class pred> auto lower_bound_w(const pred& p) const -> NodeHandle;
 			
 			/// \brief convenience function to get the key of a node
 			const KeyType& get_node_key(NodeHandle n) const { return get_node(n).get_key_value().key(); }
@@ -383,6 +394,46 @@ namespace orbtree {
 			if(n == nil()) return last; /* end of search */
 		}
 	}
+	
+	template<class NodeAllocator, class Compare, class NVFunc, bool multi> template<class pred>
+	auto orbtree_base<NodeAllocator,Compare,NVFunc,multi>::lower_bound_w(const pred& p) const -> NodeHandle {
+		if(root() == Invalid) return nil();
+		NodeHandle n = get_node(root()).get_right();
+		if(n == Invalid || n == nil()) return nil();
+		NodeHandle last = nil(); /* guess of the result node */
+		NVType parent[f.get_nr()];
+		NVType left[f.get_nr()];
+		NVType current[f.get_nr()];
+		for(unsigned int i=0; i < f.get_nr(); i++) parent[i] = NVType();
+		
+		do {
+			for(unsigned int i=0; i < f.get_nr(); i++) current[i] = NVType();
+			NVAdd(current, parent);
+			NodeHandle l = get_node(n).get_left();
+			if(l != nil()) {
+				this->get_node_sum(l,left);
+				NVAdd(current, left);
+			}
+			
+			bool res = p(current);
+			if(res) {
+				// predicate is already true, we have to go left
+				last = n;
+				n = l;
+			}
+			else {
+				/* predicate is false, try to go right
+				 * in this case, we have to update the parent sum to include our
+				 * own and the left child's rank as well */
+				if(l != nil()) NVAdd(parent, left);
+				get_node_grvalue(n, current);
+				NVAdd(parent, current);
+				n = get_node(n).get_right();
+			}
+		} while(n != nil());
+		return last;
+	}
+
 
 	template<class NodeAllocator, class Compare, class NVFunc, bool multi> template<class K>
 	void orbtree_base<NodeAllocator,Compare,NVFunc,multi>::get_sum_fv(const K& k, NVType* res) const {
@@ -862,7 +913,7 @@ namespace orbtree {
 			if(c != nil()) {
 				get_node(c).set_black();
 			}
-			else {
+			else if(p != root()) {
 				/* here, del is black -- in this case, it must have a valid sibling */
 				while(true) {
 					NodeHandle s = get_node(p).get_left();

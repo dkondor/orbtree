@@ -79,6 +79,8 @@ int main(int argc, char **argv)
 			for(auto it = rbtree.cbegin();it != rbtree.cend();++it,++i) {
 				uint32_t r = rbtree.get_sum_node(it);
 				if(r != i) throw std::runtime_error("key rank not consistent!\n");
+				auto it2 = orbtree::lower_bound_r(rbtree, r);
+				if(it2 != it) throw std::runtime_error("rank search result not consistent!\n");
 			}
 			if(i != rbtree.size()) throw std::runtime_error("inconsistent tree size!\n");
 		}
@@ -93,6 +95,8 @@ int main(int argc, char **argv)
 		for(auto it = rbtree.cbegin();it != rbtree.cend();++it,++i) {
 			uint32_t r = rbtree.get_sum_node(it);
 			if(r != i) throw std::runtime_error("key rank not consistent!\n");
+			auto it2 = orbtree::lower_bound_r(rbtree, r);
+			if(it2 != it) throw std::runtime_error("rank search result not consistent!\n");
 		}
 		if(i != rbtree.size()) throw std::runtime_error("inconsistent tree size!\n");
 	}
