@@ -580,9 +580,10 @@ namespace orbtree {
 			void clear_tree() {
 				nodes.resize(2);
 				nvarray.resize(2);
-				//~ size = 2;
 				root = 0;
 				nil = 1;
+				deleted_nodes_head = Invalid;
+				n_del = 0;
 				nodes[root] = Node();
 				nodes[nil] = Node();
 				shrink_memory(4);
@@ -623,7 +624,11 @@ namespace orbtree {
 						NodeHandle right = nodes[size].get_right();
 						if(left != Invalid) nodes[left].set_right(right);
 						if(right != Invalid) nodes[right].set_left(left);
-						if(deleted_nodes_head == size) deleted_nodes_head = left;
+						if(deleted_nodes_head == size) {
+							deleted_nodes_head = left; // in this case, right == Invalid
+							if(deleted_nodes_head == Invalid && n_del > 1)
+								throw std::runtime_error("NodeAllocatorCompact::shrink_size(): inconsistent deleted nodes!\n");
+						}
 					}
 					else {
 						/* otherwise move last node into the place of a deleted node */
