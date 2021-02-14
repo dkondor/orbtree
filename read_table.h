@@ -246,7 +246,8 @@ static int read_table_line_skip(read_table* r, int skip) {
 		r->pos = 0;
 		if(skip) {
 			for(; r->pos < r->line_len; r->pos++)
-				if( ! (r->buf[r->pos] == ' ' || r->buf[r->pos] == '\t') ) break;
+				if( ! (r->buf[r->pos] == ' ' || r->buf[r->pos] == '\t' 
+					|| r->buf[r->pos] == '\r' || r->buf[r->pos] == '\n') ) break;
 			if(r->comment) if(r->buf[r->pos] == r->comment) continue; /* check for comment character first */
 			if(r->pos < r->line_len) break; /* there is some data in the line */
 		}
@@ -473,7 +474,7 @@ static int read_table_uint32_limits(read_table* r, uint32_t* i, uint32_t min, ui
 	}
 	unsigned long res = strtoul(r->buf + r->pos, &c2, r->base);
 	/* check that result fits in 32-bit integer -- long might be 64-bit */
-	if(res > (unsigned long)max || res < (unsigned int)min) {
+	if(res > (unsigned long)max || res < (unsigned long)min) {
 		r->last_error = T_OVERFLOW;
 		if(res > (unsigned long)max) *i = max;
 		if(res < (unsigned long)min) *i = min;
@@ -517,10 +518,10 @@ static int read_table_uint64_limits(read_table* r, uint64_t* i, uint64_t min, ui
 	}
 	else {
 		res2 = strtoull(r->buf + r->pos, &c2, r->base);
-		if(res2 > (unsigned long long)max || res < (unsigned long long)min) {
+		if(res2 > (unsigned long long)max || res2 < (unsigned long long)min) {
 			r->last_error = T_OVERFLOW;
-			if(res > (unsigned long long)max) *i = max;
-			if(res < (unsigned long long)min) *i = min;
+			if(res2 > (unsigned long long)max) *i = max;
+			if(res2 < (unsigned long long)min) *i = min;
 			return 1;
 		}
 		*i = res2; /* store potential result */
@@ -668,6 +669,7 @@ static const char* read_table_get_line_str(const read_table* r) {
 
 #include <utility>
 #include <string>
+#include <sstream>
 
 
 template<class T>
@@ -877,8 +879,7 @@ struct read_table2 : public read_table {
 		}
 		/* read next line into the internal buffer */
 		bool read_line(bool skip = true) {
-			if(skip) return (read_table_line_skip(this,1)==0);
-			else return (read_table_line_skip(this,0)==0);
+			return (read_table_line_skip(this,skip) == 0);
 		}
 		/* try to parse one value from the currently read line
 		 * T can be 16, 32 or 64 bit signed or unsigned int or double */
@@ -948,7 +949,8 @@ struct read_table2 : public read_table {
 		size_t get_pos() const { return pos; }
 		size_t get_col() const { return col; }
 		/* set filename (for better formatting of diagnostic messages) */
-		void set_fn(const char* fn_) { fn = fn; }
+		void set_fn(const char* fn_) { fn = fn_; }
+		const char* get_fn() const { return fn; }
 		/* get current line string */
 		const char* get_line_str() const { return read_table_get_line_str(this); }
 		
@@ -956,6 +958,17 @@ struct read_table2 : public read_table {
 		void write_error(FILE* f) const { read_table_write_error(this,f); }
 		
 		static const read_table_skip_t* skip() { return &_read_table_skip1; }
+		
+		/* create a string error message that can be thrown as an exception */
+		std::string exception_string(std::string&& base_message = "") {
+			std::ostringstream strs(std::move(base_message), std::ios_base::ate);
+			strs << "read_table, ";
+			if(fn) strs << "file " << fn << ", ";
+			else strs << "input ";
+			strs << "line " << line << ", position " << pos << " / column " << col << ": ";
+			strs << get_error_desc(last_error) << '\n';
+			return strs.str();
+		}
 };
 
 #endif /* __cplusplus */
