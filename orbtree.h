@@ -86,11 +86,11 @@ namespace orbtree {
 /* typedefs */
 			/// \brief Values stored in this tree. Either the key (for sets)
 			///	or an std::pair or orbtree::trivial_pair of key and value
-			typedef typename NodeAllocator::KeyValue::ValueType value_type;
+			typedef typename orbtree_base<NodeAllocator, Compare, NVFunc, multi>::ValueType value_type;
 			/// Key type of nodes that determines ordering.
-			typedef typename NodeAllocator::KeyValue::KeyType key_type;
+			typedef typename orbtree_base<NodeAllocator, Compare, NVFunc, multi>::KeyType key_type;
 			/// Type of values associated by nodes (calculated by NVFunc)
-			typedef typename NodeAllocator::NVType NVType;
+			typedef typename orbtree_base<NodeAllocator, Compare, NVFunc, multi>::NVType NVType;
 			typedef NVFunc NVFunc_t;
 			/* conditionally define mapped_type ?? */
 			typedef size_t size_type;
@@ -126,7 +126,7 @@ namespace orbtree {
 			template<bool is_const>
 			struct iterator_base {
 				protected:
-					typedef typename NodeAllocator::KeyValue::ValueType value_base;
+					typedef typename orbtree_base<NodeAllocator, Compare, NVFunc, multi>::ValueType value_base;
 					typedef typename std::conditional<is_const, const orbtree, orbtree>::type orbtree_t;
 				public:
 					/* typedefs */
@@ -186,12 +186,12 @@ namespace orbtree {
 						return &(t.get_node(n).get_key_value().keyvalue());
 					}
 					/// change value stored in map or multimap
-					template<bool is_const_ = is_const, class KeyValue_ = typename NodeAllocator::KeyValue>
+					template<bool is_const_ = is_const, class KeyValue_ = KeyValue>
 					typename std::enable_if<!is_const_>::type set_value(typename KeyValue_::MappedType&& v) {
 						t.update_value(n,std::move(v));
 					}
 					/// change value stored in map or multimap
-					template<bool is_const_ = is_const, class KeyValue_ = typename NodeAllocator::KeyValue>
+					template<bool is_const_ = is_const, class KeyValue_ = KeyValue>
 					typename std::enable_if<!is_const_>::type set_value(typename KeyValue_::MappedType const& v) {
 						t.update_value(n,v);
 					}
@@ -221,7 +221,7 @@ namespace orbtree {
 			/// iterator that does not allow modification
 			typedef iterator_base<true> const_iterator;
 			/// iteraror that allows the modification of the stored value (for maps)
-			typedef typename std::conditional<NodeAllocator::KeyValue::keyonly, iterator_base<true>, iterator_base<false> >::type iterator;
+			typedef typename std::conditional<KeyValue::keyonly, iterator_base<true>, iterator_base<false> >::type iterator;
 			
 			iterator begin() { return iterator(*this,this->first()); } /// get an iterator to the beginning (node with the lowest key value)
 			const_iterator begin() const { return const_iterator(*this,this->first()); } /// get an iterator to the beginning (node with the lowest key value)
@@ -963,7 +963,7 @@ namespace orbtree {
 			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false, simple>::iterator iterator;
 			typedef typename orbtree<NodeAllocator, Compare, NVFunc, false, simple>::const_iterator const_iterator;
 			/// type of values stored in this map
-			typedef typename NodeAllocator::KeyValue::MappedType mapped_type;
+			typedef typename KeyValue::MappedType mapped_type;
 			
 			explicit orbtreemap(const NVFunc& f_ = NVFunc(), const Compare& c_ = Compare()) :
 				orbtree<NodeAllocator, Compare, NVFunc, false, simple>(f_,c_) { }
