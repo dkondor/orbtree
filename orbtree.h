@@ -492,8 +492,7 @@ namespace orbtree {
 			 * large enough (e.g. with at least as many elements as
 			 * the components calculated by NVFunc)
 			 */
-			template<bool simple_ = simple>
-			void get_sum_node(const_iterator it, typename std::enable_if<!simple_,NVType*>::type res) const {
+			void get_sum_node(const_iterator it, NVType* res) const {
 				if(it == cend()) this->get_norm_fv(res);
 				this->get_sum_fv_node(it.n,res);
 			}
