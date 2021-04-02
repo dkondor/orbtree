@@ -150,11 +150,14 @@ namespace orbtree {
 					friend class iterator_base<!is_const>;
 					friend class orbtree<NodeAllocator,Compare,NVFunc,multi,simple>;
 				protected:
-					orbtree_t& t; /* has to be const reference for const iterator */
+					/* Reference to the parent tree (we need it for dereferencing); it is a const pointer for const iterator.
+					 * Note: this needs to be a pointer (and not a reference) so that assignment operators can work */
+					orbtree_t* t;
 					NodeHandle n;
 					iterator_base() = delete;
 					/* create iterator (by orbtree class) */
-					iterator_base(orbtree_t& t_, NodeHandle n_):t(t_),n(n_) { }
+					iterator_base(orbtree_t& t_, NodeHandle n_):t(&t_),n(n_) { }
+					iterator_base(orbtree_t* t_, NodeHandle n_):t(t_),n(n_) { }
 					/* convert const iterator to non-const -- protected, might be needed internally ? */
 					template<bool is_const_ = is_const>
 					explicit iterator_base(const iterator_base<true>& it, typename std::enable_if<!is_const_>::type* = 0)
@@ -164,9 +167,15 @@ namespace orbtree {
 					/* any iterator can be copied from non-const iterator;
 					 * this is not explicit so comparison operators can auto-convert */
 					iterator_base(const iterator_base<false>& it):t(it.t),n(it.n) { }
+					void operator = (const iterator_base<false>& it) { t = it.t; n = it.n; }
 					/* only const iterator can be copied from const iterator */
 					template<bool is_const_ = is_const>
 					iterator_base(const iterator_base<true>& it, typename std::enable_if<is_const_>::type* = 0 ):t(it.t),n(it.n) { }
+					template<bool is_const_ = is_const>
+					void operator = (typename std::enable_if<is_const_, const iterator_base<true> >::type& it) {
+						t = it.t;
+						n = it.n;
+					}
 					
 					/// read-only access to values
 					/** 
@@ -178,26 +187,26 @@ namespace orbtree {
 					 * for that purpose. */
 					reference operator * () {
 						if(n == NodeAllocator::Invalid) throw std::runtime_error("Attempt to dereference invalid orbtree::iterator!\n");
-						return t.get_node(n).get_key_value().keyvalue();
+						return t->get_node(n).get_key_value().keyvalue();
 					}
 					/// \copydoc operator*()
 					pointer operator -> () {
 						if(n == NodeAllocator::Invalid) throw std::runtime_error("Attempt to dereference invalid orbtree::iterator!\n");
-						return &(t.get_node(n).get_key_value().keyvalue());
+						return &(t->get_node(n).get_key_value().keyvalue());
 					}
 					/// change value stored in map or multimap
 					template<bool is_const_ = is_const, class KeyValue_ = KeyValue>
 					typename std::enable_if<!is_const_>::type set_value(typename KeyValue_::MappedType&& v) {
-						t.update_value(n,std::move(v));
+						t->update_value(n,std::move(v));
 					}
 					/// change value stored in map or multimap
 					template<bool is_const_ = is_const, class KeyValue_ = KeyValue>
 					typename std::enable_if<!is_const_>::type set_value(typename KeyValue_::MappedType const& v) {
-						t.update_value(n,v);
+						t->update_value(n,v);
 					}
 					
 					/// convenience function to return the key (for both set and map)
-					const key_type& key() const { return t.get_node(n).get_key_value().key(); }
+					const key_type& key() const { return t->get_node(n).get_key_value().key(); }
 					
 					/// compare iterators
 					/** Note: comparing iterators from different map / tree
@@ -209,13 +218,13 @@ namespace orbtree {
 					template<bool is_const2> bool operator != (const iterator_base<is_const2>& i) const { return n != i.n; }
 					
 					/// increment: move to the next stored node
-					iterator_base& operator ++() { n = t.next(n); return *this; }
+					iterator_base& operator ++() { n = t->next(n); return *this; }
 					/// increment: move to the next stored node
-					iterator_base operator ++(int) { iterator_base<is_const> i(*this); n = t.next(n); return i; }
+					iterator_base operator ++(int) { iterator_base<is_const> i(*this); n = t->next(n); return i; }
 					/// decrement: move to the previous stored node
-					iterator_base& operator --() { n = t.previous(n); return *this; }
+					iterator_base& operator --() { n = t->previous(n); return *this; }
 					/// decrement: move to the previous stored node
-					iterator_base operator --(int) { iterator_base<is_const> i(*this); n = t.previous(n); return i; }
+					iterator_base operator --(int) { iterator_base<is_const> i(*this); n = t->previous(n); return i; }
 			};
 			
 			/// iterator that does not allow modification
