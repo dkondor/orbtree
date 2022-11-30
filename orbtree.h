@@ -503,7 +503,7 @@ namespace orbtree {
 			 */
 			void get_sum_node(const_iterator it, NVType* res) const {
 				if(it == cend()) this->get_norm_fv(res);
-				this->get_sum_fv_node(it.n,res);
+				else this->get_sum_fv_node(it.n,res);
 			}
 			/** \brief Calculate partial sum of nodes
 			 * that come before the one pointed to by it.
@@ -516,7 +516,7 @@ namespace orbtree {
 			NVType get_sum_node(typename std::enable_if<simple_,const_iterator>::type it) const {
 				NVType res;
 				if(it == cend()) this->get_norm_fv(&res);
-				this->get_sum_fv_node(it.n,&res);
+				else this->get_sum_fv_node(it.n,&res);
 				return res;
 			}
 			
